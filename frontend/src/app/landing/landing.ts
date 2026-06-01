@@ -11,6 +11,8 @@ import {
 import { RouterLink } from '@angular/router';
 import QRCode from 'qrcode';
 
+import { token } from '../core/tessera-tokens';
+
 interface DemoCase {
   key: 'menu' | 'event' | 'bio';
   label: string;
@@ -94,11 +96,17 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
     if (!canvas) return;
     // Always encode the SAME short URL — that's the point of the demo:
     // the QR is permanent, the destination behind it isn't.
+    // QR modules use tessera "ink" on "surface" — both tokens stay
+    // legal QR contrast in light AND dark mode (the dark-mode --color-ink
+    // is the warm paper and --color-surface is deep pin, still > 4.5:1).
     void QRCode.toCanvas(canvas, `https://${this.fakeShortUrl}`, {
       errorCorrectionLevel: 'Q',
       width: 320,
       margin: 2,
-      color: { dark: '#0f172a', light: '#ffffff' },
+      color: {
+        dark: token('color-ink'),
+        light: token('color-surface'),
+      },
     });
   }
 }

@@ -1,12 +1,74 @@
+/* Foundation — load design tokens FIRST so every rule below (and every
+   component-level stylesheet) can resolve var(--…). Never hardcode a
+   colour, font or radius anywhere else; see tessera-design.md. */
+@import './styles/tessera-tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  background: #fafafa;
-  color: #111;
   min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
+h1,
+h2,
+h3 {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+h1 {
+  font-size: 28px;
+}
+h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 18px;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--color-ink-soft);
+}
+
+a {
+  color: var(--color-accent);
+}
+a:hover {
+  text-decoration: underline;
+}
+
+code,
+kbd,
+samp,
+pre,
+.slug {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
 }

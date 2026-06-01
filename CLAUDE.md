@@ -78,6 +78,15 @@ Infra
     no built-in policy. Hits return `422` with a clear validation message.
 11. Public-demo hygiene: if `DEMO_USER_EMAIL` is set, the `cron` service purges links owned by that
     account older than `DEMO_LINK_TTL_HOURS` (default 24). Disabled when the env var is empty.
+12. **All styling follows `tessera-design.md` and uses ONLY the variables in
+    `frontend/src/styles/tessera-tokens.css` — never a hardcoded hex, rgb, named
+    colour, or font literal in any component, template, or JS chart/QR config.**
+    `tessera-tokens.css` is imported first from `frontend/src/styles.css`. New
+    visuals must resolve every colour through `var(--color-…)`, every font
+    through `var(--font-…)`, every radius through `var(--radius-…)`. Both light
+    and dark mode are driven by the tokens via `prefers-color-scheme`; verify
+    every new screen in both. The user-facing brand is **Tessera**; the repo
+    name (`qr-code-redirect`) stays in code/docs only.
 
 ## Dev commands
 

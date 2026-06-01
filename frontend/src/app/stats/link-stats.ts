@@ -11,6 +11,7 @@ import {
 import { ChartConfiguration } from 'chart.js';
 
 import { LinkStats, LinksService } from '../core/links.service';
+import { token } from '../core/tessera-tokens';
 import { ChartCanvasComponent } from './chart-canvas';
 
 type Period = 7 | 30 | 90;
@@ -39,10 +40,12 @@ export class LinkStatsComponent implements OnInit, OnChanges {
     return s !== null && s.total === 0;
   });
 
-  // Pre-built Chart.js configs derived from the latest stats.
+  // Pre-built Chart.js configs derived from the latest stats. Colours are
+  // pulled from tessera tokens at render time — never hardcoded.
   readonly timeSeriesConfig = computed<ChartConfiguration | null>(() => {
     const s = this.stats();
     if (!s || s.total === 0) return null;
+    const accent = token('color-accent');
     return {
       type: 'line',
       data: {
@@ -51,8 +54,8 @@ export class LinkStatsComponent implements OnInit, OnChanges {
           {
             label: 'Scans',
             data: s.perDay.map((d) => d.count),
-            borderColor: '#2563eb',
-            backgroundColor: 'rgba(37, 99, 235, 0.15)',
+            borderColor: accent,
+            backgroundColor: token('color-accent-soft'),
             fill: true,
             tension: 0.25,
             pointRadius: s.period <= 30 ? 2 : 0,
@@ -137,7 +140,7 @@ export class LinkStatsComponent implements OnInit, OnChanges {
         datasets: [
           {
             data: top.map((r) => r.value),
-            backgroundColor: '#2563eb',
+            backgroundColor: token('color-accent'),
             borderRadius: 3,
           },
         ],

@@ -2,10 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Frontend</title>
+    <title>Tessera — privacy-first dynamic QR codes</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta
+      name="description"
+      content="Self-hostable, privacy-first dynamic QR codes. Codes never expire, IPs are never stored."
+    />
+    <link rel="icon" type="image/svg+xml" href="/tessera-logo.svg" />
+
+    <!-- Tessera design fonts. <link> is preferred over @import (no extra round-trip,
+         no render-blocking CSS chain). Keep this in sync with --font-* in
+         tessera-tokens.css. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
   </head>
   <body>
     <app-root></app-root>
