@@ -1,0 +1,132 @@
+.stats {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px dashed #ddd;
+  display: grid;
+  gap: 1rem;
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.period {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.chip {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: white;
+  color: #333;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.chip:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.total {
+  font-size: 0.875rem;
+  color: #444;
+}
+
+.muted {
+  color: #777;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.empty {
+  background: #f5f5f5;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  color: #555;
+  font-size: 0.875rem;
+}
+
+.empty code {
+  background: white;
+  padding: 0 0.25rem;
+  border-radius: 0.125rem;
+}
+
+.error {
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.chart-row {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.chart-row.split {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.chart-card {
+  border: 1px solid #eee;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  background: #fafafa;
+}
+
+.chart-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+}
+
+.chart-frame {
+  position: relative;
+  height: 10rem;
+}
+
+.chart-frame-tall {
+  height: 14rem;
+}
+
+.os-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.os-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.os-list h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #555;
+}

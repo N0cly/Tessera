@@ -1,0 +1,84 @@
+<div class="stats">
+  <div class="stats-header">
+    <div class="period">
+      <span class="muted">Period:</span>
+      @for (p of periods; track p) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="p === period()"
+          (click)="selectPeriod(p)"
+          [disabled]="loading()"
+        >
+          {{ p }}d
+        </button>
+      }
+    </div>
+    @if (stats()) {
+      <div class="total">
+        <strong>{{ stats()?.total }}</strong>
+        scan{{ stats()?.total === 1 ? '' : 's' }} since {{ stats()?.since }}
+      </div>
+    }
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (loading() && !stats()) {
+    <p class="muted">Loading stats…</p>
+  } @else if (isEmpty()) {
+    <p class="empty">
+      No scans yet for the selected period. Share the QR or the <code>/r/</code> link to start
+      collecting data.
+    </p>
+  } @else if (stats()) {
+    <div class="chart-row">
+      <div class="chart-card chart-wide">
+        <h4>Scans / day</h4>
+        <div class="chart-frame chart-frame-tall">
+          @if (timeSeriesConfig(); as cfg) {
+            <app-chart-canvas [config]="cfg" />
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row split">
+      <div class="chart-card">
+        <h4>By country</h4>
+        @if (countryConfig(); as cfg) {
+          <div class="chart-frame">
+            <app-chart-canvas [config]="cfg" />
+          </div>
+        } @else {
+          <p class="muted small">No data.</p>
+        }
+      </div>
+
+      <div class="chart-card">
+        <h4>By device</h4>
+        @if (deviceConfig(); as cfg) {
+          <div class="chart-frame">
+            <app-chart-canvas [config]="cfg" />
+          </div>
+        } @else {
+          <p class="muted small">No data.</p>
+        }
+      </div>
+    </div>
+
+    @if (stats()?.byOs?.length) {
+      <div class="os-list">
+        <h4>By OS</h4>
+        <ul>
+          @for (row of stats()?.byOs ?? []; track row.os) {
+            <li>
+              <span>{{ row.os ?? 'Unknown' }}</span>
+              <span class="muted">{{ row.count }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  }
+</div>

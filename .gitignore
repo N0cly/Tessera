@@ -1,0 +1,14 @@
+# Self-host config: never commit your real values, copy .env.example instead.
+.env
+.env.*.local
+
+# OS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Build artefacts that don't belong in the repo (each app has its own
+# .gitignore for finer-grained ignores).
+node_modules/
+vendor/

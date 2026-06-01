@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel an in-flight run when a new commit is pushed to the same PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────── BACKEND ───────────────────────────
+  # PHP 8.4 + Composer install + PHPStan + PHPUnit.
+  # Pure unit tests today — no Postgres/Redis services required.
+  backend:
+    name: backend (PHP / PHPStan / PHPUnit)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, pdo_pgsql, redis, gd, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: backend/vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('backend/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Warm dev container (PHPStan reads compiled service map)
+        env:
+          APP_ENV: dev
+          APP_DEBUG: '1'
+        run: php bin/console cache:clear
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+
+      - name: PHPUnit
+        env:
+          APP_ENV: test
+        run: vendor/bin/phpunit
+
+  # ─────────────────────────── FRONTEND ──────────────────────────
+  # Angular: npm ci, prettier --check, ng test, ng build.
+  frontend:
+    name: frontend (Angular / Prettier / build / test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (prettier --check)
+        run: npm run lint
+
+      - name: Tests (ng test, vitest)
+        run: npm test -- --watch=false
+
+      - name: Production build
+        run: npm run build

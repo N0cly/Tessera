@@ -1,0 +1,16 @@
+framework:
+    cache:
+        # Default Symfony cache uses the filesystem.
+        # We expose a dedicated Redis-backed pool for the slug → destinationUrl
+        # hot path. Cache invalidation runs on every Link write (Doctrine listener),
+        # plus a safety TTL covers any miss.
+        default_redis_provider: '%env(REDIS_URL)%'
+
+        pools:
+            app.cache.links:
+                adapter: cache.adapter.redis
+                default_lifetime: 3600 # safety TTL: 1 hour
+
+            app.cache.rate_limiter:
+                adapter: cache.adapter.redis
+                default_lifetime: 600

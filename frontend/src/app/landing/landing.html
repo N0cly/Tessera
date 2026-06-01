@@ -1,0 +1,218 @@
+<header class="topbar">
+  <a class="brand" routerLink="/">
+    <span class="brand-mark" aria-hidden="true">▢</span>
+    <span class="brand-name">qr-code-redirect</span>
+  </a>
+  <nav class="nav">
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#self-host">Self-host</a>
+    <a class="nav-link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    <a class="nav-cta" routerLink="/app">Open dashboard →</a>
+  </nav>
+</header>
+
+<!-- ─────────────────────────  HERO  ───────────────────────── -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Open-source dynamic QR codes</p>
+    <h1>
+      Print the QR once.<br />
+      Change the destination <em>forever</em>.
+    </h1>
+    <p class="lede">
+      Each QR encodes a short permanent URL hosted on <strong>your</strong>
+      infrastructure. Edit where it points whenever you want — no reprint, no expiry, no third party
+      between your scanners and your data.
+    </p>
+    <ul class="chips" role="list">
+      <li>🇪🇺 EU-hostable</li>
+      <li>🔒 IP never stored</li>
+      <li>♾️ Codes never expire</li>
+      <li>📜 MIT licensed</li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#self-host">Self-host in 1 minute</a>
+      <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener">
+        ★ Star on GitHub
+      </a>
+    </div>
+    <p class="hero-foot">No tracking pixels, no signup wall, no “community edition” trick.</p>
+  </div>
+
+  <!-- ─────────────  INTERACTIVE QR DEMO (front-end only)  ───────────── -->
+  <aside class="demo" aria-label="Interactive demo">
+    <div class="demo-tabs" role="tablist" aria-label="Choose a use case">
+      @for (c of cases; track c.key) {
+        <button
+          type="button"
+          role="tab"
+          [class.active]="activeKey() === c.key"
+          [attr.aria-selected]="activeKey() === c.key"
+          (click)="selectCase(c.key)"
+        >
+          <span class="tab-emoji" aria-hidden="true">{{ c.emoji }}</span>
+          <span>{{ c.label }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-qr">
+        <canvas
+          #qrCanvas
+          width="320"
+          height="320"
+          aria-label="QR code for the demo short URL"
+        ></canvas>
+        <p class="demo-shorturl">
+          <span class="muted">scans go to</span>
+          <code>{{ fakeShortUrl }}</code>
+        </p>
+      </div>
+
+      <div class="demo-side">
+        <div class="demo-arrow" aria-hidden="true">→</div>
+        <div class="demo-dest">
+          <p class="muted small">Destination right now</p>
+          <code class="demo-url">{{ active().destination }}</code>
+          <p class="demo-blurb">{{ active().blurb }}</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="demo-note">
+      ⚡ The QR above doesn't change — only the destination does. That's the whole point. Try
+      clicking another tab; the canvas re-renders the same encoded URL.
+    </p>
+  </aside>
+</section>
+
+<!-- ─────────────────────────  USE CASES  ───────────────────────── -->
+<section class="use-cases" id="use-cases">
+  <h2>One engine, many shapes</h2>
+  <p class="section-lede">
+    The data model is deliberately generic. Slap a QR on anything that needs a redirectable link.
+  </p>
+  <div class="case-grid">
+    <article class="case-card">
+      <span class="case-emoji" aria-hidden="true">🍽️</span>
+      <h3>Restaurants &amp; cafés</h3>
+      <p>
+        Menu QRs that survive seasonal changes. New spring menu? Edit the destination. The printed
+        table tents keep working.
+      </p>
+    </article>
+    <article class="case-card">
+      <span class="case-emoji" aria-hidden="true">🎟️</span>
+      <h3>Events &amp; posters</h3>
+      <p>
+        Print the QR on next year's posters before knowing the signup URL. Set the destination later
+        — even hours before the event opens.
+      </p>
+    </article>
+    <article class="case-card">
+      <span class="case-emoji" aria-hidden="true">🔗</span>
+      <h3>Social bios &amp; cards</h3>
+      <p>
+        A single QR on your business card or sticker, rerouted as your platform-of-the-month
+        link-in-bio service changes.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- ─────────────────────────  HOW IT WORKS  ───────────────────────── -->
+<section class="how" id="how">
+  <h2>Three steps, no surprises</h2>
+  <ol class="steps">
+    <li>
+      <span class="step-n">1</span>
+      <h3>Create the link</h3>
+      <p>
+        Paste any <code>http(s)</code> URL. You get a short permanent identifier — that's what gets
+        encoded into the QR.
+      </p>
+    </li>
+    <li>
+      <span class="step-n">2</span>
+      <h3>Print or share the QR</h3>
+      <p>
+        Download the QR as PNG or SVG. Put it on a menu, poster, sticker, business card — whatever
+        the physical world needs.
+      </p>
+    </li>
+    <li>
+      <span class="step-n">3</span>
+      <h3>Change the destination, anytime</h3>
+      <p>
+        Edit where the link points whenever you want. Every previously printed QR keeps working and
+        now leads to the new target.
+      </p>
+    </li>
+  </ol>
+</section>
+
+<!-- ─────────────────────────  DIFFERENTIATORS  ───────────────────────── -->
+<section class="diff">
+  <h2>What makes this different</h2>
+  <div class="diff-grid">
+    <div class="diff-card">
+      <h3>🛠️ Open-source, MIT</h3>
+      <p>
+        The full code is on GitHub. Fork it, audit it, run it, sell what you build on top of it. No
+        “community edition” with the good parts missing.
+      </p>
+    </div>
+    <div class="diff-card">
+      <h3>🕶️ IP never stored</h3>
+      <p>
+        Scan logging is async. The visitor's IP is resolved to a country code in flight, then
+        dropped. The <code>scans</code> table literally has no IP column.
+      </p>
+    </div>
+    <div class="diff-card">
+      <h3>♾️ Codes that never expire</h3>
+      <p>
+        As long as your instance is running, the QR you printed three years ago still works — and
+        still points wherever you tell it to today. No hostage model.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  SELF-HOST  ───────────────────────── -->
+<section class="self-host" id="self-host">
+  <h2>Self-host in one command</h2>
+  <p class="section-lede">Docker + Docker Compose. That's the entire dependency list.</p>
+  <pre
+    class="snippet"
+    aria-label="Self-host command"
+  ><code>git clone https://github.com/&lt;you&gt;/qr-code-redirect.git
+cd qr-code-redirect
+cp .env.example .env       <span class="comment"># tweak APP_SECRET, JWT_PASSPHRASE, etc.</span>
+docker compose up -d --build</code></pre>
+  <p class="self-host-foot">
+    Brings up Postgres, Redis, the API, the dashboard, the async worker, and the periodic janitor —
+    with healthchecks, restart policies, and JWT/migrations handled automatically on first boot.
+  </p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://github.com/" target="_blank" rel="noopener">
+      View on GitHub
+    </a>
+    <a class="btn btn-ghost" routerLink="/app">Try the dashboard</a>
+  </div>
+</section>
+
+<!-- ─────────────────────────  FOOTER  ───────────────────────── -->
+<footer class="footer">
+  <div class="foot-row">
+    <span class="brand-mark" aria-hidden="true">▢</span>
+    <strong>qr-code-redirect</strong>
+    <span class="muted">— privacy-first dynamic QR codes you actually own.</span>
+  </div>
+  <nav class="foot-links">
+    <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/" target="_blank" rel="noopener">License: MIT</a>
+    <a routerLink="/app">Dashboard</a>
+  </nav>
+</footer>

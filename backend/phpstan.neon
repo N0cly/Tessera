@@ -1,0 +1,20 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+
+    paths:
+        - src
+
+    excludePaths:
+        - src/Kernel.php
+
+    # The Symfony extension reads service ids and parameter types from the
+    # compiled container, so we point it at the dev cache. Generate it
+    # before running phpstan with: bin/console cache:warmup --env=dev
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    # Tighten a couple of generic checks that catch real bugs cheaply.
+    treatPhpDocTypesAsCertain: false

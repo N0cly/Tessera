@@ -1,0 +1,14 @@
+framework:
+    rate_limiter:
+        # Per-user limiter applied on POST /api/links to keep self-hosted
+        # instances safe from runaway scripts hammering the create endpoint.
+        # Token-bucket so legitimate bursts (e.g. importing a few links by
+        # hand) still go through. Override LINK_CREATION_RATE_PER_MINUTE
+        # in your .env to tune for trusted environments.
+        link_creation:
+            policy: 'token_bucket'
+            limit: '%env(int:LINK_CREATION_BURST)%'
+            rate:
+                interval: '1 minute'
+                amount: '%env(int:LINK_CREATION_RATE_PER_MINUTE)%'
+            cache_pool: 'app.cache.rate_limiter'

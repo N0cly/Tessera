@@ -1,0 +1,119 @@
+<header class="topbar">
+  <h1>Your links</h1>
+  <button type="button" class="ghost" (click)="logout()">Sign out</button>
+</header>
+
+<section class="create">
+  <h2>Create a new link</h2>
+  <form (submit)="$event.preventDefault(); create()">
+    <label>
+      Destination URL
+      <input
+        type="url"
+        name="destination"
+        placeholder="https://example.com/long-path"
+        [(ngModel)]="newDestination"
+        required
+      />
+    </label>
+    <label>
+      Name (optional)
+      <input
+        type="text"
+        name="name"
+        maxlength="120"
+        placeholder="Spring menu, support page, …"
+        [(ngModel)]="newName"
+      />
+    </label>
+    <button type="submit" [disabled]="creating() || !newDestination">
+      {{ creating() ? 'Creating…' : 'Create link' }}
+    </button>
+  </form>
+</section>
+
+@if (error()) {
+  <p class="error" role="alert">{{ error() }}</p>
+}
+
+<section class="list">
+  @if (loading()) {
+    <p>Loading…</p>
+  } @else if (links().length === 0) {
+    <p class="empty">No links yet. Create one above.</p>
+  } @else {
+    <ul>
+      @for (link of links(); track link['@id']) {
+        <li class="card">
+          <div class="card-body">
+            <div class="card-main">
+              <div class="row">
+                <a class="slug" [href]="redirectUrl(link.slug)" target="_blank" rel="noopener">
+                  /r/{{ link.slug }}
+                </a>
+                <button type="button" class="ghost" (click)="copySlug(link.slug)">Copy</button>
+              </div>
+
+              @if (link.name) {
+                <div class="name">{{ link.name }}</div>
+              }
+
+              @if (editing()?.iri === link['@id']) {
+                <form class="edit" (submit)="$event.preventDefault(); saveEdit()">
+                  <input
+                    type="url"
+                    required
+                    [ngModel]="editing()?.destinationUrl"
+                    (ngModelChange)="editing.set({ iri: link['@id'], destinationUrl: $event })"
+                    name="dest-{{ link.id }}"
+                  />
+                  <button type="submit" [disabled]="savingEdit()">
+                    {{ savingEdit() ? 'Saving…' : 'Save' }}
+                  </button>
+                  <button type="button" class="ghost" (click)="cancelEdit()">Cancel</button>
+                </form>
+              } @else {
+                <div class="row dest">
+                  <span class="muted">→</span>
+                  <a [href]="link.destinationUrl" target="_blank" rel="noopener">{{
+                    link.destinationUrl
+                  }}</a>
+                </div>
+                <div class="row actions">
+                  <button type="button" (click)="startEdit(link)">Edit destination</button>
+                  <button
+                    type="button"
+                    class="ghost"
+                    (click)="toggleStats(link)"
+                    [attr.aria-expanded]="isExpanded(link.id)"
+                  >
+                    {{ isExpanded(link.id) ? 'Hide stats' : 'Show stats' }}
+                  </button>
+                  <button type="button" class="ghost" (click)="download(link, 'png')">
+                    Download PNG
+                  </button>
+                  <button type="button" class="ghost" (click)="download(link, 'svg')">
+                    Download SVG
+                  </button>
+                  <button type="button" class="danger" (click)="remove(link)">Delete</button>
+                </div>
+              }
+            </div>
+
+            <div class="card-qr" aria-label="QR code for this link">
+              @if (qrPreviewUrl(link.id); as src) {
+                <img [src]="src" alt="QR code for /r/{{ link.slug }}" />
+              } @else {
+                <div class="qr-placeholder" aria-hidden="true">QR…</div>
+              }
+            </div>
+          </div>
+
+          @if (isExpanded(link.id)) {
+            <app-link-stats [linkIri]="link['@id']" />
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>

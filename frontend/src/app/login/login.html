@@ -1,0 +1,39 @@
+<section class="auth">
+  <h2>{{ mode() === 'login' ? 'Sign in' : 'Create an account' }}</h2>
+
+  <form (submit)="$event.preventDefault(); submit()">
+    <label>
+      Email
+      <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
+    </label>
+    <label>
+      Password
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        minlength="8"
+        autocomplete="{{ mode() === 'login' ? 'current-password' : 'new-password' }}"
+      />
+    </label>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="busy()">
+      {{ busy() ? 'Working…' : mode() === 'login' ? 'Sign in' : 'Create account' }}
+    </button>
+  </form>
+
+  <p class="toggle">
+    @if (mode() === 'login') {
+      No account yet?
+      <button type="button" class="link" (click)="toggle()">Register</button>
+    } @else {
+      Already registered?
+      <button type="button" class="link" (click)="toggle()">Sign in</button>
+    }
+  </p>
+</section>

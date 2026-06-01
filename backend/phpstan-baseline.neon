@@ -1,0 +1,19 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Property App\\Entity\\Link\:\:\$destinationUrl type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Link.php
+
+		-
+			message: '#^Property App\\Entity\\Link\:\:\$owner type mapping mismatch\: property can contain App\\Entity\\User\|null but database expects App\\Entity\\User\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Link.php
+
+		-
+			message: '#^Property App\\Entity\\Link\:\:\$slug type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Link.php
