@@ -12,7 +12,7 @@
   --brand: var(--color-accent);
   --brand-ink: var(--color-accent-strong);
   --brand-soft: var(--color-accent-soft);
-  --max-w: 64rem;
+  --max-w: 80rem;
 
   display: block;
   color: var(--color-ink);
@@ -139,7 +139,7 @@ section {
 /* ─────────────────── Hero ─────────────────── */
 .hero {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   gap: 3rem;
   align-items: center;
   padding-top: 4rem;
@@ -271,6 +271,7 @@ section {
   display: flex;
   gap: 0.375rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .demo-tabs button {
@@ -299,10 +300,10 @@ section {
 }
 
 .demo-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.25rem;
   align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .demo-qr {
@@ -332,22 +333,27 @@ section {
 }
 
 .demo-side {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.75rem;
-  align-items: start;
 }
 
 .demo-arrow {
   font-size: 1.5rem;
   color: var(--brand);
   line-height: 1;
-  padding-top: 0.25rem;
 }
 
 .demo-dest {
   display: grid;
   gap: 0.4rem;
+}
+
+.demo-dest-header{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.demo-dest-header p{
+  margin: 0;
 }
 
 .demo-url {

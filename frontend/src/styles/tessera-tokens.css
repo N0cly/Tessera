@@ -1,0 +1,45 @@
+/* Tessera — design tokens.
+   The Google Fonts <link> (Fraunces / Hanken Grotesk / JetBrains Mono)
+   is loaded from index.html for better perf — keep it there, don't
+   re-add the @import here. */
+
+:root {
+  /* Typographie */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Couleurs — mode clair */
+  --color-bg: #f7f4ec; /* fond de page (papier chaud) */
+  --color-surface: #ffffff; /* cartes, panneaux */
+  --color-ink: #14211e; /* texte principal (pin profond) */
+  --color-ink-soft: #43534c; /* texte secondaire */
+  --color-muted: #6e8b7b; /* texte tertiaire / sauge */
+  --color-border: #e4decf; /* filets, séparateurs */
+  --color-accent: #1b9e78; /* accent teal */
+  --color-accent-strong: #137a5b; /* hover / actif */
+  --color-accent-soft: #e1f0ea; /* fond teinté accent */
+  --color-danger: #b23a2e;
+  --color-warning: #c98a2b;
+
+  /* Rayons */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #101d19;
+    --color-surface: #172620;
+    --color-ink: #ece8dc;
+    --color-ink-soft: #b6c2ba;
+    --color-muted: #7e948a;
+    --color-border: #283a32;
+    --color-accent: #2fb78c;
+    --color-accent-strong: #4fc9a2;
+    --color-accent-soft: #16302a;
+    --color-danger: #e0685b;
+    --color-warning: #e0a94b;
+  }
+}
