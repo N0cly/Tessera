@@ -1,5 +1,4 @@
 # Self-host config: never commit your real values, copy .env.example instead.
-.env
 .env.*.local
 
 # OS / editor cruft
