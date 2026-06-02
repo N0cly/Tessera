@@ -26,7 +26,7 @@ interface DemoCase {
   standalone: true,
   imports: [RouterLink],
   templateUrl: './landing.html',
-  styleUrl: './landing.css',
+  styleUrl: './landing.scss',
 })
 export class LandingComponent implements AfterViewInit, OnDestroy {
   @ViewChild('qrCanvas', { static: false }) qrCanvasRef?: ElementRef<HTMLCanvasElement>;

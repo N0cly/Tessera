@@ -1,6 +1,6 @@
-/* Local aliases keep the existing 600 lines of selectors working without
-   touching them; the actual values come from tessera-tokens.css. Foundation
-   only — no visual redesign of the landing here. */
+// Local aliases keep the existing selectors working without touching them;
+// the actual values come from tessera-tokens.scss. Foundation only — no
+// visual redesign of the landing here.
 :host {
   --ink: var(--color-ink);
   --ink-2: var(--color-ink-soft);
@@ -47,13 +47,13 @@ code {
 a {
   color: var(--color-accent);
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* ─────────────────── Topbar ─────────────────── */
+// ─────────────────── Topbar ───────────────────
 .topbar {
   position: sticky;
   top: 0;
@@ -74,13 +74,13 @@ a:hover {
   gap: 0.625rem;
   color: var(--color-ink);
   font-family: var(--font-display);
-  font-weight: 500; /* tessera caps emphasis at 600 — see tessera-design.md */
+  font-weight: 500; // tessera caps emphasis at 600 — see tessera-design.md
   font-size: 1.125rem;
   letter-spacing: -0.01em;
-}
 
-.brand:hover {
-  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .brand-mark {
@@ -106,23 +106,24 @@ a:hover {
   color: var(--color-surface);
   border-radius: 0.375rem;
   font-weight: 600;
-}
 
-.nav-cta:hover {
-  background: var(--ink-2);
-  text-decoration: none;
+  &:hover {
+    background: var(--ink-2);
+    text-decoration: none;
+  }
 }
 
 @media (max-width: 38rem) {
   .nav {
     gap: 0.75rem;
   }
+
   .nav-link {
     display: none;
   }
 }
 
-/* ─────────────────── Section frame ─────────────────── */
+// ─────────────────── Section frame ───────────────────
 section {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -136,7 +137,7 @@ section {
   margin-bottom: 2rem;
 }
 
-/* ─────────────────── Hero ─────────────────── */
+// ─────────────────── Hero ───────────────────
 .hero {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -144,6 +145,17 @@ section {
   align-items: center;
   padding-top: 4rem;
   padding-bottom: 5rem;
+
+  h1 {
+    font-size: clamp(2rem, 4.4vw, 3.25rem);
+    line-height: 1.07;
+    margin: 0 0 1rem;
+
+    em {
+      color: var(--brand);
+      font-style: normal;
+    }
+  }
 }
 
 .eyebrow {
@@ -159,26 +171,15 @@ section {
   text-transform: uppercase;
 }
 
-.hero h1 {
-  font-size: clamp(2rem, 4.4vw, 3.25rem);
-  line-height: 1.07;
-  margin: 0 0 1rem;
-}
-
-.hero h1 em {
-  color: var(--brand);
-  font-style: normal;
-}
-
 .lede {
   font-size: 1.0625rem;
   color: var(--ink-2);
   max-width: 32rem;
   margin-bottom: 1.5rem;
-}
 
-.lede strong {
-  color: var(--ink);
+  strong {
+    color: var(--ink);
+  }
 }
 
 .chips {
@@ -189,14 +190,14 @@ section {
   flex-wrap: wrap;
   gap: 0.5rem;
   font-size: 0.875rem;
-}
 
-.chips li {
-  padding: 0.25rem 0.625rem;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--ink-2);
+  li {
+    padding: 0.25rem 0.625rem;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--ink-2);
+  }
 }
 
 .cta-row {
@@ -217,30 +218,30 @@ section {
   cursor: pointer;
   border: 0;
   transition: transform 0.05s ease;
-}
 
-.btn:hover {
-  text-decoration: none;
-  transform: translateY(-1px);
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
 }
 
 .btn-primary {
   background: var(--brand);
   color: var(--color-surface);
-}
 
-.btn-primary:hover {
-  background: var(--brand-ink);
+  &:hover {
+    background: var(--brand-ink);
+  }
 }
 
 .btn-ghost {
   background: var(--color-surface);
   color: var(--ink);
   border: 1px solid var(--border);
-}
 
-.btn-ghost:hover {
-  border-color: var(--ink-2);
+  &:hover {
+    border-color: var(--ink-2);
+  }
 }
 
 .hero-foot {
@@ -257,7 +258,7 @@ section {
   }
 }
 
-/* ─────────────────── Interactive demo ─────────────────── */
+// ─────────────────── Interactive demo ───────────────────
 .demo {
   background: var(--bg-soft);
   border: 1px solid var(--border);
@@ -272,26 +273,26 @@ section {
   gap: 0.375rem;
   flex-wrap: wrap;
   justify-content: center;
-}
 
-.demo-tabs button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.4rem 0.75rem;
-  background: var(--color-surface);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font: inherit;
-  font-size: 0.8125rem;
-  cursor: pointer;
-  color: var(--ink-2);
-}
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    color: var(--ink-2);
 
-.demo-tabs button.active {
-  background: var(--ink);
-  color: var(--color-surface);
-  border-color: var(--ink);
+    &.active {
+      background: var(--ink);
+      color: var(--color-surface);
+      border-color: var(--ink);
+    }
+  }
 }
 
 .tab-emoji {
@@ -310,26 +311,26 @@ section {
   display: grid;
   justify-items: center;
   gap: 0.5rem;
-}
 
-.demo-qr canvas {
-  width: 13.5rem;
-  height: 13.5rem;
-  border-radius: 0.5rem;
-  background: var(--color-surface);
-  border: 1px solid var(--border);
-  image-rendering: pixelated;
+  canvas {
+    width: 13.5rem;
+    height: 13.5rem;
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--border);
+    image-rendering: pixelated;
+  }
 }
 
 .demo-shorturl {
   font-size: 0.8125rem;
   margin: 0;
   text-align: center;
-}
 
-.demo-shorturl code {
-  color: var(--ink);
-  font-weight: 600;
+  code {
+    color: var(--ink);
+    font-weight: 600;
+  }
 }
 
 .demo-side {
@@ -346,14 +347,14 @@ section {
   gap: 0.4rem;
 }
 
-.demo-dest-header{
+.demo-dest-header {
   display: flex;
   align-items: center;
   gap: 5px;
-}
 
-.demo-dest-header p{
-  margin: 0;
+  p {
+    margin: 0;
+  }
 }
 
 .demo-url {
@@ -395,28 +396,30 @@ section {
   .demo-card {
     grid-template-columns: 1fr;
   }
+
   .demo-side {
     grid-template-columns: 1fr;
   }
+
   .demo-arrow {
     display: none;
   }
 }
 
-/* ─────────────────── Use cases ─────────────────── */
+// ─────────────────── Use cases ───────────────────
 .use-cases {
   background: var(--bg-soft);
   max-width: none;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
 
-.use-cases > h2,
-.use-cases > .section-lede,
-.use-cases > .case-grid {
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
+  > h2,
+  > .section-lede,
+  > .case-grid {
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .case-grid {
@@ -430,6 +433,16 @@ section {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   padding: 1.25rem;
+
+  h3 {
+    font-size: 1.0625rem;
+    margin: 0 0 0.4rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    margin: 0;
+  }
 }
 
 .case-emoji {
@@ -438,17 +451,7 @@ section {
   margin-bottom: 0.5rem;
 }
 
-.case-card h3 {
-  font-size: 1.0625rem;
-  margin: 0 0 0.4rem;
-}
-
-.case-card p {
-  font-size: 0.9375rem;
-  margin: 0;
-}
-
-/* ─────────────────── How it works ─────────────────── */
+// ─────────────────── How it works ───────────────────
 .steps {
   list-style: none;
   padding: 0;
@@ -457,14 +460,24 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: 1.25rem;
   counter-reset: step;
-}
 
-.steps li {
-  background: var(--color-surface);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  position: relative;
+  li {
+    background: var(--color-surface);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    position: relative;
+  }
+
+  h3 {
+    font-size: 1.0625rem;
+    margin: 0 0 0.4rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    margin: 0;
+  }
 }
 
 .step-n {
@@ -481,31 +494,21 @@ section {
   margin-bottom: 0.75rem;
 }
 
-.steps h3 {
-  font-size: 1.0625rem;
-  margin: 0 0 0.4rem;
-}
-
-.steps p {
-  font-size: 0.9375rem;
-  margin: 0;
-}
-
-/* ─────────────────── Differentiators ─────────────────── */
+// ─────────────────── Differentiators ───────────────────
 .diff {
   background: var(--bg-tint);
   max-width: none;
-}
 
-.diff > h2,
-.diff > .diff-grid {
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
-}
+  > h2,
+  > .diff-grid {
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.diff > h2 {
-  margin-bottom: 1.5rem;
+  > h2 {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .diff-grid {
@@ -519,45 +522,55 @@ section {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   padding: 1.25rem;
+
+  h3 {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    margin: 0;
+  }
 }
 
-.diff-card h3 {
-  font-size: 1rem;
-  margin: 0 0 0.5rem;
-}
-
-.diff-card p {
-  font-size: 0.9375rem;
-  margin: 0;
-}
-
-/* ─────────────────── Self-host ─────────────────── */
-/* Inverted CTA band — uses ink-as-surface to create a clear visual island.
-   All values come from tessera tokens (no hex). The band naturally inverts
-   in dark mode because the tokens themselves swap. */
+// ─────────────────── Self-host ───────────────────
+// Inverted CTA band — uses ink-as-surface to create a clear visual island.
+// All values come from tessera tokens (no hex). The band naturally inverts
+// in dark mode because the tokens themselves swap.
 .self-host {
   background: var(--color-ink);
   color: var(--color-bg);
   max-width: none;
   border-radius: 0;
-}
 
-.self-host > h2,
-.self-host > .section-lede,
-.self-host > .snippet,
-.self-host > .self-host-foot,
-.self-host > .cta-row {
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
-}
+  > h2,
+  > .section-lede,
+  > .snippet,
+  > .self-host-foot,
+  > .cta-row {
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.self-host h2 {
-  color: var(--color-bg);
-}
+  h2 {
+    color: var(--color-bg);
+  }
 
-.self-host .section-lede {
-  color: color-mix(in srgb, var(--color-bg) 75%, var(--color-ink));
+  .section-lede {
+    color: color-mix(in srgb, var(--color-bg) 75%, var(--color-ink));
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-bg);
+    border-color: color-mix(in srgb, var(--color-bg) 35%, var(--color-ink));
+
+    &:hover {
+      border-color: var(--color-bg);
+    }
+  }
 }
 
 .snippet {
@@ -570,15 +583,15 @@ section {
   font-size: 14px;
   line-height: 1.6;
   color: var(--color-bg);
-}
 
-.snippet code {
-  font-family: var(--font-mono);
-  white-space: pre;
-}
+  code {
+    font-family: var(--font-mono);
+    white-space: pre;
+  }
 
-.snippet .comment {
-  color: color-mix(in srgb, var(--color-bg) 50%, var(--color-ink));
+  .comment {
+    color: color-mix(in srgb, var(--color-bg) 50%, var(--color-ink));
+  }
 }
 
 .self-host-foot {
@@ -587,17 +600,7 @@ section {
   margin-bottom: 1.5rem;
 }
 
-.self-host .btn-ghost {
-  background: transparent;
-  color: var(--color-bg);
-  border-color: color-mix(in srgb, var(--color-bg) 35%, var(--color-ink));
-}
-
-.self-host .btn-ghost:hover {
-  border-color: var(--color-bg);
-}
-
-/* ─────────────────── Footer ─────────────────── */
+// ─────────────────── Footer ───────────────────
 .footer {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -621,8 +624,8 @@ section {
 .foot-links {
   display: inline-flex;
   gap: 1.25rem;
-}
 
-.foot-links a {
-  color: var(--ink-2);
+  a {
+    color: var(--ink-2);
+  }
 }

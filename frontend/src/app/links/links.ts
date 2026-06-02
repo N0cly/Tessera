@@ -14,7 +14,7 @@ interface EditState {
   selector: 'app-links',
   imports: [FormsModule, LinkStatsComponent],
   templateUrl: './links.html',
-  styleUrl: './links.css',
+  styleUrl: './links.scss',
 })
 export class LinksComponent implements OnInit, OnDestroy {
   private readonly api = inject(LinksService);

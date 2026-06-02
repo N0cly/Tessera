@@ -21,7 +21,7 @@ type Period = 7 | 30 | 90;
   standalone: true,
   imports: [ChartCanvasComponent],
   templateUrl: './link-stats.html',
-  styleUrl: './link-stats.css',
+  styleUrl: './link-stats.scss',
 })
 export class LinkStatsComponent implements OnInit, OnChanges {
   private readonly api = inject(LinksService);

@@ -30,17 +30,17 @@
   font-size: 13px;
   font-family: var(--font-sans);
   cursor: pointer;
-}
 
-.chip.active {
-  background: var(--color-accent);
-  color: var(--color-surface);
-  border-color: var(--color-accent);
-}
+  &.active {
+    background: var(--color-accent);
+    color: var(--color-surface);
+    border-color: var(--color-accent);
+  }
 
-.chip:disabled {
-  opacity: 0.5;
-  cursor: progress;
+  &:disabled {
+    opacity: 0.5;
+    cursor: progress;
+  }
 }
 
 .total {
@@ -62,12 +62,12 @@
   border-radius: var(--radius-md);
   color: var(--color-ink-soft);
   font-size: 14px;
-}
 
-.empty code {
-  background: var(--color-surface);
-  padding: 0 0.25rem;
-  border-radius: var(--radius-sm);
+  code {
+    background: var(--color-surface);
+    padding: 0 0.25rem;
+    border-radius: var(--radius-sm);
+  }
 }
 
 .error {
@@ -78,10 +78,10 @@
 .chart-row {
   display: grid;
   gap: 0.75rem;
-}
 
-.chart-row.split {
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  &.split {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
 }
 
 .chart-card {
@@ -89,14 +89,14 @@
   border-radius: var(--radius-md);
   padding: 0.75rem;
   background: var(--color-surface);
-}
 
-.chart-card h4 {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 13px;
-  color: var(--color-muted);
+  h4 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
 }
 
 .chart-frame {
@@ -108,26 +108,28 @@
   height: 14rem;
 }
 
-.os-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 0.25rem;
-}
+.os-list {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.25rem;
+  }
 
-.os-list li {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  padding: 0.25rem 0.5rem;
-  border-bottom: 1px solid var(--color-border);
-}
+  li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 0.25rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
 
-.os-list h4 {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 13px;
-  color: var(--color-muted);
+  h4 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
 }

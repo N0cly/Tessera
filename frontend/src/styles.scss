@@ -1,7 +1,7 @@
-/* Foundation — load design tokens FIRST so every rule below (and every
-   component-level stylesheet) can resolve var(--…). Never hardcode a
-   colour, font or radius anywhere else; see tessera-design.md. */
-@import './styles/tessera-tokens.css';
+// Foundation — load design tokens FIRST so every rule below (and every
+// component-level stylesheet) can resolve var(--…). Never hardcode a
+// colour, font or radius anywhere else; see tessera-design.md.
+@use './styles/tessera-tokens';
 
 * {
   box-sizing: border-box;
@@ -35,9 +35,11 @@ h3 {
 h1 {
   font-size: 28px;
 }
+
 h2 {
   font-size: 22px;
 }
+
 h3 {
   font-size: 18px;
 }
@@ -49,9 +51,10 @@ p {
 
 a {
   color: var(--color-accent);
-}
-a:hover {
-  text-decoration: underline;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 code,
