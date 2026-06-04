@@ -129,16 +129,16 @@ export class LinksComponent implements OnInit, OnDestroy {
         fallbackUrl: fallback === '' ? null : fallback,
       })
       .subscribe({
-      next: (updated) => {
-        this.links.update((curr) => curr.map((l) => (l['@id'] === updated['@id'] ? updated : l)));
-        this.editing.set(null);
-        this.savingEdit.set(false);
-      },
-      error: (err) => {
-        this.savingEdit.set(false);
-        this.error.set(this.extractError(err) ?? 'Could not save changes.');
-      },
-    });
+        next: (updated) => {
+          this.links.update((curr) => curr.map((l) => (l['@id'] === updated['@id'] ? updated : l)));
+          this.editing.set(null);
+          this.savingEdit.set(false);
+        },
+        error: (err) => {
+          this.savingEdit.set(false);
+          this.error.set(this.extractError(err) ?? 'Could not save changes.');
+        },
+      });
   }
 
   remove(link: Link): void {

@@ -5,11 +5,7 @@ import { ChartConfiguration } from 'chart.js';
 
 import { AuthService } from '../core/auth.service';
 import { BillingService, SubscriptionStatus, SubscriptionSummary } from '../core/billing.service';
-import {
-  DashboardOverview,
-  DashboardPeriod,
-  DashboardService,
-} from '../core/dashboard.service';
+import { DashboardOverview, DashboardPeriod, DashboardService } from '../core/dashboard.service';
 import { token } from '../core/tessera-tokens';
 import { ChartCanvasComponent } from '../stats/chart-canvas';
 
