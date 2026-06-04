@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\SubscriptionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ final class RegistrationController
         private readonly UserPasswordHasherInterface $hasher,
         private readonly UserRepository $users,
         private readonly ValidatorInterface $validator,
+        private readonly SubscriptionManager $subscriptions,
     ) {
     }
 
@@ -57,6 +59,8 @@ final class RegistrationController
         }
 
         $this->em->persist($user);
+        // New account → 14-day free trial, starting now (CLAUDE.md rule 14).
+        $this->em->persist($this->subscriptions->newTrial($user));
         $this->em->flush();
 
         return new JsonResponse([

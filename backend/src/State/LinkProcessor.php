@@ -10,9 +10,13 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Link;
 use App\Entity\User;
+use App\Repository\LinkRepository;
+use App\Service\PlanCatalog;
 use App\Service\SlugGenerator;
+use App\Service\SubscriptionManager;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
@@ -28,6 +32,9 @@ final class LinkProcessor implements ProcessorInterface
         private readonly Security $security,
         #[Autowire(service: 'limiter.link_creation')]
         private readonly RateLimiterFactoryInterface $linkCreationLimiter,
+        private readonly SubscriptionManager $subscriptions,
+        private readonly PlanCatalog $plans,
+        private readonly LinkRepository $links,
     ) {
     }
 
@@ -37,6 +44,20 @@ final class LinkProcessor implements ProcessorInterface
             $user = $this->security->getUser();
             if (!$user instanceof User) {
                 throw new \LogicException('A user must be authenticated to create a link.');
+            }
+
+            // Plan limit (billing): block creating codes beyond the plan's
+            // allowance with a clear, actionable error (CLAUDE.md rule 14).
+            $subscription = $this->subscriptions->getOrCreate($user);
+            $codeLimit = $this->plans->codeLimitFor($subscription);
+            if (null !== $codeLimit && $this->links->countForOwner($user) >= $codeLimit) {
+                throw new HttpException(
+                    402,
+                    sprintf(
+                        "You've reached your plan's limit of %d codes. Upgrade your plan to create more.",
+                        $codeLimit,
+                    ),
+                );
             }
 
             // Per-user limiter, keyed on the immutable user id.

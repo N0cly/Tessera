@@ -10,7 +10,11 @@
     />
     <h1>Your links</h1>
   </div>
-  <button type="button" class="ghost" (click)="logout()">Sign out</button>
+  <nav class="topnav" aria-label="Dashboard sections">
+    <a routerLink="/app" class="nav-link">Overview</a>
+    <a routerLink="/app/links" class="nav-link active" aria-current="page">Your links</a>
+    <button type="button" class="ghost" (click)="logout()">Sign out</button>
+  </nav>
 </header>
 
 <section class="create">
@@ -43,7 +47,12 @@
 </section>
 
 @if (error()) {
-  <p class="error" role="alert">{{ error() }}</p>
+  <p class="error" role="alert">
+    {{ error() }}
+    @if (upgradeNeeded()) {
+      <a routerLink="/app" class="upgrade-link">View plans &amp; upgrade →</a>
+    }
+  </p>
 }
 
 <section class="list">
@@ -70,17 +79,35 @@
 
               @if (editing()?.iri === link['@id']) {
                 <form class="edit" (submit)="$event.preventDefault(); saveEdit()">
-                  <input
-                    type="url"
-                    required
-                    [ngModel]="editing()?.destinationUrl"
-                    (ngModelChange)="editing.set({ iri: link['@id'], destinationUrl: $event })"
-                    name="dest-{{ link.id }}"
-                  />
-                  <button type="submit" [disabled]="savingEdit()">
-                    {{ savingEdit() ? 'Saving…' : 'Save' }}
-                  </button>
-                  <button type="button" class="ghost" (click)="cancelEdit()">Cancel</button>
+                  <label class="edit-field">
+                    <span class="edit-label">Destination URL</span>
+                    <input
+                      type="url"
+                      required
+                      [ngModel]="editing()?.destinationUrl"
+                      (ngModelChange)="patchEditing({ destinationUrl: $event })"
+                      name="dest-{{ link.id }}"
+                    />
+                  </label>
+                  <label class="edit-field">
+                    <span class="edit-label">Fallback URL (optional)</span>
+                    <input
+                      type="url"
+                      placeholder="https://… where this code goes if your plan lapses"
+                      [ngModel]="editing()?.fallbackUrl"
+                      (ngModelChange)="patchEditing({ fallbackUrl: $event })"
+                      name="fallback-{{ link.id }}"
+                    />
+                    <span class="edit-hint">
+                      If your subscription lapses, this code redirects here instead of breaking.
+                    </span>
+                  </label>
+                  <div class="edit-actions">
+                    <button type="submit" [disabled]="savingEdit()">
+                      {{ savingEdit() ? 'Saving…' : 'Save' }}
+                    </button>
+                    <button type="button" class="ghost" (click)="cancelEdit()">Cancel</button>
+                  </div>
                 </form>
               } @else {
                 <div class="row dest">
@@ -89,8 +116,16 @@
                     link.destinationUrl
                   }}</a>
                 </div>
+                @if (link.fallbackUrl) {
+                  <div class="row dest fallback">
+                    <span class="muted" title="Used if your subscription lapses">↳ fallback</span>
+                    <a [href]="link.fallbackUrl" target="_blank" rel="noopener">{{
+                      link.fallbackUrl
+                    }}</a>
+                  </div>
+                }
                 <div class="row actions">
-                  <button type="button" (click)="startEdit(link)">Edit destination</button>
+                  <button type="button" (click)="startEdit(link)">Edit links</button>
                   <button
                     type="button"
                     class="ghost"

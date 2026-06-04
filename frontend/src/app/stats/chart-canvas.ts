@@ -45,14 +45,22 @@ Chart.register(
   template: `<canvas #canvas></canvas>`,
   styles: [
     `
+      /*
+       * The host IS the relative, fixed-height container Chart.js sizes
+       * against — height comes from the consumer's frame (height: 100% here),
+       * never from the canvas. The canvas carries NO width/height/position of
+       * its own so Chart.js (responsive + maintainAspectRatio:false) can fit
+       * it to this box instead of overflowing onto whatever follows.
+       */
       :host {
         display: block;
         position: relative;
         width: 100%;
+        height: 100%;
+        min-width: 0;
       }
       canvas {
-        width: 100% !important;
-        height: 100% !important;
+        display: block;
       }
     `,
   ],

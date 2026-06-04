@@ -22,6 +22,9 @@ Backend
 - PostgreSQL (data) + Redis (slug→URL cache and async scan queue)
 - QR image generation: endroid/qr-code
 - Geo from IP: MaxMind GeoLite2 (local DB, no third-party call)
+- Billing via a **Merchant of Record (Paddle)** — hosted checkout + customer
+  portal + webhooks. Outbound calls use `symfony/http-client`. The MoR owns
+  card data (PCI) and tax/VAT; we store only subscription status.
 
 Frontend
 - Angular (latest stable, pinned at scaffold) + TypeScript
@@ -87,6 +90,49 @@ Infra
     and dark mode are driven by the tokens via `prefers-color-scheme`; verify
     every new screen in both. The user-facing brand is **Tessera**; the repo
     name (`qr-code-redirect`) stays in code/docs only.
+13. **Dashboard overview** — `GET /api/dashboard/overview?period=7d|30d|90d` (default `30d`),
+    authenticated, owner-scoped. A plain lightweight controller (not an API Platform resource);
+    aggregates across all the user's links on the fly via SQL `GROUP BY` over `Scan` rows — no
+    precomputed roll-up table. `periodScansChangePct` compares vs the previous equal-length period.
+    Frontend route layout (all behind the auth guard): `/app` = `DashboardOverviewComponent` (home),
+    `/app/links` = `LinksComponent`. The scans chart reuses the existing `chart.js` +
+    `ChartCanvasComponent` wrapper — no new charting dependency.
+14. **Billing via Merchant of Record (Paddle).** One `Subscription` per user
+    (status: `trialing|active|past_due|canceled|expired`). New users start
+    `trialing` for `BILLING_TRIAL_DAYS` (14). The MoR is the **source of truth**:
+    - `POST /api/webhooks/billing` is **public** (no JWT — own firewall +
+      access_control). It **verifies the Paddle HMAC signature before any
+      processing** (rejects 401 if invalid/stale) and is **idempotent** via the
+      `billing_events` ledger (provider event id is unique). NEVER grant access
+      from the checkout return redirect — only from a verified webhook.
+    - `POST /api/billing/checkout` returns the MoR hosted-checkout URL (user id
+      planted in `custom_data` so the webhook maps the result back).
+      `POST /api/billing/portal` deep-links the MoR customer portal.
+      `GET /api/billing/subscription` feeds the dashboard's Plan & usage widget.
+    - Link creation is capped at the plan's code limit (`PlanCatalog`); over the
+      limit → **HTTP 402** with a clear message and a UI upgrade prompt.
+    - Secrets (`PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET`) come from env /
+      `.env.local` and are **never committed**. Empty `PADDLE_*` = billing
+      disabled gracefully (everyone stays on the trial code limit). The
+      destination → fallback-on-expiry logic lives in rule 15.
+15. **Fallback on lapse (honest degradation).** `Link.fallbackUrl` (nullable,
+    same `http(s)` + denylist validation as `destinationUrl`). The redirect hot
+    path picks the target from the subscription state, but **never joins the
+    subscription table per scan** (this would wreck M1/M3 latency):
+    - `LinkCache` stores, per slug, `{ id, destinationUrl, fallbackUrl,
+      graceEndsAt, lapsed }`. `graceEndsAt` (= `currentPeriodEndsAt` +
+      `BILLING_GRACE_DAYS`, default 30) is computed once at cache-build time by
+      `GraceCalculator`. `/r/{slug}` decides with a pure `now >= graceEndsAt`
+      compare — the time boundary is self-resolving, no query.
+    - `graceEndsAt` null = active/trial → always `destinationUrl`. Past the
+      boundary → `fallbackUrl` if set, else the neutral hosted **inactive page**
+      (`InactivePageRenderer`: calm, on-brand, NO redirect to Tessera marketing).
+      Always **302** for redirects.
+    - Cache is busted when: the link's `destinationUrl`/`fallbackUrl` is edited
+      (Doctrine listener), OR the owner's subscription status changes — the
+      **billing webhook calls `LinkCache::invalidateForOwner()`** for all the
+      owner's slugs. A direct DB status change needs a manual
+      `cache:pool:clear app.cache.links`.
 
 ## Dev commands
 

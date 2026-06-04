@@ -22,6 +22,7 @@
         "symfony/expression-language": "7.4.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.4.*",
+        "symfony/http-client": "7.4.*",
         "symfony/lock": "7.4.*",
         "symfony/messenger": "7.4.*",
         "symfony/rate-limiter": "7.4.*",

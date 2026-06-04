@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { AuthService } from '../core/auth.service';
 import { Link, LinksService } from '../core/links.service';
@@ -8,11 +9,12 @@ import { LinkStatsComponent } from '../stats/link-stats';
 interface EditState {
   iri: string;
   destinationUrl: string;
+  fallbackUrl: string;
 }
 
 @Component({
   selector: 'app-links',
-  imports: [FormsModule, LinkStatsComponent],
+  imports: [FormsModule, RouterLink, LinkStatsComponent],
   templateUrl: './links.html',
   styleUrl: './links.scss',
 })
@@ -27,6 +29,9 @@ export class LinksComponent implements OnInit, OnDestroy {
   newDestination = '';
   newName = '';
   readonly creating = signal(false);
+  // Set when create is refused for hitting the plan's code limit (HTTP 402),
+  // so the template can show an upgrade prompt linking to billing.
+  readonly upgradeNeeded = signal(false);
 
   readonly editing = signal<EditState | null>(null);
   readonly savingEdit = signal(false);
@@ -74,6 +79,7 @@ export class LinksComponent implements OnInit, OnDestroy {
     if (this.creating() || !this.newDestination) return;
     this.creating.set(true);
     this.error.set(null);
+    this.upgradeNeeded.set(false);
     this.api.create({ destinationUrl: this.newDestination, name: this.newName || null }).subscribe({
       next: (link) => {
         this.links.update((curr) => [link, ...curr]);
@@ -84,24 +90,45 @@ export class LinksComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.creating.set(false);
+        // 402 Payment Required = plan code limit reached → prompt to upgrade.
+        if (err?.status === 402) {
+          this.upgradeNeeded.set(true);
+        }
         this.error.set(this.extractError(err) ?? 'Could not create link.');
       },
     });
   }
 
   startEdit(link: Link): void {
-    this.editing.set({ iri: link['@id'], destinationUrl: link.destinationUrl });
+    this.editing.set({
+      iri: link['@id'],
+      destinationUrl: link.destinationUrl,
+      fallbackUrl: link.fallbackUrl ?? '',
+    });
   }
 
   cancelEdit(): void {
     this.editing.set(null);
   }
 
+  patchEditing(patch: Partial<EditState>): void {
+    const state = this.editing();
+    if (!state) return;
+    this.editing.set({ ...state, ...patch });
+  }
+
   saveEdit(): void {
     const state = this.editing();
     if (!state || this.savingEdit()) return;
     this.savingEdit.set(true);
-    this.api.update(state.iri, { destinationUrl: state.destinationUrl }).subscribe({
+    const fallback = state.fallbackUrl.trim();
+    this.api
+      .update(state.iri, {
+        destinationUrl: state.destinationUrl,
+        // Empty input clears the fallback (back to the inactive page on lapse).
+        fallbackUrl: fallback === '' ? null : fallback,
+      })
+      .subscribe({
       next: (updated) => {
         this.links.update((curr) => curr.map((l) => (l['@id'] === updated['@id'] ? updated : l)));
         this.editing.set(null);

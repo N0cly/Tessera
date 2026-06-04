@@ -46,6 +46,16 @@ services:
       LINK_DESTINATION_DENYLIST: ${LINK_DESTINATION_DENYLIST:-}
       DEMO_USER_EMAIL: ${DEMO_USER_EMAIL:-}
       DEMO_LINK_TTL_HOURS: ${DEMO_LINK_TTL_HOURS:-24}
+      # Billing (Merchant of Record: Paddle). Secrets stay empty here; set them
+      # in your root .env / secret store. Empty = billing disabled gracefully.
+      BILLING_TRIAL_DAYS: ${BILLING_TRIAL_DAYS:-14}
+      BILLING_GRACE_DAYS: ${BILLING_GRACE_DAYS:-30}
+      PLAN_TRIAL_CODE_LIMIT: ${PLAN_TRIAL_CODE_LIMIT:-25}
+      PLAN_PRO_CODE_LIMIT: ${PLAN_PRO_CODE_LIMIT:-0}
+      PADDLE_API_BASE_URL: ${PADDLE_API_BASE_URL:-https://sandbox-api.paddle.com}
+      PADDLE_PRICE_ID: ${PADDLE_PRICE_ID:-}
+      PADDLE_API_KEY: ${PADDLE_API_KEY:-}
+      PADDLE_WEBHOOK_SECRET: ${PADDLE_WEBHOOK_SECRET:-}
       # Only the backend container runs migrations on boot to avoid races
       # with the worker. The script is idempotent either way.
       RUN_MIGRATIONS: "1"
