@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest an idea or enhancement.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! For larger changes, please discuss it first in
+        [Discussions](https://github.com/N0cly/Tessera/discussions) — a quick chat
+        saves a rewritten PR. Note the items marked **Planned** in the README roadmap
+        are deliberately out of v1 scope and need a design conversation before code.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What are you trying to do that's hard or impossible today?
+      placeholder: I run a public demo and need scans to expire faster than 24h…
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to happen? An env knob? A new endpoint? A UI change?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you thought about, and why you didn't pick them.
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: I've read the README roadmap and this isn't an item already listed as "Planned" (or, if it is, I'm opening this to discuss the design first).
+          required: true
+        - label: This keeps Tessera generic — vertical/use-case framing belongs in the marketing layer, not the core data model.
+          required: true

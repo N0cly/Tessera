@@ -1,0 +1,9 @@
+# Steer open-ended questions to Discussions and vulnerabilities to private reporting.
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & ideas (Discussions)
+    url: https://github.com/N0cly/Tessera/discussions
+    about: Ask questions, share setups, or float a feature before opening an issue.
+  - name: Report a security vulnerability (private)
+    url: https://github.com/N0cly/Tessera/security/advisories/new
+    about: Please report vulnerabilities privately — never in a public issue. See SECURITY.md.

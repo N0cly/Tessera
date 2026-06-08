@@ -1,8 +1,12 @@
-# Contributing to qr-code-redirect
+# Contributing to Tessera
 
 Thanks for considering a contribution! This is a small, opinionated
-project — a quick read of this file plus [`CLAUDE.md`](CLAUDE.md) will
-save us both time.
+project — a quick read of this file plus [`CLAUDE.md`](CLAUDE.md) and
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) will save us both time.
+
+By participating you agree to abide by our
+[Code of Conduct](CODE_OF_CONDUCT.md). To report a security issue, use
+private reporting — see [`SECURITY.md`](SECURITY.md), never a public issue.
 
 ## Before you start
 
@@ -43,6 +47,36 @@ Migrations and JWT keys are generated automatically on first boot
 After Dockerfile or Composer/npm dependency changes:
 `docker compose up -d --build` (the `--build` matters).
 
+## Tests, lint & format
+
+Run the same checks CI runs (`.github/workflows/ci.yml`) before you push — all
+green is the merge bar. Everything runs inside the containers:
+
+**Backend (Symfony):**
+
+```bash
+docker compose exec backend bin/phpunit                 # tests
+docker compose exec backend vendor/bin/phpstan analyse  # static analysis (type-check)
+```
+
+PHP follows **PSR-12** (typed properties, constructor injection); keep PHPStan green.
+
+**Frontend (Angular):**
+
+```bash
+docker compose exec frontend npm run lint               # prettier --check
+docker compose exec frontend npm run format             # prettier --write (auto-fix)
+docker compose exec frontend npx ng test --watch=false  # unit tests
+docker compose exec frontend npx ng build               # type-check + production build
+```
+
+If you touch UI strings, rebuild the i18n locale files and keep all five locales
+at key parity:
+
+```bash
+docker compose exec frontend node scripts/merge-i18n.mjs
+```
+
 ## Style
 
 - **PHP:** PSR-12, typed properties, constructor injection, no
@@ -81,13 +115,38 @@ After Dockerfile or Composer/npm dependency changes:
 - Adding analytics/telemetry that phones home.
 - Anything that breaks one of the architectural rules in `CLAUDE.md`.
 
+## Sign your commits (DCO)
+
+This project uses the [Developer Certificate of Origin](https://developercertificate.org/)
+— a lightweight, one-line affirmation that you wrote the patch or have the right
+to submit it under the project's MIT license. (No CLA, no copyright assignment.)
+
+Sign off **every** commit with `-s`, which appends a `Signed-off-by` trailer
+using your real name and the email on your commits:
+
+```bash
+git commit -s -m "fix: warm the slug cache after a destination edit"
+```
+
+This adds:
+
+```
+Signed-off-by: Your Name <you@example.com>
+```
+
+Forgot to sign off? Amend the last commit with `git commit -s --amend`, or sign
+off a whole branch with `git rebase --signoff main`. PRs whose commits aren't
+signed off can't be merged.
+
 ## Submitting a PR
 
 1. Fork, branch from `main`, name the branch `<type>/<short-slug>`
    (e.g. `feat/wifi-qr-types`, `fix/redirect-302-cache`).
-2. Make sure `docker compose up` boots a working app at the end of
-   your change — that's the smoke-test bar.
-3. Push, open a PR linking the relevant issue, describe the *why*.
-4. Be patient — review may take a few days.
+2. Run the tests / lint / build above, and make sure `docker compose up` boots a
+   working app at the end of your change — that's the smoke-test bar.
+3. **Sign off** your commits (`git commit -s`).
+4. Push, open a PR linking the relevant issue, fill in the template, describe the *why*.
+5. Be patient — review may take a few days. The Claude review bot and CI will
+   weigh in automatically (on PRs from forks, a maintainer triggers them).
 
 Thanks again. 🙏

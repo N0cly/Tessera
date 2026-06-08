@@ -1,0 +1,75 @@
+name: Bug report
+description: Something isn't working as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please search existing issues first.
+        **Do not report security vulnerabilities here** — see [SECURITY.md](../blob/main/SECURITY.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected instead.
+      placeholder: When I edit a link's destination, the QR keeps redirecting to the old URL…
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal, ordered steps. A failing request (method + path + response) helps a lot.
+      placeholder: |
+        1. Create a link to https://example.com
+        2. PATCH /api/links/{id} destinationUrl = https://example.org
+        3. GET /r/{slug}
+        4. Observe: 302 → example.com (expected example.org)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Git tag or commit SHA you're running.
+      placeholder: v1.0.0 or abc1234
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Redirect / scan hot path (/r/{slug})
+        - Management API / dashboard
+        - QR generation
+        - Analytics / stats
+        - Billing / pricing
+        - Admin panel
+        - i18n
+        - Demo mode
+        - Docker / self-host setup
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Docker version, browser (for UI bugs). Relevant `.env` overrides (redact secrets).
+      placeholder: macOS 14, Docker 27, Firefox 130; DEMO_MODE=false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: "`docker compose logs backend worker` around the failure. Redact any secrets."
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: This is not a security vulnerability (those go through private reporting).
+          required: true
