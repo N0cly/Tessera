@@ -14,3 +14,17 @@ framework:
             app.cache.rate_limiter:
                 adapter: cache.adapter.redis
                 default_lifetime: 600
+
+            # Short-lived cache of the Paddle pricing catalogue so /api/pricing
+            # never calls Paddle per page view. The actual TTL is set per item
+            # by PricingCatalog (PRICING_CACHE_TTL, shorter when degraded); this
+            # is just the pool default backstop.
+            app.cache.pricing:
+                adapter: cache.adapter.redis
+                default_lifetime: 600
+
+            # Cache of the admin panel's Paddle-sourced business KPIs so the
+            # operator panel never calls Paddle per view (ADMIN_METRICS_CACHE_TTL).
+            app.cache.admin:
+                adapter: cache.adapter.redis
+                default_lifetime: 300

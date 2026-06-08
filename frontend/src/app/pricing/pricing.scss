@@ -1,0 +1,454 @@
+// Pricing page — strictly tessera tokens (no hardcoded colour/font/radius).
+// Fraunces for headings, teal accent, calm and honest. Light + dark both come
+// for free because the tokens swap via prefers-color-scheme.
+:host {
+  display: block;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// ─────────────────── Topbar ───────────────────
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.brand-mark {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.nav-link {
+  color: var(--color-ink-soft);
+}
+
+.nav-cta {
+  padding: 6px 14px;
+  background: var(--color-ink);
+  color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+
+  &:hover {
+    background: var(--color-ink-soft);
+    text-decoration: none;
+  }
+}
+
+@media (max-width: 38rem) {
+  .nav {
+    gap: 12px;
+  }
+
+  .nav-link {
+    display: none;
+  }
+}
+
+// ─────────────────── Page frame ───────────────────
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 16px;
+}
+
+.intro {
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 8px 0 16px;
+  }
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 10px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lede {
+  font-size: 17px;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+// ─────────────────── Cards grid ───────────────────
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 56rem) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 28rem;
+    margin: 0 auto;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.plan-name {
+  font-size: 22px;
+}
+
+.plan-tag {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+// ─────────────────── Price block ───────────────────
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.price-interval {
+  font-size: 15px;
+  color: var(--color-muted);
+}
+
+.price-now {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-was {
+  font-size: 18px;
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.price-unavailable {
+  color: var(--color-muted);
+}
+
+.promo-badge {
+  align-self: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.price-note {
+  margin: -8px 0 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+// ─────────────────── Features ───────────────────
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  flex: 1;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--color-ink-soft);
+  }
+
+  .is-soon {
+    color: var(--color-muted);
+  }
+}
+
+.tick {
+  color: var(--color-accent);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.soon-tag {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+// ─────────────────── Buttons ───────────────────
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-align: center;
+  transition:
+    background 0.1s ease,
+    border-color 0.1s ease;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-surface);
+
+  &:not(:disabled):hover {
+    background: var(--color-accent-strong);
+  }
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-border);
+
+  &:not(:disabled):hover {
+    border-color: var(--color-ink-soft);
+  }
+}
+
+.checkout-error {
+  margin: 16px auto 0;
+  max-width: 680px;
+  text-align: center;
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.trial-note {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.unavailable-card {
+  justify-content: flex-start;
+  grid-column: span 2;
+}
+
+@media (max-width: 56rem) {
+  .unavailable-card {
+    grid-column: auto;
+  }
+}
+
+// ─────────────────── Loading skeleton ───────────────────
+.skeleton {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  opacity: 0.7;
+}
+
+.skeleton-title {
+  width: 40%;
+  height: 22px;
+}
+
+.skeleton-price {
+  width: 55%;
+  height: 36px;
+}
+
+.skeleton-line {
+  width: 80%;
+  height: 14px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    animation: pricing-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes pricing-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}
+
+// ─────────────────── FAQ ───────────────────
+.faq {
+  max-width: 1100px;
+  margin: 64px auto 0;
+  padding: 0 24px;
+
+  > h2 {
+    font-size: clamp(22px, 3vw, 28px);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 16px;
+}
+
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+
+  h3 {
+    font-size: 17px;
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-ink-soft);
+  }
+}
+
+// ─────────────────── Footer ───────────────────
+.footer {
+  max-width: 1100px;
+  margin: 64px auto 0;
+  padding: 24px 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.foot-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-ink-soft);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.foot-links {
+  display: inline-flex;
+  gap: 20px;
+
+  a {
+    color: var(--color-ink-soft);
+  }
+}

@@ -12,3 +12,13 @@ framework:
                 interval: '1 minute'
                 amount: '%env(int:LINK_CREATION_RATE_PER_MINUTE)%'
             cache_pool: 'app.cache.rate_limiter'
+
+        # Per-IP brute-force defence on the operator admin login. Strict by
+        # default — admin login is rare and high-value (CLAUDE.md rule 17).
+        admin_login:
+            policy: 'token_bucket'
+            limit: '%env(int:ADMIN_LOGIN_BURST)%'
+            rate:
+                interval: '1 minute'
+                amount: '%env(int:ADMIN_LOGIN_RATE_PER_MINUTE)%'
+            cache_pool: 'app.cache.rate_limiter'

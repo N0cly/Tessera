@@ -50,12 +50,28 @@ services:
       # in your root .env / secret store. Empty = billing disabled gracefully.
       BILLING_TRIAL_DAYS: ${BILLING_TRIAL_DAYS:-14}
       BILLING_GRACE_DAYS: ${BILLING_GRACE_DAYS:-30}
+      # Per-plan code limits — single source, reused by /api/pricing display and
+      # billing enforcement. 0 = unlimited.
       PLAN_TRIAL_CODE_LIMIT: ${PLAN_TRIAL_CODE_LIMIT:-25}
-      PLAN_PRO_CODE_LIMIT: ${PLAN_PRO_CODE_LIMIT:-0}
+      PLAN_STARTER_CODE_LIMIT: ${PLAN_STARTER_CODE_LIMIT:-100}
+      PLAN_PRO_CODE_LIMIT: ${PLAN_PRO_CODE_LIMIT:-1000}
       PADDLE_API_BASE_URL: ${PADDLE_API_BASE_URL:-https://sandbox-api.paddle.com}
+      # Paddle price ids per paid plan (create them in Paddle; see .env.example).
+      PADDLE_STARTER_PRICE_ID: ${PADDLE_STARTER_PRICE_ID:-}
+      PADDLE_PRO_PRICE_ID: ${PADDLE_PRO_PRICE_ID:-}
+      # Legacy single-price knob; fallback for the Pro price when the per-plan id is empty.
       PADDLE_PRICE_ID: ${PADDLE_PRICE_ID:-}
+      # /api/pricing Paddle-catalogue cache TTL (seconds).
+      PRICING_CACHE_TTL: ${PRICING_CACHE_TTL:-600}
       PADDLE_API_KEY: ${PADDLE_API_KEY:-}
       PADDLE_WEBHOOK_SECRET: ${PADDLE_WEBHOOK_SECRET:-}
+      # Admin panel (operator-only). Admin is granted out-of-band via the CLI or
+      # this allowlist; 2FA, rate-limiting and audit logging always apply.
+      ADMIN_ALLOWLIST: ${ADMIN_ALLOWLIST:-}
+      ADMIN_IP_ALLOWLIST: ${ADMIN_IP_ALLOWLIST:-}
+      ADMIN_LOGIN_RATE_PER_MINUTE: ${ADMIN_LOGIN_RATE_PER_MINUTE:-5}
+      ADMIN_LOGIN_BURST: ${ADMIN_LOGIN_BURST:-5}
+      ADMIN_METRICS_CACHE_TTL: ${ADMIN_METRICS_CACHE_TTL:-300}
       # Only the backend container runs migrations on boot to avoid races
       # with the worker. The script is idempotent either way.
       RUN_MIGRATIONS: "1"

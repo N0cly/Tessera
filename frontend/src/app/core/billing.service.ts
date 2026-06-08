@@ -31,9 +31,13 @@ export class BillingService {
     return this.http.get<SubscriptionSummary>(`${this.base}/subscription`);
   }
 
-  /** Start a hosted checkout; returns the MoR checkout URL to redirect to. */
-  checkout(): Observable<{ checkoutUrl: string }> {
-    return this.http.post<{ checkoutUrl: string }>(`${this.base}/checkout`, {});
+  /**
+   * Start a hosted checkout; returns the MoR checkout URL to redirect to.
+   * `plan` selects which paid plan to subscribe to (the pricing page passes
+   * "starter"/"pro"); omitted falls back to the first configured paid plan.
+   */
+  checkout(plan?: 'starter' | 'pro'): Observable<{ checkoutUrl: string }> {
+    return this.http.post<{ checkoutUrl: string }>(`${this.base}/checkout`, plan ? { plan } : {});
   }
 
   /** Open the MoR customer portal; returns its URL. */

@@ -12,6 +12,7 @@ use App\Service\PlanCatalog;
 use App\Service\SubscriptionManager;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
@@ -52,20 +53,35 @@ final class BillingController
             'codesUsed' => $codesUsed,
             'codeLimit' => $codeLimit,
             'graceDays' => $this->grace->days(),
-            'checkoutAvailable' => $this->paddle->isConfigured(),
+            'checkoutAvailable' => $this->paddle->isConfigured() && $this->plans->hasConfiguredPlan(),
             'portalAvailable' => $this->paddle->isConfigured() && null !== $sub->getProviderCustomerId(),
         ], headers: ['Cache-Control' => 'private, no-store']);
     }
 
     #[Route('/api/billing/checkout', name: 'billing_checkout', methods: ['POST'])]
-    public function checkout(): JsonResponse
+    public function checkout(Request $request): JsonResponse
     {
         $user = $this->currentUser();
         // Ensure a subscription row exists so the webhook has something to map to.
         $this->subscriptions->getOrCreate($user);
 
+        // The plan to subscribe to comes from the request (pricing page passes
+        // "starter"/"pro"). Fall back to the first configured paid plan so the
+        // dashboard's plain "subscribe" button keeps working. The price id is
+        // resolved through PlanCatalog — the single source — never hardcoded.
+        $payload = json_decode($request->getContent() ?: '{}', true);
+        $requested = is_array($payload) && is_string($payload['plan'] ?? null) ? $payload['plan'] : null;
+        $plan = (null !== $requested && $this->plans->isPaidPlan($requested))
+            ? $requested
+            : $this->firstConfiguredPaidPlan();
+
+        $priceId = null !== $plan ? $this->plans->priceIdForPlan($plan) : null;
+        if (null === $priceId) {
+            throw new ServiceUnavailableHttpException(message: 'Billing is not configured on this instance.');
+        }
+
         try {
-            $url = $this->paddle->createCheckoutUrl($user);
+            $url = $this->paddle->createCheckoutUrl($user, $priceId);
         } catch (\RuntimeException $e) {
             throw new ServiceUnavailableHttpException(message: $e->getMessage());
         }
@@ -90,6 +106,21 @@ final class BillingController
         }
 
         return new JsonResponse(['portalUrl' => $url]);
+    }
+
+    /**
+     * The first paid plan that actually has a Paddle price configured, or null
+     * if none do (billing disabled). Used as the default when no plan is named.
+     */
+    private function firstConfiguredPaidPlan(): ?string
+    {
+        foreach ($this->plans->paidPlans() as $plan) {
+            if (null !== $this->plans->priceIdForPlan($plan)) {
+                return $plan;
+            }
+        }
+
+        return null;
     }
 
     private function currentUser(): User

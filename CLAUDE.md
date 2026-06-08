@@ -133,6 +133,74 @@ Infra
       **billing webhook calls `LinkCache::invalidateForOwner()`** for all the
       owner's slugs. A direct DB status change needs a manual
       `cache:pool:clear app.cache.links`.
+16. **Pricing page — Paddle is the source of truth for prices; nothing is
+    hardcoded.** Plans: **Self-host** (free/MIT, not a Paddle price), **Starter**,
+    **Pro**.
+    - `GET /api/pricing` is **public** (lightweight controller, NOT an API
+      Platform resource) and returns the paid plans assembled by `PricingCatalog`
+      from Paddle: `{ plan, name, priceId, amount, currency, interval, codeLimit,
+      available, promo? }`. `amount`/`promo.finalAmount` are **minor units** read
+      straight from Paddle so the displayed price always equals what Paddle
+      charges. Active Paddle **discounts** become `promo` (discounted price +
+      badge). It is **cached in Redis** (`app.cache.pricing`, `PRICING_CACHE_TTL`,
+      default 600s) — never call Paddle per view — and **fails safe**: if a plan
+      can't be priced it comes back `available:false`/`amount:null` (a card with
+      no number), never a wrong number. The cache also busts on Paddle
+      `price.*`/`product.*`/`discount.*` webhooks.
+    - **No price/promo editor** — Paddle's dashboard owns that. Create the prices
+      in Paddle (start: Starter 3 €/mo, Pro 15 €/mo) and reference them via
+      `PADDLE_STARTER_PRICE_ID` / `PADDLE_PRO_PRICE_ID` (legacy `PADDLE_PRICE_ID`
+      is a Pro fallback). Empty id = that plan isn't purchasable.
+    - **Plan limits have ONE source: `PlanCatalog`** (env `PLAN_*_CODE_LIMIT`),
+      reused by BOTH the pricing display (via `/api/pricing`) and billing
+      enforcement (`LinkProcessor` 402). `PlanCatalog` also owns the
+      price-id↔plan mapping used by checkout and by the webhook to set the
+      purchased plan. Never duplicate a limit or a price→plan mapping elsewhere.
+    - Checkout (`POST /api/billing/checkout`) takes a `plan` (`starter`/`pro`);
+      the pricing page's Starter/Pro CTAs start the 14-day trial (logged-out →
+      sign up first, no card; logged-in → hosted checkout). Self-host CTA →
+      GitHub. Unbuilt Pro features (custom domain, QR branding, teams) are tagged
+      **"coming soon"** — marked, not sold. Frontend: public route `/pricing`
+      (`PricingComponent`), styled strictly via `tessera-tokens.css`.
+17. **Admin panel (operator-only, read-only v1) — the highest-value target in
+    the app; security is non-negotiable.** Routes isolated under **`/admin`**
+    (own firewalls), separate from `/api`.
+    - **Dedicated `ROLE_ADMIN`, granted ONLY out-of-band** — never via signup or
+      any user-facing flow (`RegistrationController` sets no roles; no endpoint
+      sets roles). Grant via `bin/console app:admin:grant <email>` (sets the role
+      + enrols 2FA) or the `ADMIN_ALLOWLIST` env. `App\Service\AdminAccess` is the
+      single authority (DB role OR allowlist).
+    - **2FA is mandatory.** `POST /admin/login` requires email + password + a TOTP
+      code (`App\Service\TotpService`, RFC 6238, self-contained; codes are
+      **single-use** — the consumed step is persisted to `User.lastTotpStep` so a
+      captured code can't be replayed). It mints an
+      **admin-scoped JWT** (`scope=admin, mfa=true`) — the ONLY token accepted by
+      admin endpoints. A normal `/api/login_check` token, even for a ROLE_ADMIN
+      user, has neither claim and is rejected, so 2FA cannot be bypassed.
+    - **Server-side authorization on EVERY admin endpoint** via
+      `AdminContext::requireAdmin()` (admin role + `scope=admin`/`mfa` claims +
+      optional `ADMIN_IP_ALLOWLIST`). Never rely on hiding the UI. Login is
+      per-IP rate-limited; failures are generic (no user enumeration).
+    - **Audit log** (`admin_audit_logs`, `AdminAuditLogger`): every admin login
+      (success + failure) and every customer-data access is recorded (actor, IP,
+      action); reads of the audit log itself are recorded too (and excluded from
+      the feed to avoid self-noise). Viewable at `GET /admin/audit`.
+    - **Privacy / minimization:** `GET /admin/overview` is aggregates-only (NO
+      PII); customer PII (emails, top customers) lives ONLY in `GET
+      /admin/customers`, whose every access is audit-logged and which the UI
+      loads on demand. Scans still store no raw IP (rule 5) — scanner identity is
+      never available. The audit log's `ip` is the OPERATOR's own (security
+      audit), which is a different thing.
+    - **Business KPIs come from Paddle** (`AdminBillingMetrics`, Redis-cached,
+      fail-safe): MRR is normalized from active subscriptions, never recomputed
+      from raw payments. Conversion/churn (history Paddle's snapshot lacks) come
+      from the synced `Subscription` mirror. **Usage + customer aggregates**
+      (`AdminStats`) come from our DB (platform-wide GROUP BY, no roll-up table).
+    - **Out of scope (v1):** management actions (suspend / refund / change plan →
+      do them in Paddle), content/feature-flag tooling. Read-only only.
+    - Frontend: separate `AdminAuthService` (own token key) + `adminGuard`; routes
+      `/admin/login` + `/admin` (`AdminDashboardComponent`); styled strictly via
+      `tessera-tokens.css`.
 
 ## Dev commands
 
@@ -146,6 +214,7 @@ http://localhost:8000, frontend at http://localhost:4200.
   the backend entrypoint regenerates everything on next boot)
 - Backend shell: `docker compose exec backend sh`
 - Backend health check: `curl http://localhost:8000/health` → `{"status":"ok"}`
+- Pricing catalogue: `curl http://localhost:8000/api/pricing` (public; reads Paddle, Redis-cached)
 - Backend migrations: auto-applied on backend startup. Re-run manually:
   `docker compose exec backend bin/console doctrine:migrations:migrate -n`
 - Generate migration: `docker compose exec backend bin/console make:migration`
@@ -157,6 +226,8 @@ http://localhost:8000, frontend at http://localhost:4200.
 - Cron logs: `docker compose logs -f cron` (periodic demo-link purge; no-op when `DEMO_USER_EMAIL` is empty)
 - Inspect queue: `docker compose exec redis redis-cli XLEN messages`
 - Manual demo purge: `docker compose exec backend bin/console app:demo:purge`
+- Grant operator admin + enrol 2FA: `docker compose exec backend bin/console app:admin:grant <email>`
+  (also `app:admin:revoke <email>`, `app:admin:list`). Admin panel: frontend `/admin`, API under `/admin`.
 
 ## Conventions
 

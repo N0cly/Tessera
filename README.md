@@ -129,6 +129,49 @@ That directory is mounted read-only into both `backend` and `worker`.
 See [`backend/var/geoip/README.md`](backend/var/geoip/README.md) for the
 exact contract.
 
+### Pricing & plans
+
+The public pricing page (`/pricing`) and its API (`GET /api/pricing`) read
+**prices and active discounts live from Paddle** — the single source of truth.
+Nothing is hardcoded: the amount shown always equals what Paddle charges, and
+if Paddle can't be reached a plan is shown as unavailable rather than with a
+wrong number (the catalogue is Redis-cached for `PRICING_CACHE_TTL` seconds).
+
+To enable the paid plans, create a recurring price per plan in the Paddle
+dashboard — starting values **Starter 3 €/mo** and **Pro 15 €/mo** (change them
+in Paddle anytime, no redeploy) — and set `PADDLE_STARTER_PRICE_ID` /
+`PADDLE_PRO_PRICE_ID`. Leave them empty and the page simply points visitors at
+self-hosting. Time-limited promos are Paddle discounts; the page reflects active
+ones automatically with a badge.
+
+Per-plan **code limits** (`PLAN_TRIAL_CODE_LIMIT` / `PLAN_STARTER_CODE_LIMIT` /
+`PLAN_PRO_CODE_LIMIT`, `0` = unlimited) are the single source reused by both the
+pricing display and the billing limit enforcement. Self-host is always free,
+MIT, and unlimited. All Paddle settings are documented in
+[`.env.example`](.env.example).
+
+### Operator admin panel
+
+A private, **read-only** operator panel lives at `/admin` (API under `/admin`):
+service-wide business KPIs (MRR, subscriptions, trials, churn — read from
+Paddle), product usage (links, scans, active codes), and customer aggregates.
+
+It is the highest-value surface in the app, so it is locked down:
+
+- **Admin is granted out-of-band only** — never via signup. Promote an existing
+  account with `docker compose exec backend bin/console app:admin:grant <email>`,
+  which also enrols mandatory **2FA** (prints an `otpauth://` URI for your
+  authenticator app). See also `app:admin:revoke` / `app:admin:list`, and the
+  `ADMIN_ALLOWLIST` / `ADMIN_IP_ALLOWLIST` env knobs.
+- **Login requires email + password + a TOTP code**; authorization is enforced
+  server-side on every endpoint (never just by hiding the UI).
+- **Audit log**: admin logins and any customer-data access are recorded.
+- **Privacy first internally too**: the overview is aggregates-only; customer PII
+  is a separate, audit-logged view; scanner IPs are never stored or shown.
+
+Management actions (suspend / refund / change plan) are intentionally **not**
+here — do those in Paddle.
+
 ---
 
 ## How it works

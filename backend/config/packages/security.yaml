@@ -30,6 +30,22 @@ security:
             stateless: true
             security: false
 
+        admin_login:
+            # The admin 2FA login does its own verification (password + TOTP +
+            # admin role) and mints an admin-scoped JWT. Must precede ^/admin.
+            pattern: ^/admin/login
+            stateless: true
+            security: false
+
+        admin:
+            # Operator panel. JWT-authenticated; the real authorization (admin
+            # role + 2FA scope claim + optional IP allowlist) is enforced
+            # server-side per endpoint by App\Service\AdminContext.
+            pattern: ^/admin
+            stateless: true
+            provider: app_user_provider
+            jwt: ~
+
         login:
             pattern: ^/api/login_check
             stateless: true
@@ -56,7 +72,12 @@ security:
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/pricing, roles: PUBLIC_ACCESS }
         - { path: ^/api/webhooks/billing, roles: PUBLIC_ACCESS }
+        # Admin: login is public (does its own auth); everything else under
+        # /admin needs a valid JWT, then AdminContext enforces admin+2FA.
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

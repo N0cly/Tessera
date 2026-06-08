@@ -13,6 +13,7 @@ use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
 use App\Service\PaddleClient;
 use App\Service\PlanCatalog;
+use App\Service\PricingCatalog;
 use App\Service\SubscriptionManager;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +40,8 @@ final class BillingWebhookController
         private readonly UserRepository $users,
         private readonly EntityManagerInterface $em,
         private readonly LinkCache $linkCache,
+        private readonly PricingCatalog $pricing,
+        private readonly PlanCatalog $plans,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -77,6 +80,16 @@ final class BillingWebhookController
             $this->applySubscriptionEvent($eventType, $data);
         }
 
+        // Catalogue changes in Paddle (prices, products, discounts) invalidate
+        // the cached pricing page so the next view reflects them immediately
+        // instead of waiting for the TTL (CLAUDE.md rule 16).
+        if (str_starts_with($eventType, 'price.')
+            || str_starts_with($eventType, 'product.')
+            || str_starts_with($eventType, 'discount.')
+        ) {
+            $this->pricing->invalidate();
+        }
+
         // 4) Record the event id so a re-delivery is a no-op. The unique index
         //    closes the race if two deliveries land concurrently.
         try {
@@ -107,10 +120,27 @@ final class BillingWebhookController
             ? SubscriptionStatus::Canceled
             : $this->mapStatus(is_string($data['status'] ?? null) ? $data['status'] : null);
 
+        // Which plan was purchased is derived from the price id on the
+        // subscription's items, mapped through PlanCatalog (the single source).
+        // If the price is unrecognized we DO NOT elevate — we leave the existing
+        // plan untouched (passing null) and log loudly. Defaulting an unknown
+        // price to the highest-entitlement plan would silently hand out Pro for
+        // free whenever the Paddle catalogue and PADDLE_*_PRICE_ID drift; failing
+        // toward least entitlement is the safe direction (mirrors how a lapsed
+        // sub falls back to the trial limit in PlanCatalog::codeLimitFor()).
+        $plan = $this->planFromData($data);
+        if (null === $plan) {
+            $this->logger->warning(
+                'Billing webhook: subscription price id maps to no configured plan; leaving the plan unchanged. '
+                .'Check that PADDLE_STARTER_PRICE_ID / PADDLE_PRO_PRICE_ID match your Paddle catalogue.',
+                ['event_type' => $eventType],
+            );
+        }
+
         $this->subscriptions->applyProviderState(
             $subscription,
             $status,
-            PlanCatalog::PLAN_PRO,
+            $plan, // null = keep the current plan; never auto-elevate on an unknown price
             is_string($data['id'] ?? null) ? $data['id'] : null,
             is_string($data['customer_id'] ?? null) ? $data['customer_id'] : null,
             $this->parsePeriodEnd($data),
@@ -149,6 +179,36 @@ final class BillingWebhookController
 
         if (is_string($data['customer_id'] ?? null)) {
             return $this->subscriptionRepo->findOneByProviderCustomerId($data['customer_id']);
+        }
+
+        return null;
+    }
+
+    /**
+     * Resolve the purchased plan from the subscription's line items. Paddle
+     * sends each item's price under `items[].price.id`; we map the first one we
+     * recognize through PlanCatalog. Returns null if no item maps to a plan.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function planFromData(array $data): ?string
+    {
+        $items = $data['items'] ?? null;
+        if (!is_array($items)) {
+            return null;
+        }
+
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+            $priceId = $item['price']['id'] ?? ($item['price_id'] ?? null);
+            if (is_string($priceId) && '' !== $priceId) {
+                $plan = $this->plans->planForPriceId($priceId);
+                if (null !== $plan) {
+                    return $plan;
+                }
+            }
         }
 
         return null;

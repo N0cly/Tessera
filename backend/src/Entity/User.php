@@ -32,6 +32,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
+    /**
+     * Base32 TOTP secret for two-factor auth. Only ever set for admin accounts
+     * (via the admin CLI) — 2FA is mandatory to reach the operator panel. Null
+     * for ordinary users. Never exposed over the API.
+     */
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $totpSecret = null;
+
+    /**
+     * The last successfully-consumed TOTP time-step. A code is accepted only if
+     * its step is strictly greater than this, making each code single-use within
+     * its validity window (RFC 6238 §5.2 replay protection). Admin-only.
+     */
+    #[ORM\Column(nullable: true)]
+    private ?int $lastTotpStep = null;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
 
@@ -93,6 +109,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getTotpSecret(): ?string
+    {
+        return $this->totpSecret;
+    }
+
+    public function setTotpSecret(?string $totpSecret): self
+    {
+        $this->totpSecret = $totpSecret;
+
+        return $this;
+    }
+
+    public function isTotpEnabled(): bool
+    {
+        return null !== $this->totpSecret && '' !== $this->totpSecret;
+    }
+
+    public function getLastTotpStep(): ?int
+    {
+        return $this->lastTotpStep;
+    }
+
+    public function setLastTotpStep(?int $lastTotpStep): self
+    {
+        $this->lastTotpStep = $lastTotpStep;
+
+        return $this;
+    }
+
+    /**
+     * Whether ROLE_ADMIN is set on this account in the database. Note: admin
+     * authorization additionally honours the env allowlist and requires 2FA —
+     * always go through App\Service\AdminAccess, never this alone.
+     */
+    public function hasAdminRole(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->getRoles(), true);
     }
 
     public function eraseCredentials(): void
