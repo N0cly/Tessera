@@ -7,13 +7,29 @@ registration:
     invalid_input: 'Un e-mail et un mot de passe (au moins 8 caractères) sont requis.'
     email_taken: 'Un compte avec cet e-mail existe déjà.'
     validation_failed: 'La validation a échoué.'
+    demo_disabled: "L'inscription est désactivée dans la démo."
 link:
     limit_reached: "Vous avez atteint la limite de %count% codes de votre offre. Passez à une offre supérieure pour en créer davantage."
     rate_limited: 'Trop de créations de liens. Veuillez ralentir.'
     invalid_qr_format: 'le format doit être « png » ou « svg ».'
+    demo_quota: 'Cette démo est limitée à %count% liens. Auto-hébergez Tessera pour des codes illimités.'
 billing:
     not_configured: "La facturation n'est pas configurée sur cette instance."
     no_subscription: "Aucun abonnement actif à gérer pour l'instant."
     portal_failed: "Impossible d'ouvrir le portail client."
 me:
     invalid_locale: "La langue doit être l'une de : %locales%."
+demo:
+    interstitial:
+        title: 'Démo Tessera'
+        heading: 'Lien de démo'
+        body: 'Dans le vrai produit, ce code redirigerait vers :'
+        note: "Aucune redirection réelle n'a lieu dans la démo — cela protège le web ouvert de tout détournement."
+        selfHost: 'Auto-hébergez Tessera pour de vraies redirections modifiables →'
+        return: 'Vous pouvez fermer cet onglet pour revenir à la démo.'
+    seed:
+        launch: 'Lancement produit'
+        steady: 'Menu du restaurant'
+        growth: 'Inscription newsletter'
+        weekend: 'Marché éphémère'
+        low: 'Lien dans la bio'

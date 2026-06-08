@@ -4,11 +4,15 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
 import { AdminAuthService } from './admin-auth.service';
+import { AppConfigService } from './app-config.service';
 import { AuthService } from './auth.service';
+import { DemoService } from './demo.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const adminAuth = inject(AdminAuthService);
+  const config = inject(AppConfigService);
+  const demo = inject(DemoService);
   const router = inject(Router);
 
   // Admin API calls carry the admin token; everything else the user token. The
@@ -27,8 +31,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           // Admin token expired/invalid → back to the admin login.
           adminAuth.logout();
         } else if (!isAdminApi && auth.isAuthenticated()) {
-          auth.logout();
-          void router.navigate(['/login']);
+          if (config.demoMode()) {
+            // Demo session expired/purged → drop it and seed a fresh isolated
+            // one directly. We don't rely on navigating to re-trigger the guard:
+            // the visitor is usually already on /app, so a navigate(['/app'])
+            // is a same-URL no-op and would leave them stuck with no session.
+            auth.clear();
+            demo.createSession().subscribe((ok) => {
+              if (ok) void router.navigate(['/app']);
+            });
+          } else {
+            auth.logout(); // clears + navigates to /login
+          }
         }
       }
       return throwError(() => err);

@@ -73,6 +73,8 @@ security:
         - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api/pricing, roles: PUBLIC_ACCESS }
+        - { path: ^/api/config, roles: PUBLIC_ACCESS }
+        - { path: ^/api/demo, roles: PUBLIC_ACCESS }
         - { path: ^/api/webhooks/billing, roles: PUBLIC_ACCESS }
         # Admin: login is public (does its own auth); everything else under
         # /admin needs a valid JWT, then AdminContext enforces admin+2FA.

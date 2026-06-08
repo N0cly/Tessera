@@ -17,7 +17,10 @@
         t('dashboard.title')
       }}</a>
       <a routerLink="/app/links" class="nav-link">{{ t('dashboard.yourLinks') }}</a>
-      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>
+      @if (config.demoMode()) {
+        <button type="button" class="ghost" (click)="startTour()">{{ t('tour.replay') }}</button>
+      }
+<!--      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>-->
     </nav>
   </header>
 
@@ -29,7 +32,7 @@
     <p class="muted">{{ t('dashboard.loadingOverview') }}</p>
   } @else if (data(); as d) {
     <!-- KPI row -->
-    <section class="kpis" [attr.aria-label]="t('dashboard.kpisAria')">
+    <section class="kpis" data-tour="kpis" [attr.aria-label]="t('dashboard.kpisAria')">
       <div class="kpi">
         <span class="kpi-label">{{ t('dashboard.kpi.activeCodes') }}</span>
         <span class="kpi-value">{{ d.kpis.activeCodes | number: undefined : locale.lang() }}</span>
@@ -58,7 +61,7 @@
     </section>
 
     <!-- Period filter + scans line chart -->
-    <section class="card chart-card">
+    <section class="card chart-card" data-tour="scans-chart">
       <div class="card-head">
         <h2>{{ t('dashboard.scansOverTime') }}</h2>
         <div class="segmented" role="group" [attr.aria-label]="t('dashboard.periodAria')">
@@ -98,7 +101,7 @@
     </section>
 
     <!-- Top links | by device -->
-    <div class="two-col">
+    <div class="two-col" data-tour="breakdowns">
       <section class="card">
         <h2>{{ t('dashboard.topLinks') }}</h2>
         @if (d.topLinks.length === 0) {
@@ -205,106 +208,108 @@
       </section>
     </div>
 
-    <!-- Plan & usage + billing -->
-    <section class="card plan">
-      <h2>{{ t('dashboard.planUsage') }}</h2>
-      @if (subscription(); as sub) {
-        <div class="plan-grid">
-          <div class="plan-line">
-            <span class="muted small">{{ t('dashboard.plan') }}</span>
-            <span class="plan-value">{{ sub.planName }}</span>
-            <span class="status-badge" [attr.data-status]="sub.status">{{ statusLabel() }}</span>
-            @if (sub.status === 'trialing' && sub.trialDaysLeft > 0) {
-              <span class="trial-badge">{{
-                t('dashboard.trialDaysLeft', { days: sub.trialDaysLeft })
-              }}</span>
-            }
-          </div>
-
-          <div class="plan-usage">
-            <div class="plan-usage-head">
-              <span class="muted small">{{ t('dashboard.codesUsed') }}</span>
-              @if (sub.codeLimit === null) {
-                <span class="plan-value"
-                  >{{ sub.codesUsed | number: undefined : locale.lang() }} /
-                  {{ t('common.unlimited') }}</span
-                >
-              } @else {
-                <span class="plan-value"
-                  >{{ sub.codesUsed | number: undefined : locale.lang() }} /
-                  {{ sub.codeLimit | number: undefined : locale.lang() }}</span
-                >
+    <!-- Plan & usage + billing — hidden unless billing is enabled (off in demo / by default). -->
+    @if (config.billingEnabled()) {
+      <section class="card plan">
+        <h2>{{ t('dashboard.planUsage') }}</h2>
+        @if (subscription(); as sub) {
+          <div class="plan-grid">
+            <div class="plan-line">
+              <span class="muted small">{{ t('dashboard.plan') }}</span>
+              <span class="plan-value">{{ sub.planName }}</span>
+              <span class="status-badge" [attr.data-status]="sub.status">{{ statusLabel() }}</span>
+              @if (sub.status === 'trialing' && sub.trialDaysLeft > 0) {
+                <span class="trial-badge">{{
+                  t('dashboard.trialDaysLeft', { days: sub.trialDaysLeft })
+                }}</span>
               }
             </div>
-            @if (sub.codeLimit !== null) {
-              <div
-                class="bar-track"
-                role="progressbar"
-                [attr.aria-valuenow]="sub.codesUsed"
-                [attr.aria-valuemin]="0"
-                [attr.aria-valuemax]="sub.codeLimit"
-              >
-                <div class="bar-fill" [style.width.%]="planUsagePct()"></div>
+
+            <div class="plan-usage">
+              <div class="plan-usage-head">
+                <span class="muted small">{{ t('dashboard.codesUsed') }}</span>
+                @if (sub.codeLimit === null) {
+                  <span class="plan-value"
+                    >{{ sub.codesUsed | number: undefined : locale.lang() }} /
+                    {{ t('common.unlimited') }}</span
+                  >
+                } @else {
+                  <span class="plan-value"
+                    >{{ sub.codesUsed | number: undefined : locale.lang() }} /
+                    {{ sub.codeLimit | number: undefined : locale.lang() }}</span
+                  >
+                }
               </div>
-              @if (sub.codesUsed >= sub.codeLimit) {
-                <p class="muted small">
-                  {{ t('dashboard.limitReached') }}
-                </p>
+              @if (sub.codeLimit !== null) {
+                <div
+                  class="bar-track"
+                  role="progressbar"
+                  [attr.aria-valuenow]="sub.codesUsed"
+                  [attr.aria-valuemin]="0"
+                  [attr.aria-valuemax]="sub.codeLimit"
+                >
+                  <div class="bar-fill" [style.width.%]="planUsagePct()"></div>
+                </div>
+                @if (sub.codesUsed >= sub.codeLimit) {
+                  <p class="muted small">
+                    {{ t('dashboard.limitReached') }}
+                  </p>
+                }
               }
+            </div>
+
+            <div class="plan-line">
+              <span class="muted small">{{ t('dashboard.lapse.label') }}</span>
+              <span class="small">
+                {{ t('dashboard.lapse.before', { days: sub.graceDays })
+                }}<a routerLink="/app/links">{{ t('dashboard.yourLinks') }}</a
+                >{{ t('dashboard.lapse.after') }}
+              </span>
+            </div>
+
+            @if (checkoutReturned()) {
+              <p class="checkout-pending">
+                {{ t('dashboard.checkoutPending') }}
+              </p>
             }
-          </div>
 
-          <div class="plan-line">
-            <span class="muted small">{{ t('dashboard.lapse.label') }}</span>
-            <span class="small">
-              {{ t('dashboard.lapse.before', { days: sub.graceDays })
-              }}<a routerLink="/app/links">{{ t('dashboard.yourLinks') }}</a
-              >{{ t('dashboard.lapse.after') }}
-            </span>
-          </div>
-
-          @if (checkoutReturned()) {
-            <p class="checkout-pending">
-              {{ t('dashboard.checkoutPending') }}
-            </p>
-          }
-
-          @if (billingError()) {
-            <p class="error" role="alert">{{ billingError() }}</p>
-          }
-
-          <div class="plan-actions">
-            @if (canSubscribe()) {
-              <button
-                type="button"
-                class="primary"
-                (click)="subscribe()"
-                [disabled]="billingBusy()"
-              >
-                {{ billingBusy() ? t('dashboard.openingCheckout') : t('dashboard.startTrial') }}
-              </button>
-            } @else if (sub.portalAvailable) {
-              <button
-                type="button"
-                class="primary"
-                (click)="manageSubscription()"
-                [disabled]="billingBusy()"
-              >
-                {{
-                  billingBusy() ? t('dashboard.openingPortal') : t('dashboard.manageSubscription')
-                }}
-              </button>
-            } @else {
-              <button type="button" class="primary" disabled>
-                {{ t('dashboard.manageSubscription') }}
-              </button>
-              <span class="muted small">{{ t('dashboard.billingDisabled') }}</span>
+            @if (billingError()) {
+              <p class="error" role="alert">{{ billingError() }}</p>
             }
+
+            <div class="plan-actions">
+              @if (canSubscribe()) {
+                <button
+                  type="button"
+                  class="primary"
+                  (click)="subscribe()"
+                  [disabled]="billingBusy()"
+                >
+                  {{ billingBusy() ? t('dashboard.openingCheckout') : t('dashboard.startTrial') }}
+                </button>
+              } @else if (sub.portalAvailable) {
+                <button
+                  type="button"
+                  class="primary"
+                  (click)="manageSubscription()"
+                  [disabled]="billingBusy()"
+                >
+                  {{
+                    billingBusy() ? t('dashboard.openingPortal') : t('dashboard.manageSubscription')
+                  }}
+                </button>
+              } @else {
+                <button type="button" class="primary" disabled>
+                  {{ t('dashboard.manageSubscription') }}
+                </button>
+                <span class="muted small">{{ t('dashboard.billingDisabled') }}</span>
+              }
+            </div>
           </div>
-        </div>
-      } @else {
-        <p class="muted">{{ t('dashboard.loadingBilling') }}</p>
-      }
-    </section>
+        } @else {
+          <p class="muted">{{ t('dashboard.loadingBilling') }}</p>
+        }
+      </section>
+    }
   }
 </ng-container>

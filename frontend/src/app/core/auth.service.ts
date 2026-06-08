@@ -42,6 +42,16 @@ export class AuthService {
     });
   }
 
+  /** Adopt a token issued out-of-band (e.g. an anonymous demo session). */
+  useToken(token: string): void {
+    this.setToken(token);
+  }
+
+  /** Clear the token without navigating (used by the demo session flow). */
+  clear(): void {
+    this.setToken(null);
+  }
+
   logout(): void {
     this.setToken(null);
     void this.router.navigate(['/login']);

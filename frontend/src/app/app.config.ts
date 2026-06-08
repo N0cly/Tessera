@@ -15,6 +15,7 @@ import { provideRouter } from '@angular/router';
 import { provideTransloco } from '@jsverse/transloco';
 
 import { routes } from './app.routes';
+import { AppConfigService } from './core/app-config.service';
 import { authInterceptor } from './core/auth.interceptor';
 import { SUPPORTED_LANGS } from './core/locale';
 import { LocaleService } from './core/locale.service';
@@ -44,6 +45,8 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
+    // Load instance flags (demo mode, billing) before first render.
+    provideAppInitializer(() => inject(AppConfigService).load()),
     // Resolve the startup language (stored → browser → en) before first render.
     provideAppInitializer(() => inject(LocaleService).init()),
   ],

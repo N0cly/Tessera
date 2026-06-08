@@ -72,6 +72,16 @@ services:
       ADMIN_LOGIN_RATE_PER_MINUTE: ${ADMIN_LOGIN_RATE_PER_MINUTE:-5}
       ADMIN_LOGIN_BURST: ${ADMIN_LOGIN_BURST:-5}
       ADMIN_METRICS_CACHE_TTL: ${ADMIN_METRICS_CACHE_TTL:-300}
+      # Demo mode (ephemeral public sandbox). OFF by default; billing is a
+      # SEPARATE flag, also OFF by default.
+      DEMO_MODE: ${DEMO_MODE:-false}
+      BILLING_ENABLED: ${BILLING_ENABLED:-false}
+      DEMO_SESSION_TTL_HOURS: ${DEMO_SESSION_TTL_HOURS:-1}
+      DEMO_LINK_QUOTA: ${DEMO_LINK_QUOTA:-5}
+      DEMO_MAX_SESSIONS: ${DEMO_MAX_SESSIONS:-500}
+      DEMO_SESSION_RATE_PER_MINUTE: ${DEMO_SESSION_RATE_PER_MINUTE:-5}
+      DEMO_SESSION_BURST: ${DEMO_SESSION_BURST:-5}
+      DEMO_GITHUB_URL: ${DEMO_GITHUB_URL:-https://github.com/N0cly/Tessera}
       # Only the backend container runs migrations on boot to avoid races
       # with the worker. The script is idempotent either way.
       RUN_MIGRATIONS: "1"
@@ -137,7 +147,7 @@ services:
     command:
       - sh
       - -c
-      - 'while true; do sleep ${DEMO_PURGE_INTERVAL_SECONDS:-900}; php bin/console app:demo:purge --no-interaction || true; done'
+      - 'while true; do sleep ${DEMO_PURGE_INTERVAL_SECONDS:-900}; php bin/console app:demo:purge --no-interaction || true; php bin/console app:demo:purge-sessions --no-interaction || true; done'
     environment:
       APP_ENV: ${APP_ENV:-prod}
       APP_SECRET: ${APP_SECRET:-change-me-in-env}
@@ -147,6 +157,9 @@ services:
       JWT_PASSPHRASE: ${JWT_PASSPHRASE:-change-me-in-env}
       DEMO_USER_EMAIL: ${DEMO_USER_EMAIL:-}
       DEMO_LINK_TTL_HOURS: ${DEMO_LINK_TTL_HOURS:-24}
+      # Demo-session purge needs the flag + reset window.
+      DEMO_MODE: ${DEMO_MODE:-false}
+      DEMO_SESSION_TTL_HOURS: ${DEMO_SESSION_TTL_HOURS:-1}
       RUN_MIGRATIONS: "0"
     depends_on:
       backend:

@@ -7,6 +7,17 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # Safe defaults for the demo / billing knobs so the container boots even when
+    # these are absent from the environment (e.g. a minimal non-Docker .env.local).
+    # OFF by default — a public demo / paid billing must be opted into explicitly.
+    env(DEMO_MODE): 'false'
+    env(BILLING_ENABLED): 'false'
+    env(DEMO_SESSION_TTL_HOURS): '1'
+    env(DEMO_LINK_QUOTA): '5'
+    env(DEMO_MAX_SESSIONS): '500'
+    env(DEMO_SESSION_RATE_PER_MINUTE): '5'
+    env(DEMO_SESSION_BURST): '5'
+    env(DEMO_GITHUB_URL): 'https://github.com/N0cly/Tessera'
 
 services:
     # default configuration for services in *this* file

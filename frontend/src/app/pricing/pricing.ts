@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
+import { AppConfigService } from '../core/app-config.service';
 import { AuthService } from '../core/auth.service';
 import { BillingService } from '../core/billing.service';
 import { LanguageSwitcherComponent } from '../core/language-switcher';
@@ -36,6 +37,8 @@ export class PricingComponent implements OnInit, OnDestroy {
   private readonly transloco = inject(TranslocoService);
   private readonly seo = inject(SeoService);
   readonly locale = inject(LocaleService);
+  /** Flag-driven entry: in demo mode the dashboard CTAs become "See the demo". */
+  readonly config = inject(AppConfigService);
 
   private readonly seoSub = this.seo.apply('pricing');
 

@@ -1,0 +1,35 @@
+{
+  "namespace": "demo",
+  "translations": {
+    "en": {
+      "banner": {
+        "text": "Demo — your data is isolated and resets after {{hours}}h of inactivity.",
+        "selfHost": "Self-host for the real thing"
+      }
+    },
+    "fr": {
+      "banner": {
+        "text": "Démo — vos données sont isolées et réinitialisées après {{hours}} h d'inactivité.",
+        "selfHost": "Auto-hébergez le vrai produit"
+      }
+    },
+    "es": {
+      "banner": {
+        "text": "Demo — tus datos están aislados y se reinician tras {{hours}} h de inactividad.",
+        "selfHost": "Aloja el producto real"
+      }
+    },
+    "it": {
+      "banner": {
+        "text": "Demo — i tuoi dati sono isolati e si azzerano dopo {{hours}} h di inattività.",
+        "selfHost": "Ospita il prodotto vero"
+      }
+    },
+    "de": {
+      "banner": {
+        "text": "Demo — deine Daten sind isoliert und werden nach {{hours}} Std. Inaktivität zurückgesetzt.",
+        "selfHost": "Hoste das echte Produkt selbst"
+      }
+    }
+  }
+}

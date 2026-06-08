@@ -7,13 +7,29 @@ registration:
     invalid_input: 'Sono richiesti un indirizzo e-mail e una password (almeno 8 caratteri).'
     email_taken: 'Esiste già un account con questa e-mail.'
     validation_failed: 'Validazione non riuscita.'
+    demo_disabled: 'La registrazione è disattivata nella demo.'
 link:
     limit_reached: 'Hai raggiunto il limite di %count% codici del tuo piano. Passa a un piano superiore per crearne altri.'
     rate_limited: 'Troppe creazioni di link. Rallenta, per favore.'
     invalid_qr_format: 'il formato deve essere "png" o "svg".'
+    demo_quota: 'Questa demo è limitata a %count% link. Ospita Tessera per codici illimitati.'
 billing:
     not_configured: 'La fatturazione non è configurata su questa istanza.'
     no_subscription: 'Nessun abbonamento attivo da gestire per ora.'
     portal_failed: 'Impossibile aprire il portale clienti.'
 me:
     invalid_locale: 'La lingua deve essere una di: %locales%.'
+demo:
+    interstitial:
+        title: 'Demo di Tessera'
+        heading: 'Link demo'
+        body: 'Nel prodotto reale, questo codice reindirizzerebbe a:'
+        note: 'Nella demo non avviene nessun reindirizzamento reale, per proteggere il web aperto da abusi.'
+        selfHost: 'Ospita Tessera per reindirizzamenti reali e modificabili →'
+        return: 'Puoi chiudere questa scheda per tornare alla demo.'
+    seed:
+        launch: 'Lancio prodotto'
+        steady: 'Menù del ristorante'
+        growth: 'Iscrizione newsletter'
+        weekend: 'Mercatino pop-up'
+        low: 'Link in bio'

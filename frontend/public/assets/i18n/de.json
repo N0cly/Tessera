@@ -117,6 +117,7 @@
       "github": "GitHub",
       "dashboard": "Dashboard",
       "openDashboard": "Dashboard öffnen",
+      "seeDemo": "Demo ansehen",
       "signIn": "Anmelden",
       "signOut": "Abmelden",
       "links": "Links"
@@ -212,6 +213,12 @@
       "loadError": "Abrechnungsdaten konnten nicht geladen werden.",
       "checkoutError": "Die Bezahlung ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
       "portalError": "Das Kundenportal konnte nicht geöffnet werden. Bitte versuche es später erneut."
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "Demo — deine Daten sind isoliert und werden nach {{hours}} Std. Inaktivität zurückgesetzt.",
+      "selfHost": "Hoste das echte Produkt selbst"
     }
   },
   "landing": {
@@ -458,5 +465,65 @@
     "byOs": "Nach System",
     "noData": "Keine Daten.",
     "unknown": "Unbekannt"
+  },
+  "tour": {
+    "replay": "Tour starten",
+    "next": "Weiter",
+    "done": "Fertig",
+    "steps": {
+      "kpis": {
+        "title": "Dein Dashboard",
+        "text": "Auf einen Blick: aktive Codes, Scans gesamt, Traffic im Zeitraum und Durchschnitt pro Code. Diese Demo ist mit 90 Tagen Beispieldaten gefüllt."
+      },
+      "chart": {
+        "title": "Scans im Zeitverlauf",
+        "text": "Jeder Scan jedes Codes, Tag für Tag. Wechsle zwischen 7, 30 und 90 Tagen, um Trends zu erkennen."
+      },
+      "breakdowns": {
+        "title": "Wer scannt",
+        "text": "Deine Top-Codes und die Geräteverteilung — live aus dem Scan-Verlauf berechnet."
+      },
+      "analytics": {
+        "title": "Analytik eines Codes",
+        "text": "Öffne die Statistik eines Codes, um seine Scans im Zeitverlauf, nach Land und nach Gerät zu sehen."
+      },
+      "edit": {
+        "title": "Ziel ändern",
+        "text": "Genau dafür gibt es dynamische Codes: leite sie jederzeit um — der gedruckte QR-Code ändert sich nie."
+      },
+      "qr": {
+        "title": "Der QR-Code",
+        "text": "Jeder Code hat einen fertigen QR-Code, ladbar als PNG oder SVG. Er codiert einen dauerhaften Kurzlink, nie das Ziel."
+      },
+      "create": {
+        "title": "Jetzt du",
+        "text": "Erstelle deinen eigenen Code: füge eine Ziel-URL ein, gib ihm einen Namen und klicke auf Erstellen."
+      },
+      "yourQr": {
+        "title": "Dein neuer Code",
+        "text": "Da ist er, ganz oben in der Liste — mit eigenem QR-Code, bereit zum Scannen."
+      },
+      "openCode": {
+        "title": "Öffne deinen Code",
+        "text": "Klicke auf den /r/…-Link. In der Demo öffnet er eine sichere Zwischenseite in einem neuen Tab (keine echte Weiterleitung) und protokolliert einen Scan. Öffne sie und komm zu diesem Tab zurück."
+      },
+      "watchScan": {
+        "title": "Dein Scan ist da",
+        "text": "Schon zurück? Dein Scan ist gerade eingetroffen und die Summe steigt live. Echte Codes aktualisieren sich genauso, in Echtzeit."
+      },
+      "changeDest": {
+        "title": "Leite ihn um",
+        "text": "Öffne „Ziel bearbeiten“, ändere die URL und speichere. Gleicher Code, neues Ziel."
+      },
+      "openAgain": {
+        "title": "Scanne ihn erneut",
+        "text": "Öffne deinen Code noch einmal — die Zwischenseite zeigt jetzt das neue Ziel, und dein Scan-Zähler steigt weiter."
+      },
+      "finish": {
+        "title": "Das ist Tessera",
+        "text": "Codes, die nie ablaufen, änderbare Ziele, Analysen, die dir gehören. Gefällt's dir?",
+        "cta": "Hoste deinen eigenen in Minuten →"
+      }
+    }
   }
 }

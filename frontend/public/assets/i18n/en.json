@@ -117,6 +117,7 @@
       "github": "GitHub",
       "dashboard": "Dashboard",
       "openDashboard": "Open dashboard",
+      "seeDemo": "See the demo",
       "signIn": "Sign in",
       "signOut": "Sign out",
       "links": "Links"
@@ -212,6 +213,12 @@
       "loadError": "Could not load billing details.",
       "checkoutError": "Checkout is unavailable right now. Please try again later.",
       "portalError": "Could not open the customer portal. Please try again later."
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "Demo — your data is isolated and resets after {{hours}}h of inactivity.",
+      "selfHost": "Self-host for the real thing"
     }
   },
   "landing": {
@@ -458,5 +465,65 @@
     "byOs": "By OS",
     "noData": "No data.",
     "unknown": "Unknown"
+  },
+  "tour": {
+    "replay": "Take the tour",
+    "next": "Next",
+    "done": "Done",
+    "steps": {
+      "kpis": {
+        "title": "Your dashboard",
+        "text": "At a glance: active codes, total scans, this period's traffic and the average per code. This demo is pre-filled with 90 days of sample data."
+      },
+      "chart": {
+        "title": "Scans over time",
+        "text": "Every scan of every code, day by day. Switch between 7, 30 and 90 days to spot trends."
+      },
+      "breakdowns": {
+        "title": "Who's scanning",
+        "text": "Your top codes and the device mix behind the scans — all computed live from the scan history."
+      },
+      "analytics": {
+        "title": "A code's analytics",
+        "text": "Open any code's stats to see its scans over time, by country and by device."
+      },
+      "edit": {
+        "title": "Change the destination",
+        "text": "This is the whole point of a dynamic code: repoint it anytime — the printed QR never changes."
+      },
+      "qr": {
+        "title": "The QR code",
+        "text": "Each code has a ready-to-use QR you can download as PNG or SVG. It encodes a permanent short link, never the destination."
+      },
+      "create": {
+        "title": "Now your turn",
+        "text": "Create your own code: paste any destination URL, give it a name, and hit create."
+      },
+      "yourQr": {
+        "title": "Your new code",
+        "text": "Here it is, at the top of the list — with its own QR, ready to scan."
+      },
+      "openCode": {
+        "title": "Open your code",
+        "text": "Click the /r/… link. In the demo it opens a safe interstitial in a new tab (no real redirect) and logs a scan. Open it, then come back to this tab."
+      },
+      "watchScan": {
+        "title": "Your scan appeared",
+        "text": "Back already? Your scan just landed and the total ticks up live. Real codes update the same way, in real time."
+      },
+      "changeDest": {
+        "title": "Repoint it",
+        "text": "Open 'Edit destination', change the URL and save. Same code, new target."
+      },
+      "openAgain": {
+        "title": "Scan it again",
+        "text": "Open your code once more — the interstitial now shows the new destination, and your scan count climbs again."
+      },
+      "finish": {
+        "title": "That's Tessera",
+        "text": "Codes that never expire, destinations you can change, analytics that stay yours. Like it?",
+        "cta": "Host your own in minutes →"
+      }
+    }
   }
 }

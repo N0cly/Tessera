@@ -15,11 +15,13 @@
     <nav class="nav">
       <a class="nav-link" href="#how">{{ t('landing.nav.howItWorks') }}</a>
       <a class="nav-link" href="#self-host">{{ t('landing.nav.selfHost') }}</a>
-      <a class="nav-link" [routerLink]="localeLink('/pricing')">{{ t('common.nav.pricing') }}</a>
+      <!--      <a class="nav-link" [routerLink]="localeLink('/pricing')">{{ t('common.nav.pricing') }}</a>-->
       <a class="nav-link" href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">{{
         t('common.nav.github')
       }}</a>
-      <a class="nav-cta" routerLink="/app">{{ t('common.nav.openDashboard') }} →</a>
+      <a class="nav-cta" routerLink="/app"
+        >{{ config.demoMode() ? t('common.nav.seeDemo') : t('common.nav.openDashboard') }} →</a
+      >
     </nav>
   </header>
 
@@ -191,7 +193,9 @@ docker compose up -d --build</code></pre>
       >
         {{ t('common.actions.viewOnGithub') }}
       </a>
-      <a class="btn btn-ghost" routerLink="/app">{{ t('landing.selfHost.tryDashboard') }}</a>
+      <a class="btn btn-ghost" routerLink="/app">{{
+        config.demoMode() ? t('common.nav.seeDemo') : t('landing.selfHost.tryDashboard')
+      }}</a>
     </div>
   </section>
 
@@ -217,7 +221,9 @@ docker compose up -d --build</code></pre>
       <a href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">{{
         t('landing.footer.license')
       }}</a>
-      <a routerLink="/app">{{ t('common.nav.dashboard') }}</a>
+      <a routerLink="/app">{{
+        config.demoMode() ? t('common.nav.seeDemo') : t('common.nav.dashboard')
+      }}</a>
       <app-language-switcher />
     </nav>
   </footer>

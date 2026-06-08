@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
+import { AppConfigService } from '../core/app-config.service';
 import { AuthService } from '../core/auth.service';
 import { LanguageSwitcherComponent } from '../core/language-switcher';
 import { LocaleService } from '../core/locale.service';
 import { Link, LinksService } from '../core/links.service';
+import { TourService } from '../core/tour.service';
 import { LinkStatsComponent } from '../stats/link-stats';
 
 interface EditState {
@@ -31,6 +33,8 @@ export class LinksComponent implements OnInit, OnDestroy {
   private readonly api = inject(LinksService);
   private readonly auth = inject(AuthService);
   private readonly transloco = inject(TranslocoService);
+  private readonly tour = inject(TourService);
+  readonly config = inject(AppConfigService);
   readonly locale = inject(LocaleService);
 
   readonly links = signal<Link[]>([]);
@@ -101,8 +105,10 @@ export class LinksComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.creating.set(false);
-        // 402 Payment Required = plan code limit reached → prompt to upgrade.
-        if (err?.status === 402) {
+        // 402 = code limit reached. On a real plan that means "upgrade"; in demo
+        // it's the anti-abuse session quota (no billing to upgrade to), so just
+        // surface the quota message without the dead-end upgrade CTA.
+        if (err?.status === 402 && !this.config.demoMode()) {
           this.upgradeNeeded.set(true);
         }
         this.error.set(this.extractError(err) ?? this.transloco.translate('links.errors.create'));
@@ -195,6 +201,11 @@ export class LinksComponent implements OnInit, OnDestroy {
           this.transloco.translate('links.errors.download', { format: format.toUpperCase() }),
         ),
     });
+  }
+
+  /** Replay the guided tour from the header button (demo only). */
+  startTour(): void {
+    this.tour.start();
   }
 
   logout(): void {

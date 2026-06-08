@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Cache\LinkCache;
+use App\Http\DemoInterstitialRenderer;
 use App\Http\InactivePageRenderer;
 use App\Message\ScanRecorded;
+use App\Service\FeatureFlags;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +34,8 @@ final class RedirectController
         private readonly LinkCache $cache,
         private readonly MessageBusInterface $bus,
         private readonly InactivePageRenderer $inactivePage,
+        private readonly FeatureFlags $flags,
+        private readonly DemoInterstitialRenderer $demoInterstitial,
     ) {
     }
 
@@ -49,13 +53,24 @@ final class RedirectController
         }
 
         // The QR was scanned regardless of where it points — always record it.
+        // In demo mode we deliberately drop the scanner IP: the public demo takes
+        // high-volume anonymous traffic and the (simulated) scan needs no real
+        // geo, so we never let a real visitor IP enter the message pipeline.
         $this->bus->dispatch(new ScanRecorded(
             linkId: $hit['id'],
             scannedAtIso: (new \DateTimeImmutable())->format(\DateTimeInterface::ATOM),
             userAgent: $request->headers->get('User-Agent'),
-            ip: $request->getClientIp(),
+            ip: $this->flags->isDemoMode() ? null : $request->getClientIp(),
             referrer: $request->headers->get('Referer'),
         ));
+
+        // DEMO MODE — CRITICAL (tessera-demo-mode.md): never perform a real
+        // external redirect. The scan above is already recorded (so analytics
+        // still demonstrate); show the safe interstitial instead of a 302. This
+        // is intentionally global — session isolation does NOT cover /r/{slug}.
+        if ($this->flags->isDemoMode()) {
+            return $this->demoInterstitial->render($hit['destinationUrl'], $request->getLocale());
+        }
 
         // Self-resolving grace boundary: switch to fallback only once we're at
         // or past graceEndsAt. Null grace = active/trial → always destination.

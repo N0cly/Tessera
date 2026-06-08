@@ -29,7 +29,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/driver.js/dist/driver.css",
+              "src/styles/tour-theme.scss"
             ],
             "allowedCommonJsDependencies": [
               "qrcode"

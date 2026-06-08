@@ -10,18 +10,21 @@
         height="28"
       />
       <h1>{{ t('links.title') }}</h1>
+      <app-language-switcher />
     </div>
     <nav class="topnav" [attr.aria-label]="t('links.navSections')">
       <a routerLink="/app" class="nav-link">{{ t('links.navOverview') }}</a>
       <a routerLink="/app/links" class="nav-link active" aria-current="page">{{
         t('links.title')
       }}</a>
-      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>
-      <app-language-switcher />
+      @if (config.demoMode()) {
+        <button type="button" class="ghost" (click)="startTour()">{{ t('tour.replay') }}</button>
+      }
+<!--      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>-->
     </nav>
   </header>
 
-  <section class="create">
+  <section class="create" data-tour="create-form">
     <h2>{{ t('links.create.heading') }}</h2>
     <form (submit)="$event.preventDefault(); create()">
       <label>
@@ -67,11 +70,17 @@
     } @else {
       <ul>
         @for (link of links(); track link['@id']) {
-          <li class="card">
+          <li class="card" data-tour="link-card">
             <div class="card-body">
               <div class="card-main">
                 <div class="row">
-                  <a class="slug" [href]="redirectUrl(link.slug)" target="_blank" rel="noopener">
+                  <a
+                    class="slug"
+                    data-tour="open-code"
+                    [href]="redirectUrl(link.slug)"
+                    target="_blank"
+                    rel="noopener"
+                  >
                     /r/{{ link.slug }}
                   </a>
                   <button type="button" class="ghost" (click)="copySlug(link.slug)">
@@ -90,6 +99,7 @@
                       <input
                         type="url"
                         required
+                        data-tour="edit-field"
                         [ngModel]="editing()?.destinationUrl"
                         (ngModelChange)="patchEditing({ destinationUrl: $event })"
                         name="dest-{{ link.id }}"
@@ -135,12 +145,13 @@
                     </div>
                   }
                   <div class="row actions">
-                    <button type="button" (click)="startEdit(link)">
+                    <button type="button" data-tour="edit-button" (click)="startEdit(link)">
                       {{ t('links.editLinks') }}
                     </button>
                     <button
                       type="button"
                       class="ghost"
+                      data-tour="toggle-stats"
                       (click)="toggleStats(link)"
                       [attr.aria-expanded]="isExpanded(link.id)"
                     >
@@ -159,7 +170,7 @@
                 }
               </div>
 
-              <div class="card-qr" [attr.aria-label]="t('links.qrAria')">
+              <div class="card-qr" data-tour="qr-preview" [attr.aria-label]="t('links.qrAria')">
                 @if (qrPreviewUrl(link.id); as src) {
                   <img [src]="src" [alt]="t('links.qrAlt', { slug: link.slug })" />
                 } @else {

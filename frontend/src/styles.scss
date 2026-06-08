@@ -2,6 +2,7 @@
 // component-level stylesheet) can resolve var(--…). Never hardcode a
 // colour, font or radius anywhere else; see tessera-design.md.
 @use './styles/tessera-tokens';
+@import 'driver.js/dist/driver.css';
 
 * {
   box-sizing: border-box;

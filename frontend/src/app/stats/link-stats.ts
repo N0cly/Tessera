@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   computed,
@@ -12,6 +13,7 @@ import {
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ChartConfiguration } from 'chart.js';
 
+import { AppConfigService } from '../core/app-config.service';
 import { LocaleService } from '../core/locale.service';
 import { LinkStats, LinksService } from '../core/links.service';
 import { token } from '../core/tessera-tokens';
@@ -26,9 +28,10 @@ type Period = 7 | 30 | 90;
   templateUrl: './link-stats.html',
   styleUrl: './link-stats.scss',
 })
-export class LinkStatsComponent implements OnInit, OnChanges {
+export class LinkStatsComponent implements OnInit, OnChanges, OnDestroy {
   private readonly api = inject(LinksService);
   private readonly transloco = inject(TranslocoService);
+  private readonly config = inject(AppConfigService);
   readonly locale = inject(LocaleService);
 
   @Input({ required: true }) linkIri!: string;
@@ -39,6 +42,12 @@ export class LinkStatsComponent implements OnInit, OnChanges {
   readonly stats = signal<LinkStats | null>(null);
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
+
+  /** Total shown in the header — eased toward stats().total so a fresh scan
+   *  visibly counts up (the demo "watch the scan appear" moment). */
+  readonly displayTotal = signal(0);
+  private rafId = 0;
+  private followupTimer?: ReturnType<typeof setTimeout>;
 
   readonly isEmpty = computed(() => {
     const s = this.stats();
@@ -116,12 +125,26 @@ export class LinkStatsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.refresh();
+    // In demo mode the visitor opens their code in a NEW tab (the safe
+    // interstitial logs a simulated scan); when they switch back, re-pull the
+    // stats so the new scan shows up and the total counts up — no manual reload.
+    if (this.config.demoMode() && typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', this.onVisibility);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['linkIri'] && !changes['linkIri'].firstChange) {
       this.refresh();
     }
+  }
+
+  ngOnDestroy(): void {
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('visibilitychange', this.onVisibility);
+    }
+    clearTimeout(this.followupTimer);
+    if (this.rafId) cancelAnimationFrame(this.rafId);
   }
 
   selectPeriod(p: Period): void {
@@ -136,6 +159,7 @@ export class LinkStatsComponent implements OnInit, OnChanges {
     this.api.stats(this.linkIri, this.period()).subscribe({
       next: (stats) => {
         this.stats.set(stats);
+        this.animateTotal(stats.total);
         this.loading.set(false);
       },
       error: () => {
@@ -144,6 +168,37 @@ export class LinkStatsComponent implements OnInit, OnChanges {
         this.error.set(this.transloco.translate('stats.loadError'));
       },
     });
+  }
+
+  /** Tab regained focus (back from the interstitial): re-pull now, then once
+   *  more shortly after to absorb the async scan-worker latency. */
+  private readonly onVisibility = (): void => {
+    if (document.visibilityState !== 'visible') return;
+    this.refresh();
+    clearTimeout(this.followupTimer);
+    this.followupTimer = setTimeout(() => this.refresh(), 1500);
+  };
+
+  /** Ease displayTotal toward `to`. Counts UP only; drops (period switch) snap. */
+  private animateTotal(to: number): void {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    const from = this.displayTotal();
+    const reduce =
+      typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || to <= from || typeof requestAnimationFrame === 'undefined') {
+      this.displayTotal.set(to);
+      return;
+    }
+    const start = performance.now();
+    const duration = 600;
+    const step = (now: number): void => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      this.displayTotal.set(Math.round(from + (to - from) * eased));
+      if (p < 1) this.rafId = requestAnimationFrame(step);
+      else this.rafId = 0;
+    };
+    this.rafId = requestAnimationFrame(step);
   }
 
   private breakdownConfig(

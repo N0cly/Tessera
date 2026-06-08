@@ -22,3 +22,13 @@ framework:
                 interval: '1 minute'
                 amount: '%env(int:ADMIN_LOGIN_RATE_PER_MINUTE)%'
             cache_pool: 'app.cache.rate_limiter'
+
+        # Per-IP cap on demo-session creation (anti session-spam, CLAUDE.md
+        # rule 19). Only consulted when DEMO_MODE is on.
+        demo_session:
+            policy: 'token_bucket'
+            limit: '%env(int:DEMO_SESSION_BURST)%'
+            rate:
+                interval: '1 minute'
+                amount: '%env(int:DEMO_SESSION_RATE_PER_MINUTE)%'
+            cache_pool: 'app.cache.rate_limiter'

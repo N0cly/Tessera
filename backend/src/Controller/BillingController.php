@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use App\Service\FeatureFlags;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -34,6 +35,7 @@ final class BillingController
         private readonly GraceCalculator $grace,
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
+        private readonly FeatureFlags $flags,
     ) {
     }
 
@@ -55,14 +57,15 @@ final class BillingController
             'codesUsed' => $codesUsed,
             'codeLimit' => $codeLimit,
             'graceDays' => $this->grace->days(),
-            'checkoutAvailable' => $this->paddle->isConfigured() && $this->plans->hasConfiguredPlan(),
-            'portalAvailable' => $this->paddle->isConfigured() && null !== $sub->getProviderCustomerId(),
+            'checkoutAvailable' => $this->flags->isBillingEnabled() && $this->paddle->isConfigured() && $this->plans->hasConfiguredPlan(),
+            'portalAvailable' => $this->flags->isBillingEnabled() && $this->paddle->isConfigured() && null !== $sub->getProviderCustomerId(),
         ], headers: ['Cache-Control' => 'private, no-store']);
     }
 
     #[Route('/api/billing/checkout', name: 'billing_checkout', methods: ['POST'])]
     public function checkout(Request $request): JsonResponse
     {
+        $this->assertBillingEnabled();
         $user = $this->currentUser();
         // Ensure a subscription row exists so the webhook has something to map to.
         $this->subscriptions->getOrCreate($user);
@@ -95,6 +98,7 @@ final class BillingController
     #[Route('/api/billing/portal', name: 'billing_portal', methods: ['POST'])]
     public function portal(): JsonResponse
     {
+        $this->assertBillingEnabled();
         $user = $this->currentUser();
         $sub = $this->subscriptions->getOrCreate($user);
 
@@ -124,6 +128,14 @@ final class BillingController
         }
 
         return null;
+    }
+
+    /** Billing is a separately-flagged feature (off in demo / by default). */
+    private function assertBillingEnabled(): void
+    {
+        if (!$this->flags->isBillingEnabled()) {
+            throw new ServiceUnavailableHttpException(message: $this->translator->trans('billing.not_configured'));
+        }
     }
 
     private function currentUser(): User

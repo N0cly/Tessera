@@ -16,7 +16,9 @@
       <a class="nav-link" [href]="githubUrl" target="_blank" rel="noopener">{{
         t('common.nav.github')
       }}</a>
-      <a class="nav-cta" routerLink="/app">{{ t('common.nav.openDashboard') }} →</a>
+      <a class="nav-cta" routerLink="/app"
+        >{{ config.demoMode() ? t('common.nav.seeDemo') : t('common.nav.openDashboard') }} →</a
+      >
       <app-language-switcher />
     </nav>
   </header>
@@ -209,7 +211,9 @@
     <nav class="foot-links">
       <a [routerLink]="localeLink('/')">{{ t('common.nav.home') }}</a>
       <a [href]="githubUrl" target="_blank" rel="noopener">{{ t('common.nav.github') }}</a>
-      <a routerLink="/app">{{ t('common.nav.dashboard') }}</a>
+      <a routerLink="/app">{{
+        config.demoMode() ? t('common.nav.seeDemo') : t('common.nav.dashboard')
+      }}</a>
       <app-language-switcher />
     </nav>
   </footer>

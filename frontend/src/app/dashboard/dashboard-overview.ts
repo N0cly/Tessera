@@ -4,12 +4,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ChartConfiguration } from 'chart.js';
 
+import { AppConfigService } from '../core/app-config.service';
 import { AuthService } from '../core/auth.service';
 import { BillingService, SubscriptionStatus, SubscriptionSummary } from '../core/billing.service';
 import { DashboardOverview, DashboardPeriod, DashboardService } from '../core/dashboard.service';
 import { LanguageSwitcherComponent } from '../core/language-switcher';
 import { LocaleService } from '../core/locale.service';
 import { token } from '../core/tessera-tokens';
+import { TourService } from '../core/tour.service';
 import { ChartCanvasComponent } from '../stats/chart-canvas';
 
 interface PeriodOption {
@@ -38,6 +40,8 @@ export class DashboardOverviewComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly transloco = inject(TranslocoService);
   readonly locale = inject(LocaleService);
+  readonly config = inject(AppConfigService);
+  private readonly tour = inject(TourService);
 
   readonly periods: PeriodOption[] = [
     { value: '7d', labelKey: 'dashboard.period.7d' },
@@ -149,11 +153,18 @@ export class DashboardOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh();
-    this.loadSubscription();
-    // Coming back from the hosted checkout: show a pending hint and re-read the
-    // subscription. We never grant access here — the webhook does that.
-    if (this.route.snapshot.queryParamMap.get('checkout') === 'success') {
-      this.checkoutReturned.set(true);
+    // First demo landing → auto-run the guided tour once per session. It polls
+    // for the rendered KPIs itself, so calling before data loads is fine.
+    this.tour.maybeAutoStart();
+    // Only touch billing when it's enabled (off in demo / by default) — this
+    // also avoids provisioning a subscription for an ephemeral demo user.
+    if (this.config.billingEnabled()) {
+      this.loadSubscription();
+      // Coming back from the hosted checkout: show a pending hint and re-read
+      // the subscription. We never grant access here — the webhook does that.
+      if (this.route.snapshot.queryParamMap.get('checkout') === 'success') {
+        this.checkoutReturned.set(true);
+      }
     }
   }
 
@@ -240,6 +251,11 @@ export class DashboardOverviewComponent implements OnInit {
     if (device === 'desktop') return 'desktop';
     if (device === 'tablet') return 'tablet';
     return 'other';
+  }
+
+  /** Replay the guided tour from the header button (demo only). */
+  startTour(): void {
+    this.tour.start();
   }
 
   logout(): void {

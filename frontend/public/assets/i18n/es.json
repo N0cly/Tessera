@@ -117,6 +117,7 @@
       "github": "GitHub",
       "dashboard": "Panel",
       "openDashboard": "Abrir el panel",
+      "seeDemo": "Ver la demo",
       "signIn": "Iniciar sesión",
       "signOut": "Cerrar sesión",
       "links": "Enlaces"
@@ -212,6 +213,12 @@
       "loadError": "No se pudieron cargar los datos de facturación.",
       "checkoutError": "El pago no está disponible en este momento. Inténtalo de nuevo más tarde.",
       "portalError": "No se pudo abrir el portal del cliente. Inténtalo de nuevo más tarde."
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "Demo — tus datos están aislados y se reinician tras {{hours}} h de inactividad.",
+      "selfHost": "Aloja el producto real"
     }
   },
   "landing": {
@@ -458,5 +465,65 @@
     "byOs": "Por sistema",
     "noData": "Sin datos.",
     "unknown": "Desconocido"
+  },
+  "tour": {
+    "replay": "Hacer el tour",
+    "next": "Siguiente",
+    "done": "Listo",
+    "steps": {
+      "kpis": {
+        "title": "Tu panel",
+        "text": "De un vistazo: códigos activos, escaneos totales, tráfico del periodo y media por código. Esta demo viene con 90 días de datos de ejemplo."
+      },
+      "chart": {
+        "title": "Escaneos en el tiempo",
+        "text": "Cada escaneo de cada código, día a día. Cambia entre 7, 30 y 90 días para ver tendencias."
+      },
+      "breakdowns": {
+        "title": "Quién escanea",
+        "text": "Tus códigos principales y el reparto por dispositivo, calculados en directo desde el historial de escaneos."
+      },
+      "analytics": {
+        "title": "Analíticas de un código",
+        "text": "Abre las estadísticas de cualquier código para ver sus escaneos en el tiempo, por país y por dispositivo."
+      },
+      "edit": {
+        "title": "Cambiar el destino",
+        "text": "Esta es la clave de un código dinámico: redirígelo cuando quieras — el QR impreso nunca cambia."
+      },
+      "qr": {
+        "title": "El código QR",
+        "text": "Cada código tiene un QR listo para usar, descargable en PNG o SVG. Codifica un enlace corto permanente, nunca el destino."
+      },
+      "create": {
+        "title": "Ahora tú",
+        "text": "Crea tu propio código: pega una URL de destino, ponle un nombre y pulsa Crear."
+      },
+      "yourQr": {
+        "title": "Tu nuevo código",
+        "text": "Aquí está, arriba de la lista — con su propio QR, listo para escanear."
+      },
+      "openCode": {
+        "title": "Abre tu código",
+        "text": "Haz clic en el enlace /r/…. En la demo abre una página intermedia segura en una pestaña nueva (sin redirección real) y registra un escaneo. Ábrela y vuelve a esta pestaña."
+      },
+      "watchScan": {
+        "title": "Tu escaneo apareció",
+        "text": "¿Ya de vuelta? Tu escaneo acaba de llegar y el total sube en directo. Los códigos reales se actualizan igual, en tiempo real."
+      },
+      "changeDest": {
+        "title": "Redirígelo",
+        "text": "Abre «Editar destino», cambia la URL y guarda. Mismo código, nuevo destino."
+      },
+      "openAgain": {
+        "title": "Escanéalo otra vez",
+        "text": "Abre tu código una vez más — la página intermedia ahora muestra el nuevo destino, y tu contador de escaneos sube."
+      },
+      "finish": {
+        "title": "Esto es Tessera",
+        "text": "Códigos que nunca caducan, destinos que puedes cambiar, analíticas que siguen siendo tuyas. ¿Te gusta?",
+        "cta": "Aloja el tuyo en minutos →"
+      }
+    }
   }
 }

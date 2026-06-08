@@ -7,13 +7,29 @@ registration:
     invalid_input: 'Email and password (at least 8 characters) are required.'
     email_taken: 'An account with this email already exists.'
     validation_failed: 'Validation failed.'
+    demo_disabled: 'Sign-up is disabled in the demo.'
 link:
     limit_reached: "You've reached your plan's limit of %count% codes. Upgrade your plan to create more."
     rate_limited: 'Too many link creations. Please slow down.'
     invalid_qr_format: 'format must be "png" or "svg".'
+    demo_quota: 'This demo is limited to %count% links. Self-host Tessera for unlimited codes.'
 billing:
     not_configured: 'Billing is not configured on this instance.'
     no_subscription: 'No active subscription to manage yet.'
     portal_failed: 'Could not open the customer portal.'
 me:
     invalid_locale: 'locale must be one of %locales%.'
+demo:
+    interstitial:
+        title: 'Tessera demo'
+        heading: 'Demo link'
+        body: 'In the live product, this code would redirect to:'
+        note: 'No real redirect happens in the demo — this keeps the open web safe from misuse.'
+        selfHost: 'Self-host Tessera for real, editable redirects →'
+        return: 'You can close this tab to return to the demo.'
+    seed:
+        launch: 'Product launch'
+        steady: 'Restaurant menu'
+        growth: 'Newsletter signup'
+        weekend: 'Pop-up market'
+        low: 'Link in bio'

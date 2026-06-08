@@ -1,0 +1,107 @@
+// driver.js theming — Tessera tokens only (tessera-design.md rule 12). Loaded
+// AFTER driver.js/dist/driver.css so these win. Scoped to the `tessera-tour`
+// popoverClass set by TourService; every value resolves a token, so the tour
+// looks right in both light and dark mode. The backdrop keeps driver's neutral
+// translucent scrim (a conventional modal dim that reads in both modes, not a
+// brand surface); only its opacity is set in TS (`overlayOpacity`).
+
+.driver-popover.tessera-tour {
+  max-width: 340px;
+  padding: 20px;
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  font-family: var(--font-sans);
+}
+
+.driver-popover.tessera-tour .driver-popover-title {
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.driver-popover.tessera-tour .driver-popover-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+.driver-popover.tessera-tour .driver-popover-description a {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.driver-popover.tessera-tour .driver-popover-description a:hover {
+  text-decoration: underline;
+}
+
+.driver-popover.tessera-tour .driver-popover-description .tour-cta {
+  margin: 12px 0 0;
+}
+
+.driver-popover.tessera-tour .driver-popover-progress-text {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.driver-popover.tessera-tour .driver-popover-close-btn {
+  color: var(--color-ink-soft); // AA contrast on surface in both modes
+}
+.driver-popover.tessera-tour .driver-popover-close-btn:hover {
+  color: var(--color-ink);
+}
+
+// driver.js base CSS does `all: unset` on its buttons, which kills the global
+// :focus-visible ring — restore a token-based one so the tour is keyboard-usable.
+.driver-popover.tessera-tour .driver-popover-footer button:focus-visible,
+.driver-popover.tessera-tour .driver-popover-close-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.driver-popover.tessera-tour .driver-popover-footer button {
+  padding: 8px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  text-shadow: none;
+}
+
+.driver-popover.tessera-tour .driver-popover-next-btn {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  border: 1px solid var(--color-accent);
+}
+.driver-popover.tessera-tour .driver-popover-next-btn:hover {
+  background-color: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+}
+
+.driver-popover.tessera-tour .driver-popover-prev-btn {
+  background-color: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+}
+.driver-popover.tessera-tour .driver-popover-prev-btn:hover {
+  background-color: var(--color-accent-soft);
+}
+
+// The little arrow must match the popover surface on whichever side it sits.
+.driver-popover.tessera-tour .driver-popover-arrow-side-left.driver-popover-arrow {
+  border-left-color: var(--color-surface);
+}
+.driver-popover.tessera-tour .driver-popover-arrow-side-right.driver-popover-arrow {
+  border-right-color: var(--color-surface);
+}
+.driver-popover.tessera-tour .driver-popover-arrow-side-top.driver-popover-arrow {
+  border-top-color: var(--color-surface);
+}
+.driver-popover.tessera-tour .driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-bottom-color: var(--color-surface);
+}

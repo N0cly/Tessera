@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import QRCode from 'qrcode';
 
+import { AppConfigService } from '../core/app-config.service';
 import { LanguageSwitcherComponent } from '../core/language-switcher';
 import { LocaleService } from '../core/locale.service';
 import { withLocalePrefix } from '../core/locale';
@@ -38,6 +39,8 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
   private readonly transloco = inject(TranslocoService);
   private readonly locale = inject(LocaleService);
   private readonly seo = inject(SeoService);
+  /** Flag-driven entry: in demo mode the dashboard CTAs become "See the demo". */
+  readonly config = inject(AppConfigService);
   private readonly seoSub = this.seo.apply('landing');
 
   /** Locale-prefixed internal path for marketing links (keeps /fr, /es, … space). */

@@ -11,6 +11,8 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Link;
 use App\Entity\User;
 use App\Repository\LinkRepository;
+use App\Service\DemoWorkspaceSeeder;
+use App\Service\FeatureFlags;
 use App\Service\PlanCatalog;
 use App\Service\SlugGenerator;
 use App\Service\SubscriptionManager;
@@ -37,6 +39,7 @@ final class LinkProcessor implements ProcessorInterface
         private readonly PlanCatalog $plans,
         private readonly LinkRepository $links,
         private readonly TranslatorInterface $translator,
+        private readonly FeatureFlags $flags,
     ) {
     }
 
@@ -48,14 +51,23 @@ final class LinkProcessor implements ProcessorInterface
                 throw new \LogicException('A user must be authenticated to create a link.');
             }
 
-            // Plan limit (billing): block creating codes beyond the plan's
-            // allowance with a clear, actionable error (CLAUDE.md rule 14).
-            $subscription = $this->subscriptions->getOrCreate($user);
-            $codeLimit = $this->plans->codeLimitFor($subscription);
+            // Code limit. In demo mode it's the per-session quota (abuse
+            // guardrail); otherwise the plan's allowance (CLAUDE.md rules 14/19).
+            if ($this->flags->isDemoMode()) {
+                // Apply the quota ON TOP of the seeded template links, so the
+                // visitor can always create their full demoLinkQuota() allowance
+                // and the seed never eats into it (the count is over ALL the
+                // synthetic user's links, seeded included).
+                $codeLimit = DemoWorkspaceSeeder::templateSize() + $this->flags->demoLinkQuota();
+                $limitMessageKey = 'link.demo_quota';
+            } else {
+                $codeLimit = $this->plans->codeLimitFor($this->subscriptions->getOrCreate($user));
+                $limitMessageKey = 'link.limit_reached';
+            }
             if (null !== $codeLimit && $this->links->countForOwner($user) >= $codeLimit) {
                 throw new HttpException(
                     402,
-                    $this->translator->trans('link.limit_reached', ['%count%' => $codeLimit]),
+                    $this->translator->trans($limitMessageKey, ['%count%' => $codeLimit]),
                 );
             }
 

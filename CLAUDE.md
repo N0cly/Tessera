@@ -231,6 +231,60 @@ Infra
       them locale-ready when added.
     - **Out of scope:** translating user content (a customer's link names); any
       machine-translation pipeline (catalogs are hand-maintained). No RTL.
+19. **Demo mode — ephemeral public sandbox (`DEMO_MODE`, OFF by default).** Two
+    independent flags via `App\Service\FeatureFlags`, surfaced by public
+    `GET /api/config`: `DEMO_MODE` and `BILLING_ENABLED` (paid subscriptions —
+    a **separate** flag, OFF by default; in demo it's off and billing UI/endpoints
+    are hidden/refused).
+    - **Session model:** `POST /api/demo/session` (public) creates an anonymous,
+      seeded, ephemeral workspace and returns a token. Each session is backed by
+      a **per-session synthetic `User`** (no PII, no real credentials) that OWNS
+      the session's links/scans — so the platform's existing owner-scoping is the
+      isolation mechanism: a session can only ever see its own data. The token is
+      a JWT for that user. Seeded from a fixed template (`DemoWorkspaceSeeder`:
+      example links + scan history) so analytics are populated immediately. No
+      signup — `/api/register` is 403 in demo.
+    - **Redirect safety — CRITICAL:** in demo mode `/r/{slug}` NEVER performs a
+      real 302. It records the (simulated) scan, then renders
+      `DemoInterstitialRenderer` ("Tessera demo — this code would redirect to
+      `<destination>`", destination shown as inert escaped text). Session
+      isolation does NOT cover `/r/{slug}` (it's global/public) — that's exactly
+      why the 302 is neutralized. Destinations keep the http(s) + denylist
+      validation even though they're never followed.
+    - **Lifecycle:** `DemoSession.lastActivityAt` is touched per request
+      (`DemoActivitySubscriber`); idle past `DEMO_SESSION_TTL_HOURS` (default 1)
+      → purged. Purge deletes the synthetic user (DB cascades session + links +
+      scans). Runs scheduled (`app:demo:purge-sessions` in the cron loop) AND
+      lazily on access. Returning later → a fresh seeded workspace.
+    - **Abuse guardrails:** per-session link quota (`DEMO_LINK_QUOTA`, 402 in
+      `LinkProcessor`), per-IP `demo_session` rate limiter, and a concurrent
+      `DEMO_MAX_SESSIONS` cap.
+    - **Frontend:** `AppConfigService` loads `/api/config` at startup; in demo
+      the auth guard auto-creates a session (no `/login`); a persistent
+      `DemoBannerComponent` (isolated data, resets after N h, self-host link) is
+      shown app-wide; billing UI is hidden when `!billingEnabled`.
+    - **Demo experience (tessera-demo-experience.md).** On the demo instance the
+      header's dashboard CTA becomes **"Voir la démo"** (flag-driven label only;
+      same `routerLink="/app"` → the guard seeds the session and lands on the
+      dashboard, already "logged in"). The seed is a **90-day showcase**:
+      `DemoWorkspaceSeeder` plants 5 story-driven links (launch spike / steady /
+      growth / weekend / sparse) with weighted, correlated scans (device↔OS,
+      country, referrer) and **non-round** totals so every widget is alive.
+      Seeded link **names are localized once, at seed time**, to the session
+      locale — `DemoService` sends `POST /api/demo/session?locale=…` (active UI
+      lang) and the backend resolves it (query param → Accept-Language → `en`);
+      never runtime-translated (rule 18). A **driver.js** (MIT) guided tour
+      (`TourService`) auto-runs once per session (sessionStorage flag) and is
+      replayable from a header button. It is **data-driven** (each step =
+      a `data-tour="…"` selector + a `tour.*` i18n key, all 5 langs), skippable
+      (the X; overlay/ESC don't close), and ends **hands-on**: overview KPIs →
+      a code's analytics → edit destination → QR → then *create your own code →
+      open it (the interstitial logs a simulated scan, no real 302) → watch the
+      total count up (`LinkStats` count-up + a demo-only `visibilitychange`
+      refresh) → repoint the destination → open again* → self-host CTA. The tour
+      navigates across `/app` and `/app/links` itself and drives the real UI
+      (expand stats, open edit) so highlights land on live state. driver.js is
+      themed via `frontend/src/styles/tour-theme.scss` (tokens only, light+dark).
 
 ## Dev commands
 
@@ -257,6 +311,8 @@ http://localhost:8000, frontend at http://localhost:4200.
 - Cron logs: `docker compose logs -f cron` (periodic demo-link purge; no-op when `DEMO_USER_EMAIL` is empty)
 - Inspect queue: `docker compose exec redis redis-cli XLEN messages`
 - Manual demo purge: `docker compose exec backend bin/console app:demo:purge`
+- Purge stale demo workspaces: `docker compose exec backend bin/console app:demo:purge-sessions`
+  (enable the demo with `DEMO_MODE=true`; `GET /api/config` exposes the flags)
 - Grant operator admin + enrol 2FA: `docker compose exec backend bin/console app:admin:grant <email>`
   (also `app:admin:revoke <email>`, `app:admin:list`). Admin panel: frontend `/admin`, API under `/admin`.
 

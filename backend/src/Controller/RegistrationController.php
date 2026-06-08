@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\FeatureFlags;
 use App\Service\LocaleResolver;
 use App\Service\SubscriptionManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,12 +27,18 @@ final class RegistrationController
         private readonly SubscriptionManager $subscriptions,
         private readonly TranslatorInterface $translator,
         private readonly LocaleResolver $locales,
+        private readonly FeatureFlags $flags,
     ) {
     }
 
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
+        // No real accounts in demo mode — visitors use the anonymous demo session.
+        if ($this->flags->isDemoMode()) {
+            return new JsonResponse(['error' => $this->translator->trans('registration.demo_disabled')], 403);
+        }
+
         $payload = json_decode($request->getContent(), true);
         if (!is_array($payload)) {
             return new JsonResponse(['error' => $this->translator->trans('registration.invalid_json')], 400);

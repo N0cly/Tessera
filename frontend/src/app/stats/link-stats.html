@@ -1,13 +1,14 @@
 <ng-container *transloco="let t">
-  <div class="stats">
+  <div class="stats" data-tour="stats-panel">
     <div class="stats-header">
-      <div class="period">
+      <div class="period" role="group" [attr.aria-label]="t('stats.periodLabel')">
         <span class="muted">{{ t('stats.periodLabel') }}</span>
         @for (p of periods; track p) {
           <button
             type="button"
             class="chip"
             [class.active]="p === period()"
+            [attr.aria-pressed]="p === period()"
             (click)="selectPeriod(p)"
             [disabled]="loading()"
           >
@@ -16,10 +17,10 @@
         }
       </div>
       @if (stats(); as s) {
-        <div class="total">
+        <div class="total" data-tour="scan-total">
           {{
-            t(s.total === 1 ? 'stats.totalScans' : 'stats.totalScansPlural', {
-              count: s.total | number: undefined : locale.lang(),
+            t(displayTotal() === 1 ? 'stats.totalScans' : 'stats.totalScansPlural', {
+              count: displayTotal() | number: undefined : locale.lang(),
               since: s.since | date: 'mediumDate' : undefined : locale.lang(),
             })
           }}

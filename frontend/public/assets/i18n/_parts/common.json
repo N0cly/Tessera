@@ -10,6 +10,7 @@
         "github": "GitHub",
         "dashboard": "Dashboard",
         "openDashboard": "Open dashboard",
+        "seeDemo": "See the demo",
         "signIn": "Sign in",
         "signOut": "Sign out",
         "links": "Links"
@@ -44,6 +45,7 @@
         "github": "GitHub",
         "dashboard": "Tableau de bord",
         "openDashboard": "Ouvrir le tableau de bord",
+        "seeDemo": "Voir la démo",
         "signIn": "Se connecter",
         "signOut": "Se déconnecter",
         "links": "Liens"
@@ -78,6 +80,7 @@
         "github": "GitHub",
         "dashboard": "Panel",
         "openDashboard": "Abrir el panel",
+        "seeDemo": "Ver la demo",
         "signIn": "Iniciar sesión",
         "signOut": "Cerrar sesión",
         "links": "Enlaces"
@@ -112,6 +115,7 @@
         "github": "GitHub",
         "dashboard": "Dashboard",
         "openDashboard": "Apri la dashboard",
+        "seeDemo": "Vedi la demo",
         "signIn": "Accedi",
         "signOut": "Esci",
         "links": "Link"
@@ -146,6 +150,7 @@
         "github": "GitHub",
         "dashboard": "Dashboard",
         "openDashboard": "Dashboard öffnen",
+        "seeDemo": "Demo ansehen",
         "signIn": "Anmelden",
         "signOut": "Abmelden",
         "links": "Links"

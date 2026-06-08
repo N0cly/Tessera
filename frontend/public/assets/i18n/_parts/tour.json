@@ -1,0 +1,305 @@
+{
+  "namespace": "tour",
+  "translations": {
+    "en": {
+      "replay": "Take the tour",
+      "next": "Next",
+      "done": "Done",
+      "steps": {
+        "kpis": {
+          "title": "Your dashboard",
+          "text": "At a glance: active codes, total scans, this period's traffic and the average per code. This demo is pre-filled with 90 days of sample data."
+        },
+        "chart": {
+          "title": "Scans over time",
+          "text": "Every scan of every code, day by day. Switch between 7, 30 and 90 days to spot trends."
+        },
+        "breakdowns": {
+          "title": "Who's scanning",
+          "text": "Your top codes and the device mix behind the scans — all computed live from the scan history."
+        },
+        "analytics": {
+          "title": "A code's analytics",
+          "text": "Open any code's stats to see its scans over time, by country and by device."
+        },
+        "edit": {
+          "title": "Change the destination",
+          "text": "This is the whole point of a dynamic code: repoint it anytime — the printed QR never changes."
+        },
+        "qr": {
+          "title": "The QR code",
+          "text": "Each code has a ready-to-use QR you can download as PNG or SVG. It encodes a permanent short link, never the destination."
+        },
+        "create": {
+          "title": "Now your turn",
+          "text": "Create your own code: paste any destination URL, give it a name, and hit create."
+        },
+        "yourQr": {
+          "title": "Your new code",
+          "text": "Here it is, at the top of the list — with its own QR, ready to scan."
+        },
+        "openCode": {
+          "title": "Open your code",
+          "text": "Click the /r/… link. In the demo it opens a safe interstitial in a new tab (no real redirect) and logs a scan. Open it, then come back to this tab."
+        },
+        "watchScan": {
+          "title": "Your scan appeared",
+          "text": "Back already? Your scan just landed and the total ticks up live. Real codes update the same way, in real time."
+        },
+        "changeDest": {
+          "title": "Repoint it",
+          "text": "Open 'Edit destination', change the URL and save. Same code, new target."
+        },
+        "openAgain": {
+          "title": "Scan it again",
+          "text": "Open your code once more — the interstitial now shows the new destination, and your scan count climbs again."
+        },
+        "finish": {
+          "title": "That's Tessera",
+          "text": "Codes that never expire, destinations you can change, analytics that stay yours. Like it?",
+          "cta": "Host your own in minutes →"
+        }
+      }
+    },
+    "fr": {
+      "replay": "Faire la visite",
+      "next": "Suivant",
+      "done": "Terminé",
+      "steps": {
+        "kpis": {
+          "title": "Votre tableau de bord",
+          "text": "En un coup d'œil : codes actifs, scans totaux, trafic de la période et moyenne par code. Cette démo est pré-remplie avec 90 jours de données d'exemple."
+        },
+        "chart": {
+          "title": "Scans dans le temps",
+          "text": "Chaque scan de chaque code, jour après jour. Basculez entre 7, 30 et 90 jours pour repérer les tendances."
+        },
+        "breakdowns": {
+          "title": "Qui scanne",
+          "text": "Vos meilleurs codes et la répartition par appareil — calculés en direct depuis l'historique des scans."
+        },
+        "analytics": {
+          "title": "L'analytique d'un code",
+          "text": "Ouvrez les stats d'un code pour voir ses scans dans le temps, par pays et par appareil."
+        },
+        "edit": {
+          "title": "Changer la destination",
+          "text": "C'est tout l'intérêt d'un code dynamique : redirigez-le quand vous voulez — le QR imprimé ne change jamais."
+        },
+        "qr": {
+          "title": "Le code QR",
+          "text": "Chaque code a un QR prêt à l'emploi, téléchargeable en PNG ou SVG. Il encode un lien court permanent, jamais la destination."
+        },
+        "create": {
+          "title": "À vous de jouer",
+          "text": "Créez votre propre code : collez une URL de destination, donnez-lui un nom, puis cliquez sur Créer."
+        },
+        "yourQr": {
+          "title": "Votre nouveau code",
+          "text": "Le voici, en haut de la liste — avec son propre QR, prêt à scanner."
+        },
+        "openCode": {
+          "title": "Ouvrez votre code",
+          "text": "Cliquez sur le lien /r/…. En démo, il ouvre une page intermédiaire sûre dans un nouvel onglet (pas de vraie redirection) et journalise un scan. Ouvrez-la, puis revenez sur cet onglet."
+        },
+        "watchScan": {
+          "title": "Votre scan est apparu",
+          "text": "Déjà de retour ? Votre scan vient d'arriver et le total grimpe en direct. Les vrais codes se mettent à jour de la même façon, en temps réel."
+        },
+        "changeDest": {
+          "title": "Redirigez-le",
+          "text": "Ouvrez « Modifier la destination », changez l'URL et enregistrez. Même code, nouvelle cible."
+        },
+        "openAgain": {
+          "title": "Scannez-le à nouveau",
+          "text": "Ouvrez votre code une fois de plus — la page intermédiaire affiche désormais la nouvelle destination, et votre compteur de scans remonte."
+        },
+        "finish": {
+          "title": "Voilà Tessera",
+          "text": "Des codes qui n'expirent jamais, des destinations modifiables, une analytique qui reste à vous. Ça vous plaît ?",
+          "cta": "Hébergez le vôtre en quelques minutes →"
+        }
+      }
+    },
+    "es": {
+      "replay": "Hacer el tour",
+      "next": "Siguiente",
+      "done": "Listo",
+      "steps": {
+        "kpis": {
+          "title": "Tu panel",
+          "text": "De un vistazo: códigos activos, escaneos totales, tráfico del periodo y media por código. Esta demo viene con 90 días de datos de ejemplo."
+        },
+        "chart": {
+          "title": "Escaneos en el tiempo",
+          "text": "Cada escaneo de cada código, día a día. Cambia entre 7, 30 y 90 días para ver tendencias."
+        },
+        "breakdowns": {
+          "title": "Quién escanea",
+          "text": "Tus códigos principales y el reparto por dispositivo, calculados en directo desde el historial de escaneos."
+        },
+        "analytics": {
+          "title": "Analíticas de un código",
+          "text": "Abre las estadísticas de cualquier código para ver sus escaneos en el tiempo, por país y por dispositivo."
+        },
+        "edit": {
+          "title": "Cambiar el destino",
+          "text": "Esta es la clave de un código dinámico: redirígelo cuando quieras — el QR impreso nunca cambia."
+        },
+        "qr": {
+          "title": "El código QR",
+          "text": "Cada código tiene un QR listo para usar, descargable en PNG o SVG. Codifica un enlace corto permanente, nunca el destino."
+        },
+        "create": {
+          "title": "Ahora tú",
+          "text": "Crea tu propio código: pega una URL de destino, ponle un nombre y pulsa Crear."
+        },
+        "yourQr": {
+          "title": "Tu nuevo código",
+          "text": "Aquí está, arriba de la lista — con su propio QR, listo para escanear."
+        },
+        "openCode": {
+          "title": "Abre tu código",
+          "text": "Haz clic en el enlace /r/…. En la demo abre una página intermedia segura en una pestaña nueva (sin redirección real) y registra un escaneo. Ábrela y vuelve a esta pestaña."
+        },
+        "watchScan": {
+          "title": "Tu escaneo apareció",
+          "text": "¿Ya de vuelta? Tu escaneo acaba de llegar y el total sube en directo. Los códigos reales se actualizan igual, en tiempo real."
+        },
+        "changeDest": {
+          "title": "Redirígelo",
+          "text": "Abre «Editar destino», cambia la URL y guarda. Mismo código, nuevo destino."
+        },
+        "openAgain": {
+          "title": "Escanéalo otra vez",
+          "text": "Abre tu código una vez más — la página intermedia ahora muestra el nuevo destino, y tu contador de escaneos sube."
+        },
+        "finish": {
+          "title": "Esto es Tessera",
+          "text": "Códigos que nunca caducan, destinos que puedes cambiar, analíticas que siguen siendo tuyas. ¿Te gusta?",
+          "cta": "Aloja el tuyo en minutos →"
+        }
+      }
+    },
+    "it": {
+      "replay": "Fai il tour",
+      "next": "Avanti",
+      "done": "Fatto",
+      "steps": {
+        "kpis": {
+          "title": "La tua dashboard",
+          "text": "A colpo d'occhio: codici attivi, scansioni totali, traffico del periodo e media per codice. Questa demo è precompilata con 90 giorni di dati di esempio."
+        },
+        "chart": {
+          "title": "Scansioni nel tempo",
+          "text": "Ogni scansione di ogni codice, giorno per giorno. Passa tra 7, 30 e 90 giorni per cogliere le tendenze."
+        },
+        "breakdowns": {
+          "title": "Chi scansiona",
+          "text": "I tuoi codici migliori e la ripartizione per dispositivo, calcolati in tempo reale dallo storico delle scansioni."
+        },
+        "analytics": {
+          "title": "Le analisi di un codice",
+          "text": "Apri le statistiche di un codice per vedere le sue scansioni nel tempo, per paese e per dispositivo."
+        },
+        "edit": {
+          "title": "Cambia la destinazione",
+          "text": "È il senso di un codice dinamico: reindirizzalo quando vuoi — il QR stampato non cambia mai."
+        },
+        "qr": {
+          "title": "Il codice QR",
+          "text": "Ogni codice ha un QR pronto all'uso, scaricabile in PNG o SVG. Codifica un link breve permanente, mai la destinazione."
+        },
+        "create": {
+          "title": "Tocca a te",
+          "text": "Crea il tuo codice: incolla un URL di destinazione, dagli un nome e premi Crea."
+        },
+        "yourQr": {
+          "title": "Il tuo nuovo codice",
+          "text": "Eccolo, in cima alla lista — con il suo QR, pronto da scansionare."
+        },
+        "openCode": {
+          "title": "Apri il tuo codice",
+          "text": "Clicca sul link /r/…. Nella demo apre una pagina intermedia sicura in una nuova scheda (nessun reindirizzamento reale) e registra una scansione. Aprila, poi torna a questa scheda."
+        },
+        "watchScan": {
+          "title": "La tua scansione è apparsa",
+          "text": "Già tornato? La tua scansione è appena arrivata e il totale sale in diretta. I codici reali si aggiornano allo stesso modo, in tempo reale."
+        },
+        "changeDest": {
+          "title": "Reindirizzalo",
+          "text": "Apri «Modifica destinazione», cambia l'URL e salva. Stesso codice, nuova destinazione."
+        },
+        "openAgain": {
+          "title": "Scansionalo di nuovo",
+          "text": "Apri il tuo codice ancora una volta — la pagina intermedia mostra ora la nuova destinazione e il tuo contatore di scansioni sale."
+        },
+        "finish": {
+          "title": "Questa è Tessera",
+          "text": "Codici che non scadono mai, destinazioni modificabili, analisi che restano tue. Ti piace?",
+          "cta": "Ospita il tuo in pochi minuti →"
+        }
+      }
+    },
+    "de": {
+      "replay": "Tour starten",
+      "next": "Weiter",
+      "done": "Fertig",
+      "steps": {
+        "kpis": {
+          "title": "Dein Dashboard",
+          "text": "Auf einen Blick: aktive Codes, Scans gesamt, Traffic im Zeitraum und Durchschnitt pro Code. Diese Demo ist mit 90 Tagen Beispieldaten gefüllt."
+        },
+        "chart": {
+          "title": "Scans im Zeitverlauf",
+          "text": "Jeder Scan jedes Codes, Tag für Tag. Wechsle zwischen 7, 30 und 90 Tagen, um Trends zu erkennen."
+        },
+        "breakdowns": {
+          "title": "Wer scannt",
+          "text": "Deine Top-Codes und die Geräteverteilung — live aus dem Scan-Verlauf berechnet."
+        },
+        "analytics": {
+          "title": "Analytik eines Codes",
+          "text": "Öffne die Statistik eines Codes, um seine Scans im Zeitverlauf, nach Land und nach Gerät zu sehen."
+        },
+        "edit": {
+          "title": "Ziel ändern",
+          "text": "Genau dafür gibt es dynamische Codes: leite sie jederzeit um — der gedruckte QR-Code ändert sich nie."
+        },
+        "qr": {
+          "title": "Der QR-Code",
+          "text": "Jeder Code hat einen fertigen QR-Code, ladbar als PNG oder SVG. Er codiert einen dauerhaften Kurzlink, nie das Ziel."
+        },
+        "create": {
+          "title": "Jetzt du",
+          "text": "Erstelle deinen eigenen Code: füge eine Ziel-URL ein, gib ihm einen Namen und klicke auf Erstellen."
+        },
+        "yourQr": {
+          "title": "Dein neuer Code",
+          "text": "Da ist er, ganz oben in der Liste — mit eigenem QR-Code, bereit zum Scannen."
+        },
+        "openCode": {
+          "title": "Öffne deinen Code",
+          "text": "Klicke auf den /r/…-Link. In der Demo öffnet er eine sichere Zwischenseite in einem neuen Tab (keine echte Weiterleitung) und protokolliert einen Scan. Öffne sie und komm zu diesem Tab zurück."
+        },
+        "watchScan": {
+          "title": "Dein Scan ist da",
+          "text": "Schon zurück? Dein Scan ist gerade eingetroffen und die Summe steigt live. Echte Codes aktualisieren sich genauso, in Echtzeit."
+        },
+        "changeDest": {
+          "title": "Leite ihn um",
+          "text": "Öffne „Ziel bearbeiten“, ändere die URL und speichere. Gleicher Code, neues Ziel."
+        },
+        "openAgain": {
+          "title": "Scanne ihn erneut",
+          "text": "Öffne deinen Code noch einmal — die Zwischenseite zeigt jetzt das neue Ziel, und dein Scan-Zähler steigt weiter."
+        },
+        "finish": {
+          "title": "Das ist Tessera",
+          "text": "Codes, die nie ablaufen, änderbare Ziele, Analysen, die dir gehören. Gefällt's dir?",
+          "cta": "Hoste deinen eigenen in Minuten →"
+        }
+      }
+    }
+  }
+}
