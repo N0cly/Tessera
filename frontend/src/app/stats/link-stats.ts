@@ -1,3 +1,4 @@
+import { DatePipe, DecimalPipe } from '@angular/common';
 import {
   Component,
   Input,
@@ -8,8 +9,10 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ChartConfiguration } from 'chart.js';
 
+import { LocaleService } from '../core/locale.service';
 import { LinkStats, LinksService } from '../core/links.service';
 import { token } from '../core/tessera-tokens';
 import { ChartCanvasComponent } from './chart-canvas';
@@ -19,12 +22,14 @@ type Period = 7 | 30 | 90;
 @Component({
   selector: 'app-link-stats',
   standalone: true,
-  imports: [ChartCanvasComponent],
+  imports: [ChartCanvasComponent, TranslocoDirective, DatePipe, DecimalPipe],
   templateUrl: './link-stats.html',
   styleUrl: './link-stats.scss',
 })
 export class LinkStatsComponent implements OnInit, OnChanges {
   private readonly api = inject(LinksService);
+  private readonly transloco = inject(TranslocoService);
+  readonly locale = inject(LocaleService);
 
   @Input({ required: true }) linkIri!: string;
 
@@ -42,17 +47,26 @@ export class LinkStatsComponent implements OnInit, OnChanges {
 
   // Pre-built Chart.js configs derived from the latest stats. Colours are
   // pulled from tessera tokens at render time — never hardcoded.
+  /** Locale-formatted short day label for chart x-axes (e.g. "Jun 8" / "8 juin"). */
+  private dayLabel(iso: string): string {
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime())
+      ? iso
+      : d.toLocaleDateString(this.locale.lang(), { month: 'short', day: 'numeric' });
+  }
+
   readonly timeSeriesConfig = computed<ChartConfiguration | null>(() => {
+    this.locale.lang();
     const s = this.stats();
     if (!s || s.total === 0) return null;
     const accent = token('color-accent');
     return {
       type: 'line',
       data: {
-        labels: s.perDay.map((d) => d.date),
+        labels: s.perDay.map((d) => this.dayLabel(d.date)),
         datasets: [
           {
-            label: 'Scans',
+            label: this.transloco.translate('stats.scansLabel'),
             data: s.perDay.map((d) => d.count),
             borderColor: accent,
             backgroundColor: token('color-accent-soft'),
@@ -84,17 +98,21 @@ export class LinkStatsComponent implements OnInit, OnChanges {
     };
   });
 
-  readonly countryConfig = computed<ChartConfiguration | null>(() =>
-    this.breakdownConfig(
-      this.stats()?.byCountry.map((r) => ({ label: r.country ?? 'Unknown', value: r.count })),
-    ),
-  );
+  readonly countryConfig = computed<ChartConfiguration | null>(() => {
+    this.locale.lang();
+    const unknown = this.transloco.translate('stats.unknown');
+    return this.breakdownConfig(
+      this.stats()?.byCountry.map((r) => ({ label: r.country ?? unknown, value: r.count })),
+    );
+  });
 
-  readonly deviceConfig = computed<ChartConfiguration | null>(() =>
-    this.breakdownConfig(
-      this.stats()?.byDevice.map((r) => ({ label: r.device ?? 'Unknown', value: r.count })),
-    ),
-  );
+  readonly deviceConfig = computed<ChartConfiguration | null>(() => {
+    this.locale.lang();
+    const unknown = this.transloco.translate('stats.unknown');
+    return this.breakdownConfig(
+      this.stats()?.byDevice.map((r) => ({ label: r.device ?? unknown, value: r.count })),
+    );
+  });
 
   ngOnInit(): void {
     this.refresh();
@@ -123,7 +141,7 @@ export class LinkStatsComponent implements OnInit, OnChanges {
       error: () => {
         this.stats.set(null);
         this.loading.set(false);
-        this.error.set('Could not load stats.');
+        this.error.set(this.transloco.translate('stats.loadError'));
       },
     });
   }

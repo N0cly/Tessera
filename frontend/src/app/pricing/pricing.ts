@@ -1,9 +1,14 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 import { AuthService } from '../core/auth.service';
 import { BillingService } from '../core/billing.service';
+import { LanguageSwitcherComponent } from '../core/language-switcher';
+import { LocaleService } from '../core/locale.service';
+import { withLocalePrefix } from '../core/locale';
 import { PricingPlan, PricingService } from '../core/pricing.service';
+import { SeoService } from '../core/seo.service';
 
 interface PlanFeature {
   text: string;
@@ -19,15 +24,25 @@ interface PaidCard {
 @Component({
   selector: 'app-pricing',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoDirective, LanguageSwitcherComponent],
   templateUrl: './pricing.html',
   styleUrl: './pricing.scss',
 })
-export class PricingComponent implements OnInit {
+export class PricingComponent implements OnInit, OnDestroy {
   private readonly pricing = inject(PricingService);
   private readonly billing = inject(BillingService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly transloco = inject(TranslocoService);
+  private readonly seo = inject(SeoService);
+  readonly locale = inject(LocaleService);
+
+  private readonly seoSub = this.seo.apply('pricing');
+
+  /** Locale-prefixed internal path for marketing links (keeps /fr, /es, … space). */
+  localeLink(path: string): string {
+    return withLocalePrefix(this.locale.lang(), path);
+  }
 
   readonly githubUrl = 'https://github.com/N0cly/Tessera';
 
@@ -40,32 +55,40 @@ export class PricingComponent implements OnInit {
 
   // Feature lists are app copy (NOT prices). Unbuilt Pro features are tagged
   // `soon` so the UI marks them "coming soon" instead of selling vapor
-  // (tessera-pricing-page.md, out-of-scope section).
-  private readonly starterFeatures: PlanFeature[] = [
-    { text: 'Full open-source core' },
-    { text: 'Complete scan analytics' },
-    { text: 'Fallback URL when a subscription lapses' },
-    { text: 'EU hosting' },
-  ];
-  private readonly proFeatures: PlanFeature[] = [
-    { text: 'Everything in Starter' },
-    { text: 'Custom domain', soon: true },
-    { text: 'QR branding (logo & colours)', soon: true },
-    { text: 'Team members', soon: true },
-    { text: 'Priority support' },
-  ];
+  // (tessera-pricing-page.md, out-of-scope section). Built as getters so the
+  // text resolves against the active language at read time.
+  private get starterFeatures(): PlanFeature[] {
+    return [
+      { text: this.transloco.translate('pricing.features.starter.core') },
+      { text: this.transloco.translate('pricing.features.starter.analytics') },
+      { text: this.transloco.translate('pricing.features.starter.fallback') },
+      { text: this.transloco.translate('pricing.features.starter.euHosting') },
+    ];
+  }
+  private get proFeatures(): PlanFeature[] {
+    return [
+      { text: this.transloco.translate('pricing.features.pro.everythingStarter') },
+      { text: this.transloco.translate('pricing.features.pro.customDomain'), soon: true },
+      { text: this.transloco.translate('pricing.features.pro.branding'), soon: true },
+      { text: this.transloco.translate('pricing.features.pro.team'), soon: true },
+      { text: this.transloco.translate('pricing.features.pro.prioritySupport') },
+    ];
+  }
 
   // Self-host is genuinely free & open-source — not a Paddle price — so its
   // card content is static (the "no hardcoded prices" rule is about the paid
   // plans, whose amounts must come from Paddle).
-  readonly selfHostFeatures: PlanFeature[] = [
-    { text: 'Unlimited codes' },
-    { text: 'The full core, forever' },
-    { text: 'Open source (MIT)' },
-    { text: 'Your data, your server' },
-  ];
+  get selfHostFeatures(): PlanFeature[] {
+    return [
+      { text: this.transloco.translate('pricing.features.selfHost.unlimited') },
+      { text: this.transloco.translate('pricing.features.selfHost.forever') },
+      { text: this.transloco.translate('pricing.features.selfHost.openSource') },
+      { text: this.transloco.translate('pricing.features.selfHost.yourData') },
+    ];
+  }
 
   readonly paidCards = computed<PaidCard[]>(() => {
+    this.locale.lang(); // re-resolve feature text when the language changes
     const list = this.plans();
     if (!list) return [];
     const features: Record<string, PlanFeature[]> = {
@@ -91,14 +114,18 @@ export class PricingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.seoSub.unsubscribe();
+  }
+
   /** True when we have a real, Paddle-sourced price to show. */
   isPriced(p: PricingPlan): boolean {
     return p.available && p.amount !== null && p.currency !== null;
   }
 
-  /** Format a minor-unit amount in its currency, using the visitor's locale. */
+  /** Format a minor-unit amount in its currency, using the active language. */
   formatPrice(minor: number, currency: string): string {
-    const fmt = new Intl.NumberFormat(undefined, { style: 'currency', currency });
+    const fmt = new Intl.NumberFormat(this.locale.lang(), { style: 'currency', currency });
     const decimals = fmt.resolvedOptions().maximumFractionDigits ?? 2;
     return fmt.format(minor / 10 ** decimals);
   }
@@ -106,13 +133,13 @@ export class PricingComponent implements OnInit {
   intervalLabel(interval: string | null): string {
     switch (interval) {
       case 'month':
-        return '/mo';
+        return this.transloco.translate('pricing.interval.month');
       case 'year':
-        return '/yr';
+        return this.transloco.translate('pricing.interval.year');
       case 'week':
-        return '/wk';
+        return this.transloco.translate('pricing.interval.week');
       case 'day':
-        return '/day';
+        return this.transloco.translate('pricing.interval.day');
       default:
         return '';
     }
@@ -123,20 +150,27 @@ export class PricingComponent implements OnInit {
     if (!p.promo) return null;
     if (p.promo.type === 'percentage') {
       const n = p.promo.amount;
-      return `−${Number.isInteger(n) ? n : n.toFixed(1)}%`;
+      const formatted = new Intl.NumberFormat(this.locale.lang(), {
+        maximumFractionDigits: 1,
+      }).format(n);
+      return `−${formatted}%`;
     }
     if (p.currency) return `−${this.formatPrice(p.promo.amount, p.currency)}`;
-    return 'Promo';
+    return this.transloco.translate('pricing.promo.badge');
   }
 
   promoEnds(p: PricingPlan): string | null {
     if (!p.promo?.endsAt) return null;
     const d = new Date(p.promo.endsAt);
-    return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString();
+    return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString(this.locale.lang());
   }
 
   codeLimitLabel(limit: number | null): string {
-    return limit === null ? 'Unlimited codes' : `Up to ${limit.toLocaleString()} codes`;
+    return limit === null
+      ? this.transloco.translate('pricing.codeLimit.unlimited')
+      : this.transloco.translate('pricing.codeLimit.upTo', {
+          count: limit.toLocaleString(this.locale.lang()),
+        });
   }
 
   startTrial(plan: 'starter' | 'pro'): void {
@@ -156,7 +190,7 @@ export class PricingComponent implements OnInit {
       },
       error: () => {
         this.checkoutBusy.set(null);
-        this.checkoutError.set('Checkout is unavailable right now. Please try again later.');
+        this.checkoutError.set(this.transloco.translate('pricing.checkoutError'));
       },
     });
   }

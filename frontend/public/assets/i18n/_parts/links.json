@@ -1,0 +1,210 @@
+{
+  "namespace": "links",
+  "translations": {
+    "en": {
+      "title": "Your links",
+      "navSections": "Dashboard sections",
+      "navOverview": "Overview",
+      "create": {
+        "heading": "Create a new link",
+        "destinationLabel": "Destination URL",
+        "destinationPlaceholder": "https://example.com/long-path",
+        "nameLabel": "Name (optional)",
+        "namePlaceholder": "Spring menu, support page, …",
+        "submit": "Create link",
+        "submitting": "Creating…"
+      },
+      "upgradeLink": "View plans & upgrade →",
+      "empty": "No links yet. Create one above.",
+      "edit": {
+        "destinationLabel": "Destination URL",
+        "fallbackLabel": "Fallback URL (optional)",
+        "fallbackPlaceholder": "https://… where this code goes if your plan lapses",
+        "fallbackHint": "If your subscription lapses, this code redirects here instead of breaking.",
+        "saving": "Saving…"
+      },
+      "fallbackBadge": "↳ fallback",
+      "fallbackTitle": "Used if your subscription lapses",
+      "editLinks": "Edit links",
+      "showStats": "Show stats",
+      "hideStats": "Hide stats",
+      "downloadPng": "Download PNG",
+      "downloadSvg": "Download SVG",
+      "qrAria": "QR code for this link",
+      "qrAlt": "QR code for /r/{{ slug }}",
+      "qrPlaceholder": "QR…",
+      "confirmDelete": "Delete /r/{{ slug }}? This cannot be undone.",
+      "errors": {
+        "load": "Could not load links.",
+        "create": "Could not create link.",
+        "save": "Could not save changes.",
+        "delete": "Could not delete link.",
+        "download": "Could not download {{ format }}."
+      }
+    },
+    "fr": {
+      "title": "Vos liens",
+      "navSections": "Sections du tableau de bord",
+      "navOverview": "Vue d'ensemble",
+      "create": {
+        "heading": "Créer un nouveau lien",
+        "destinationLabel": "URL de destination",
+        "destinationPlaceholder": "https://exemple.com/chemin-long",
+        "nameLabel": "Nom (facultatif)",
+        "namePlaceholder": "Menu de printemps, page d’aide, …",
+        "submit": "Créer le lien",
+        "submitting": "Création…"
+      },
+      "upgradeLink": "Voir les offres et passer à un forfait supérieur →",
+      "empty": "Aucun lien pour l’instant. Créez-en un ci-dessus.",
+      "edit": {
+        "destinationLabel": "URL de destination",
+        "fallbackLabel": "URL de repli (facultatif)",
+        "fallbackPlaceholder": "https://… où mène ce code si votre forfait expire",
+        "fallbackHint": "Si votre abonnement expire, ce code redirige ici au lieu de cesser de fonctionner.",
+        "saving": "Enregistrement…"
+      },
+      "fallbackBadge": "↳ repli",
+      "fallbackTitle": "Utilisé si votre abonnement expire",
+      "editLinks": "Modifier les liens",
+      "showStats": "Afficher les statistiques",
+      "hideStats": "Masquer les statistiques",
+      "downloadPng": "Télécharger le PNG",
+      "downloadSvg": "Télécharger le SVG",
+      "qrAria": "QR code de ce lien",
+      "qrAlt": "QR code pour /r/{{ slug }}",
+      "qrPlaceholder": "QR…",
+      "confirmDelete": "Supprimer /r/{{ slug }} ? Cette action est irréversible.",
+      "errors": {
+        "load": "Impossible de charger les liens.",
+        "create": "Impossible de créer le lien.",
+        "save": "Impossible d’enregistrer les modifications.",
+        "delete": "Impossible de supprimer le lien.",
+        "download": "Impossible de télécharger le {{ format }}."
+      }
+    },
+    "es": {
+      "title": "Tus enlaces",
+      "navSections": "Secciones del panel",
+      "navOverview": "Resumen",
+      "create": {
+        "heading": "Crear un nuevo enlace",
+        "destinationLabel": "URL de destino",
+        "destinationPlaceholder": "https://ejemplo.com/ruta-larga",
+        "nameLabel": "Nombre (opcional)",
+        "namePlaceholder": "Menú de primavera, página de ayuda, …",
+        "submit": "Crear enlace",
+        "submitting": "Creando…"
+      },
+      "upgradeLink": "Ver planes y mejorar →",
+      "empty": "Aún no hay enlaces. Crea uno arriba.",
+      "edit": {
+        "destinationLabel": "URL de destino",
+        "fallbackLabel": "URL de respaldo (opcional)",
+        "fallbackPlaceholder": "https://… a dónde va este código si tu plan caduca",
+        "fallbackHint": "Si tu suscripción caduca, este código redirige aquí en lugar de dejar de funcionar.",
+        "saving": "Guardando…"
+      },
+      "fallbackBadge": "↳ respaldo",
+      "fallbackTitle": "Se usa si tu suscripción caduca",
+      "editLinks": "Editar enlaces",
+      "showStats": "Mostrar estadísticas",
+      "hideStats": "Ocultar estadísticas",
+      "downloadPng": "Descargar PNG",
+      "downloadSvg": "Descargar SVG",
+      "qrAria": "Código QR de este enlace",
+      "qrAlt": "Código QR para /r/{{ slug }}",
+      "qrPlaceholder": "QR…",
+      "confirmDelete": "¿Eliminar /r/{{ slug }}? Esta acción no se puede deshacer.",
+      "errors": {
+        "load": "No se pudieron cargar los enlaces.",
+        "create": "No se pudo crear el enlace.",
+        "save": "No se pudieron guardar los cambios.",
+        "delete": "No se pudo eliminar el enlace.",
+        "download": "No se pudo descargar el {{ format }}."
+      }
+    },
+    "it": {
+      "title": "I tuoi link",
+      "navSections": "Sezioni della dashboard",
+      "navOverview": "Panoramica",
+      "create": {
+        "heading": "Crea un nuovo link",
+        "destinationLabel": "URL di destinazione",
+        "destinationPlaceholder": "https://esempio.com/percorso-lungo",
+        "nameLabel": "Nome (facoltativo)",
+        "namePlaceholder": "Menù di primavera, pagina di supporto, …",
+        "submit": "Crea link",
+        "submitting": "Creazione…"
+      },
+      "upgradeLink": "Vedi i piani e fai l’upgrade →",
+      "empty": "Ancora nessun link. Creane uno qui sopra.",
+      "edit": {
+        "destinationLabel": "URL di destinazione",
+        "fallbackLabel": "URL di riserva (facoltativo)",
+        "fallbackPlaceholder": "https://… dove va questo codice se il tuo piano scade",
+        "fallbackHint": "Se il tuo abbonamento scade, questo codice reindirizza qui invece di smettere di funzionare.",
+        "saving": "Salvataggio…"
+      },
+      "fallbackBadge": "↳ riserva",
+      "fallbackTitle": "Usato se il tuo abbonamento scade",
+      "editLinks": "Modifica i link",
+      "showStats": "Mostra le statistiche",
+      "hideStats": "Nascondi le statistiche",
+      "downloadPng": "Scarica PNG",
+      "downloadSvg": "Scarica SVG",
+      "qrAria": "Codice QR di questo link",
+      "qrAlt": "Codice QR per /r/{{ slug }}",
+      "qrPlaceholder": "QR…",
+      "confirmDelete": "Eliminare /r/{{ slug }}? L’operazione non può essere annullata.",
+      "errors": {
+        "load": "Impossibile caricare i link.",
+        "create": "Impossibile creare il link.",
+        "save": "Impossibile salvare le modifiche.",
+        "delete": "Impossibile eliminare il link.",
+        "download": "Impossibile scaricare il {{ format }}."
+      }
+    },
+    "de": {
+      "title": "Deine Links",
+      "navSections": "Dashboard-Bereiche",
+      "navOverview": "Übersicht",
+      "create": {
+        "heading": "Neuen Link erstellen",
+        "destinationLabel": "Ziel-URL",
+        "destinationPlaceholder": "https://beispiel.de/langer-pfad",
+        "nameLabel": "Name (optional)",
+        "namePlaceholder": "Frühlingsmenü, Hilfeseite, …",
+        "submit": "Link erstellen",
+        "submitting": "Erstellen…"
+      },
+      "upgradeLink": "Tarife ansehen und upgraden →",
+      "empty": "Noch keine Links. Erstelle oben einen.",
+      "edit": {
+        "destinationLabel": "Ziel-URL",
+        "fallbackLabel": "Ausweich-URL (optional)",
+        "fallbackPlaceholder": "https://… wohin dieser Code führt, wenn dein Tarif ausläuft",
+        "fallbackHint": "Wenn dein Abonnement ausläuft, leitet dieser Code hierher um, statt zu brechen.",
+        "saving": "Speichern…"
+      },
+      "fallbackBadge": "↳ Ausweich",
+      "fallbackTitle": "Wird verwendet, wenn dein Abonnement ausläuft",
+      "editLinks": "Links bearbeiten",
+      "showStats": "Statistiken anzeigen",
+      "hideStats": "Statistiken ausblenden",
+      "downloadPng": "PNG herunterladen",
+      "downloadSvg": "SVG herunterladen",
+      "qrAria": "QR-Code für diesen Link",
+      "qrAlt": "QR-Code für /r/{{ slug }}",
+      "qrPlaceholder": "QR…",
+      "confirmDelete": "/r/{{ slug }} löschen? Das kann nicht rückgängig gemacht werden.",
+      "errors": {
+        "load": "Links konnten nicht geladen werden.",
+        "create": "Link konnte nicht erstellt werden.",
+        "save": "Änderungen konnten nicht gespeichert werden.",
+        "delete": "Link konnte nicht gelöscht werden.",
+        "download": "{{ format }} konnte nicht heruntergeladen werden."
+      }
+    }
+  }
+}

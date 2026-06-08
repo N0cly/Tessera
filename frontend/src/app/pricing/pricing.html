@@ -1,207 +1,216 @@
-<header class="topbar">
-  <a class="brand" routerLink="/">
-    <img
-      class="brand-mark"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <span class="brand-name">Tessera</span>
-  </a>
-  <nav class="nav">
-    <a class="nav-link" routerLink="/">Home</a>
-    <a class="nav-link" [href]="githubUrl" target="_blank" rel="noopener">GitHub</a>
-    <a class="nav-cta" routerLink="/app">Open dashboard →</a>
-  </nav>
-</header>
+<ng-container *transloco="let t">
+  <header class="topbar">
+    <a class="brand" [routerLink]="localeLink('/')">
+      <img
+        class="brand-mark"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <span class="brand-name">Tessera</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link" [routerLink]="localeLink('/')">{{ t('common.nav.home') }}</a>
+      <a class="nav-link" [href]="githubUrl" target="_blank" rel="noopener">{{
+        t('common.nav.github')
+      }}</a>
+      <a class="nav-cta" routerLink="/app">{{ t('common.nav.openDashboard') }} →</a>
+      <app-language-switcher />
+    </nav>
+  </header>
 
-<main class="page">
-  <section class="intro">
-    <p class="eyebrow">Pricing</p>
-    <h1>Honest pricing. No hostages.</h1>
-    <p class="lede">
-      Self-host the full open-source core for free, forever. Or let us run it for you on EU
-      infrastructure. Either way, your codes never expire and your data stays yours.
-    </p>
-  </section>
+  <main class="page">
+    <section class="intro">
+      <p class="eyebrow">{{ t('common.nav.pricing') }}</p>
+      <h1>{{ t('pricing.heroTitle') }}</h1>
+      <p class="lede">
+        {{ t('pricing.heroLede') }}
+      </p>
+    </section>
 
-  <section class="pricing-grid" aria-label="Plans">
-    <!-- ─────────────  SELF-HOST (free, open source — not a Paddle price)  ───────────── -->
-    <article class="card">
-      <div class="card-head">
-        <h2 class="plan-name">Self-host</h2>
-        <p class="plan-tag">{{ codeLimitLabel(null) }}</p>
-      </div>
-      <div class="price">
-        <span class="price-amount">Free</span>
-      </div>
-      <p class="price-note">Open source, MIT licensed. Run it on your own server.</p>
-      <ul class="features" role="list">
-        @for (f of selfHostFeatures; track f.text) {
-          <li><span class="tick" aria-hidden="true">✓</span> {{ f.text }}</li>
-        }
-      </ul>
-      <a class="btn btn-secondary" [href]="githubUrl" target="_blank" rel="noopener">
-        View on GitHub
-      </a>
-    </article>
-
-    <!-- ─────────────  PAID PLANS (priced live from Paddle)  ───────────── -->
-    @if (loading()) {
-      @for (i of [1, 2]; track i) {
-        <article class="card is-loading" aria-hidden="true">
-          <div class="card-head">
-            <span class="skeleton skeleton-title"></span>
-            <span class="skeleton skeleton-line"></span>
-          </div>
-          <span class="skeleton skeleton-price"></span>
-          <span class="skeleton skeleton-line"></span>
-          <span class="skeleton skeleton-line"></span>
-        </article>
-      }
-    } @else if (loadError()) {
-      <article class="card unavailable-card">
+    <section class="pricing-grid" [attr.aria-label]="t('pricing.plansAriaLabel')">
+      <!-- ─────────────  SELF-HOST (free, open source — not a Paddle price)  ───────────── -->
+      <article class="card">
         <div class="card-head">
-          <h2 class="plan-name">Hosted plans</h2>
+          <h2 class="plan-name">{{ t('pricing.selfHost.name') }}</h2>
+          <p class="plan-tag">{{ codeLimitLabel(null) }}</p>
         </div>
-        <p class="price-note">
-          Pricing is temporarily unavailable. Please try again shortly — or
-          <a [href]="githubUrl" target="_blank" rel="noopener">self-host for free</a>.
-        </p>
+        <div class="price">
+          <span class="price-amount">{{ t('pricing.free') }}</span>
+        </div>
+        <p class="price-note">{{ t('pricing.selfHost.priceNote') }}</p>
+        <ul class="features" role="list">
+          @for (f of selfHostFeatures; track f.text) {
+            <li><span class="tick" aria-hidden="true">✓</span> {{ f.text }}</li>
+          }
+        </ul>
+        <a class="btn btn-secondary" [href]="githubUrl" target="_blank" rel="noopener">
+          {{ t('common.actions.viewOnGithub') }}
+        </a>
       </article>
-    } @else {
-      @for (card of paidCards(); track card.data.plan) {
-        <article class="card">
-          <div class="card-head">
-            <h2 class="plan-name">{{ card.data.name }}</h2>
-            <p class="plan-tag">{{ codeLimitLabel(card.data.codeLimit) }}</p>
-          </div>
 
-          <div class="price">
-            @if (isPriced(card.data)) {
-              @if (card.data.promo) {
-                <span class="promo-badge">{{ promoBadge(card.data) }}</span>
-                <span class="price-was">{{
-                  formatPrice(card.data.amount!, card.data.currency!)
-                }}</span>
-                <span class="price-now">
+      <!-- ─────────────  PAID PLANS (priced live from Paddle)  ───────────── -->
+      @if (loading()) {
+        @for (i of [1, 2]; track i) {
+          <article class="card is-loading" aria-hidden="true">
+            <div class="card-head">
+              <span class="skeleton skeleton-title"></span>
+              <span class="skeleton skeleton-line"></span>
+            </div>
+            <span class="skeleton skeleton-price"></span>
+            <span class="skeleton skeleton-line"></span>
+            <span class="skeleton skeleton-line"></span>
+          </article>
+        }
+      } @else if (loadError()) {
+        <article class="card unavailable-card">
+          <div class="card-head">
+            <h2 class="plan-name">{{ t('pricing.hostedPlans') }}</h2>
+          </div>
+          <p class="price-note">
+            {{ t('pricing.pricingUnavailableLead') }}
+            <a [href]="githubUrl" target="_blank" rel="noopener">{{
+              t('pricing.selfHostForFree')
+            }}</a
+            >.
+          </p>
+        </article>
+      } @else {
+        @for (card of paidCards(); track card.data.plan) {
+          <article class="card">
+            <div class="card-head">
+              <h2 class="plan-name">{{ card.data.name }}</h2>
+              <p class="plan-tag">{{ codeLimitLabel(card.data.codeLimit) }}</p>
+            </div>
+
+            <div class="price">
+              @if (isPriced(card.data)) {
+                @if (card.data.promo) {
+                  <span class="promo-badge">{{ promoBadge(card.data) }}</span>
+                  <span class="price-was">{{
+                    formatPrice(card.data.amount!, card.data.currency!)
+                  }}</span>
+                  <span class="price-now">
+                    <span class="price-amount">{{
+                      formatPrice(card.data.promo.finalAmount, card.data.currency!)
+                    }}</span>
+                    <span class="price-interval">{{ intervalLabel(card.data.interval) }}</span>
+                  </span>
+                } @else {
                   <span class="price-amount">{{
-                    formatPrice(card.data.promo.finalAmount, card.data.currency!)
+                    formatPrice(card.data.amount!, card.data.currency!)
                   }}</span>
                   <span class="price-interval">{{ intervalLabel(card.data.interval) }}</span>
-                </span>
-              } @else {
-                <span class="price-amount">{{
-                  formatPrice(card.data.amount!, card.data.currency!)
-                }}</span>
-                <span class="price-interval">{{ intervalLabel(card.data.interval) }}</span>
-              }
-            } @else {
-              <span class="price-amount price-unavailable">—</span>
-            }
-          </div>
-
-          @if (isPriced(card.data) && promoEnds(card.data)) {
-            <p class="price-note">Offer ends {{ promoEnds(card.data) }}.</p>
-          } @else if (!isPriced(card.data) && card.data.priceId === null) {
-            <p class="price-note">Hosted plan — not enabled on this instance.</p>
-          } @else if (!isPriced(card.data)) {
-            <p class="price-note">Pricing temporarily unavailable.</p>
-          }
-
-          <ul class="features" role="list">
-            @for (f of card.features; track f.text) {
-              <li [class.is-soon]="f.soon">
-                <span class="tick" aria-hidden="true">✓</span> {{ f.text }}
-                @if (f.soon) {
-                  <span class="soon-tag">coming soon</span>
                 }
-              </li>
+              } @else {
+                <span class="price-amount price-unavailable">—</span>
+              }
+            </div>
+
+            @if (isPriced(card.data) && promoEnds(card.data)) {
+              <p class="price-note">{{ t('pricing.offerEnds', { date: promoEnds(card.data) }) }}</p>
+            } @else if (!isPriced(card.data) && card.data.priceId === null) {
+              <p class="price-note">{{ t('pricing.notEnabled') }}</p>
+            } @else if (!isPriced(card.data)) {
+              <p class="price-note">{{ t('pricing.priceUnavailable') }}</p>
             }
-          </ul>
 
-          @if (isPriced(card.data)) {
-            <button
-              type="button"
-              class="btn btn-primary"
-              [disabled]="checkoutBusy() === card.data.plan"
-              (click)="startTrial(card.data.plan)"
-            >
-              {{ checkoutBusy() === card.data.plan ? 'Redirecting…' : 'Start 14-day trial' }}
-            </button>
-          } @else if (card.data.priceId === null) {
-            <a class="btn btn-secondary" [href]="githubUrl" target="_blank" rel="noopener">
-              Self-host instead
-            </a>
-          } @else {
-            <button type="button" class="btn btn-secondary" disabled>Unavailable</button>
-          }
-        </article>
+            <ul class="features" role="list">
+              @for (f of card.features; track f.text) {
+                <li [class.is-soon]="f.soon">
+                  <span class="tick" aria-hidden="true">✓</span> {{ f.text }}
+                  @if (f.soon) {
+                    <span class="soon-tag">{{ t('common.comingSoon') }}</span>
+                  }
+                </li>
+              }
+            </ul>
+
+            @if (isPriced(card.data)) {
+              <button
+                type="button"
+                class="btn btn-primary"
+                [disabled]="checkoutBusy() === card.data.plan"
+                (click)="startTrial(card.data.plan)"
+              >
+                {{
+                  checkoutBusy() === card.data.plan
+                    ? t('pricing.redirecting')
+                    : t('pricing.startTrial')
+                }}
+              </button>
+            } @else if (card.data.priceId === null) {
+              <a class="btn btn-secondary" [href]="githubUrl" target="_blank" rel="noopener">
+                {{ t('pricing.selfHostInstead') }}
+              </a>
+            } @else {
+              <button type="button" class="btn btn-secondary" disabled>
+                {{ t('common.unavailable') }}
+              </button>
+            }
+          </article>
+        }
       }
+    </section>
+
+    @if (checkoutError()) {
+      <p class="checkout-error" role="alert">{{ checkoutError() }}</p>
     }
-  </section>
 
-  @if (checkoutError()) {
-    <p class="checkout-error" role="alert">{{ checkoutError() }}</p>
-  }
+    <p class="trial-note">{{ t('pricing.trialNote') }}</p>
 
-  <p class="trial-note">14-day trial, no credit card required. Cancel anytime.</p>
+    <!-- ─────────────────────────  TRUST FAQ  ───────────────────────── -->
+    <section class="faq" [attr.aria-label]="t('pricing.faqAriaLabel')">
+      <h2>{{ t('pricing.faqTitle') }}</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>{{ t('pricing.faq.stopPaying.q') }}</h3>
+          <p>
+            {{ t('pricing.faq.stopPaying.a') }}
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>{{ t('pricing.faq.trialCharge.q') }}</h3>
+          <p>
+            {{ t('pricing.faq.trialCharge.a') }}
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>{{ t('pricing.faq.selfHost.q') }}</h3>
+          <p>
+            {{ t('pricing.faq.selfHost.a') }}
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>{{ t('pricing.faq.data.q') }}</h3>
+          <p>
+            {{ t('pricing.faq.data.a') }}
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <!-- ─────────────────────────  TRUST FAQ  ───────────────────────── -->
-  <section class="faq" aria-label="Frequently asked questions">
-    <h2>Questions about trust</h2>
-    <div class="faq-grid">
-      <div class="faq-item">
-        <h3>What happens if I stop paying?</h3>
-        <p>
-          Your codes keep working through a grace period, then fall back to a URL you choose —
-          nothing is held hostage. And because the core is open source, you can always self-host for
-          free and keep every code alive.
-        </p>
-      </div>
-      <div class="faq-item">
-        <h3>Does the trial charge me?</h3>
-        <p>
-          No. The 14-day trial needs no credit card. You only add payment if you decide to continue
-          after the trial.
-        </p>
-      </div>
-      <div class="faq-item">
-        <h3>Can I self-host instead of subscribing?</h3>
-        <p>
-          Always. Tessera is MIT-licensed. Run it on your own server with unlimited codes at no cost
-          — the hosted plans just save you the ops work.
-        </p>
-      </div>
-      <div class="faq-item">
-        <h3>Where is my data?</h3>
-        <p>
-          On the hosted plans we run in the EU. Visitor IPs are never stored — they're resolved to a
-          country in flight and discarded. The scans table has no IP column by design.
-        </p>
-      </div>
+  <footer class="footer">
+    <div class="foot-row">
+      <img
+        class="brand-mark"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <strong>Tessera</strong>
+      <span class="muted">— {{ t('common.tagline') }}</span>
     </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="foot-row">
-    <img
-      class="brand-mark"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <strong>Tessera</strong>
-    <span class="muted">— privacy-first dynamic QR codes you actually own.</span>
-  </div>
-  <nav class="foot-links">
-    <a routerLink="/">Home</a>
-    <a [href]="githubUrl" target="_blank" rel="noopener">GitHub</a>
-    <a routerLink="/app">Dashboard</a>
-  </nav>
-</footer>
+    <nav class="foot-links">
+      <a [routerLink]="localeLink('/')">{{ t('common.nav.home') }}</a>
+      <a [href]="githubUrl" target="_blank" rel="noopener">{{ t('common.nav.github') }}</a>
+      <a routerLink="/app">{{ t('common.nav.dashboard') }}</a>
+      <app-language-switcher />
+    </nav>
+  </footer>
+</ng-container>

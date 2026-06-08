@@ -1,0 +1,365 @@
+{
+  "namespace": "dashboard",
+  "translations": {
+    "en": {
+      "title": "Overview",
+      "sectionsAria": "Dashboard sections",
+      "yourLinks": "Your links",
+      "loadingOverview": "Loading overview…",
+      "loadingBilling": "Loading billing details…",
+      "loadError": "Could not load the overview.",
+      "kpisAria": "Key metrics",
+      "kpi": {
+        "activeCodes": "Active codes",
+        "totalScans": "Total scans",
+        "periodScans": "Scans this period",
+        "avgScansPerCode": "Avg scans / code"
+      },
+      "scansOverTime": "Scans over time",
+      "periodAria": "Period",
+      "period": {
+        "7d": "7 d",
+        "30d": "30 d",
+        "90d": "90 d"
+      },
+      "chart": {
+        "scansLabel": "Scans"
+      },
+      "empty": {
+        "noScansTitle": "No scans yet.",
+        "noScansBefore": "Share a QR or its ",
+        "noScansAfter": " link and scans will show up here.",
+        "noPeriodScansTitle": "No scans in this period.",
+        "noPeriodScansHint": "Try a longer range, or share your codes more widely."
+      },
+      "topLinks": "Top links",
+      "topLinksEmpty": "No scans to rank yet.",
+      "byDevice": "By device",
+      "byDeviceEmpty": "No device data yet.",
+      "device": {
+        "mobile": "Mobile",
+        "desktop": "Desktop",
+        "tablet": "Tablet",
+        "tv": "TV",
+        "console": "Console",
+        "unknown": "Unknown"
+      },
+      "planUsage": "Plan & usage",
+      "plan": "Plan",
+      "status": {
+        "trialing": "Trialing",
+        "active": "Active",
+        "pastDue": "Past due",
+        "canceled": "Canceled",
+        "expired": "Expired"
+      },
+      "trialDaysLeft": "{{days}} days left in trial",
+      "codesUsed": "Codes used",
+      "limitReached": "You've reached your plan's code limit. Subscribe to create more.",
+      "lapse": {
+        "label": "If your subscription lapses",
+        "before": "codes keep working for {{days}} days, then redirect to each code's fallback URL (set per code in ",
+        "after": ") — or a neutral inactive page if none is set. Codes never just break."
+      },
+      "checkoutPending": "Finishing up your subscription… this updates automatically once your payment is confirmed.",
+      "openingCheckout": "Opening checkout…",
+      "startTrial": "Start trial / subscribe",
+      "openingPortal": "Opening portal…",
+      "manageSubscription": "Manage subscription",
+      "billingDisabled": "Billing isn't enabled on this instance.",
+      "billing": {
+        "loadError": "Could not load billing details.",
+        "checkoutError": "Checkout is unavailable right now. Please try again later.",
+        "portalError": "Could not open the customer portal. Please try again later."
+      }
+    },
+    "fr": {
+      "title": "Vue d'ensemble",
+      "sectionsAria": "Sections du tableau de bord",
+      "yourLinks": "Vos liens",
+      "loadingOverview": "Chargement de la vue d'ensemble…",
+      "loadingBilling": "Chargement des informations de facturation…",
+      "loadError": "Impossible de charger la vue d'ensemble.",
+      "kpisAria": "Indicateurs clés",
+      "kpi": {
+        "activeCodes": "Codes actifs",
+        "totalScans": "Total des scans",
+        "periodScans": "Scans sur la période",
+        "avgScansPerCode": "Scans moyens / code"
+      },
+      "scansOverTime": "Scans dans le temps",
+      "periodAria": "Période",
+      "period": {
+        "7d": "7 j",
+        "30d": "30 j",
+        "90d": "90 j"
+      },
+      "chart": {
+        "scansLabel": "Scans"
+      },
+      "empty": {
+        "noScansTitle": "Aucun scan pour l'instant.",
+        "noScansBefore": "Partagez un QR ou son lien ",
+        "noScansAfter": " et les scans apparaîtront ici.",
+        "noPeriodScansTitle": "Aucun scan sur cette période.",
+        "noPeriodScansHint": "Essayez une plage plus longue, ou diffusez vos codes plus largement."
+      },
+      "topLinks": "Liens principaux",
+      "topLinksEmpty": "Aucun scan à classer pour l'instant.",
+      "byDevice": "Par appareil",
+      "byDeviceEmpty": "Aucune donnée d'appareil pour l'instant.",
+      "device": {
+        "mobile": "Mobile",
+        "desktop": "Ordinateur",
+        "tablet": "Tablette",
+        "tv": "TV",
+        "console": "Console",
+        "unknown": "Inconnu"
+      },
+      "planUsage": "Forfait & utilisation",
+      "plan": "Forfait",
+      "status": {
+        "trialing": "Période d'essai",
+        "active": "Actif",
+        "pastDue": "En retard de paiement",
+        "canceled": "Annulé",
+        "expired": "Expiré"
+      },
+      "trialDaysLeft": "{{days}} jours restants dans l'essai",
+      "codesUsed": "Codes utilisés",
+      "limitReached": "Vous avez atteint la limite de codes de votre forfait. Abonnez-vous pour en créer davantage.",
+      "lapse": {
+        "label": "Si votre abonnement expire",
+        "before": "les codes continuent de fonctionner pendant {{days}} jours, puis redirigent vers l'URL de repli de chaque code (définie par code dans ",
+        "after": ") — ou vers une page neutre d'inactivité si aucune n'est définie. Les codes ne cessent jamais simplement de fonctionner."
+      },
+      "checkoutPending": "Finalisation de votre abonnement… cette page se met à jour automatiquement une fois le paiement confirmé.",
+      "openingCheckout": "Ouverture du paiement…",
+      "startTrial": "Démarrer l'essai / s'abonner",
+      "openingPortal": "Ouverture du portail…",
+      "manageSubscription": "Gérer l'abonnement",
+      "billingDisabled": "La facturation n'est pas activée sur cette instance.",
+      "billing": {
+        "loadError": "Impossible de charger les informations de facturation.",
+        "checkoutError": "Le paiement est indisponible pour le moment. Veuillez réessayer plus tard.",
+        "portalError": "Impossible d'ouvrir le portail client. Veuillez réessayer plus tard."
+      }
+    },
+    "es": {
+      "title": "Resumen",
+      "sectionsAria": "Secciones del panel",
+      "yourLinks": "Tus enlaces",
+      "loadingOverview": "Cargando el resumen…",
+      "loadingBilling": "Cargando los datos de facturación…",
+      "loadError": "No se pudo cargar el resumen.",
+      "kpisAria": "Métricas clave",
+      "kpi": {
+        "activeCodes": "Códigos activos",
+        "totalScans": "Escaneos totales",
+        "periodScans": "Escaneos del periodo",
+        "avgScansPerCode": "Escaneos medios / código"
+      },
+      "scansOverTime": "Escaneos a lo largo del tiempo",
+      "periodAria": "Periodo",
+      "period": {
+        "7d": "7 d",
+        "30d": "30 d",
+        "90d": "90 d"
+      },
+      "chart": {
+        "scansLabel": "Escaneos"
+      },
+      "empty": {
+        "noScansTitle": "Aún no hay escaneos.",
+        "noScansBefore": "Comparte un QR o su enlace ",
+        "noScansAfter": " y los escaneos aparecerán aquí.",
+        "noPeriodScansTitle": "No hay escaneos en este periodo.",
+        "noPeriodScansHint": "Prueba un rango más amplio o comparte tus códigos más ampliamente."
+      },
+      "topLinks": "Enlaces destacados",
+      "topLinksEmpty": "Aún no hay escaneos para clasificar.",
+      "byDevice": "Por dispositivo",
+      "byDeviceEmpty": "Aún no hay datos de dispositivos.",
+      "device": {
+        "mobile": "Móvil",
+        "desktop": "Ordenador",
+        "tablet": "Tableta",
+        "tv": "TV",
+        "console": "Consola",
+        "unknown": "Desconocido"
+      },
+      "planUsage": "Plan y uso",
+      "plan": "Plan",
+      "status": {
+        "trialing": "En prueba",
+        "active": "Activo",
+        "pastDue": "Pago pendiente",
+        "canceled": "Cancelado",
+        "expired": "Caducado"
+      },
+      "trialDaysLeft": "{{days}} días restantes de prueba",
+      "codesUsed": "Códigos usados",
+      "limitReached": "Has alcanzado el límite de códigos de tu plan. Suscríbete para crear más.",
+      "lapse": {
+        "label": "Si tu suscripción caduca",
+        "before": "los códigos siguen funcionando durante {{days}} días y luego redirigen a la URL de reserva de cada código (configurada por código en ",
+        "after": ") — o a una página neutra de inactividad si no se ha definido ninguna. Los códigos nunca dejan de funcionar sin más."
+      },
+      "checkoutPending": "Finalizando tu suscripción… esto se actualiza automáticamente en cuanto se confirme tu pago.",
+      "openingCheckout": "Abriendo el pago…",
+      "startTrial": "Iniciar prueba / suscribirse",
+      "openingPortal": "Abriendo el portal…",
+      "manageSubscription": "Gestionar la suscripción",
+      "billingDisabled": "La facturación no está habilitada en esta instancia.",
+      "billing": {
+        "loadError": "No se pudieron cargar los datos de facturación.",
+        "checkoutError": "El pago no está disponible en este momento. Inténtalo de nuevo más tarde.",
+        "portalError": "No se pudo abrir el portal del cliente. Inténtalo de nuevo más tarde."
+      }
+    },
+    "it": {
+      "title": "Panoramica",
+      "sectionsAria": "Sezioni della dashboard",
+      "yourLinks": "I tuoi link",
+      "loadingOverview": "Caricamento della panoramica…",
+      "loadingBilling": "Caricamento dei dati di fatturazione…",
+      "loadError": "Impossibile caricare la panoramica.",
+      "kpisAria": "Metriche chiave",
+      "kpi": {
+        "activeCodes": "Codici attivi",
+        "totalScans": "Scansioni totali",
+        "periodScans": "Scansioni nel periodo",
+        "avgScansPerCode": "Scansioni medie / codice"
+      },
+      "scansOverTime": "Scansioni nel tempo",
+      "periodAria": "Periodo",
+      "period": {
+        "7d": "7 g",
+        "30d": "30 g",
+        "90d": "90 g"
+      },
+      "chart": {
+        "scansLabel": "Scansioni"
+      },
+      "empty": {
+        "noScansTitle": "Ancora nessuna scansione.",
+        "noScansBefore": "Condividi un QR o il suo link ",
+        "noScansAfter": " e le scansioni appariranno qui.",
+        "noPeriodScansTitle": "Nessuna scansione in questo periodo.",
+        "noPeriodScansHint": "Prova un intervallo più ampio o condividi i tuoi codici più diffusamente."
+      },
+      "topLinks": "Link principali",
+      "topLinksEmpty": "Ancora nessuna scansione da classificare.",
+      "byDevice": "Per dispositivo",
+      "byDeviceEmpty": "Ancora nessun dato sui dispositivi.",
+      "device": {
+        "mobile": "Mobile",
+        "desktop": "Desktop",
+        "tablet": "Tablet",
+        "tv": "TV",
+        "console": "Console",
+        "unknown": "Sconosciuto"
+      },
+      "planUsage": "Piano e utilizzo",
+      "plan": "Piano",
+      "status": {
+        "trialing": "In prova",
+        "active": "Attivo",
+        "pastDue": "Pagamento scaduto",
+        "canceled": "Annullato",
+        "expired": "Scaduto"
+      },
+      "trialDaysLeft": "{{days}} giorni rimanenti di prova",
+      "codesUsed": "Codici utilizzati",
+      "limitReached": "Hai raggiunto il limite di codici del tuo piano. Abbonati per crearne altri.",
+      "lapse": {
+        "label": "Se il tuo abbonamento scade",
+        "before": "i codici continuano a funzionare per {{days}} giorni, poi reindirizzano all'URL di riserva di ciascun codice (impostato per codice in ",
+        "after": ") — o a una pagina neutra di inattività se non ne è impostata nessuna. I codici non smettono mai semplicemente di funzionare."
+      },
+      "checkoutPending": "Completamento del tuo abbonamento… questa pagina si aggiorna automaticamente una volta confermato il pagamento.",
+      "openingCheckout": "Apertura del pagamento…",
+      "startTrial": "Avvia la prova / abbonati",
+      "openingPortal": "Apertura del portale…",
+      "manageSubscription": "Gestisci l'abbonamento",
+      "billingDisabled": "La fatturazione non è abilitata su questa istanza.",
+      "billing": {
+        "loadError": "Impossibile caricare i dati di fatturazione.",
+        "checkoutError": "Il pagamento non è disponibile al momento. Riprova più tardi.",
+        "portalError": "Impossibile aprire il portale clienti. Riprova più tardi."
+      }
+    },
+    "de": {
+      "title": "Übersicht",
+      "sectionsAria": "Dashboard-Bereiche",
+      "yourLinks": "Deine Links",
+      "loadingOverview": "Übersicht wird geladen…",
+      "loadingBilling": "Abrechnungsdaten werden geladen…",
+      "loadError": "Übersicht konnte nicht geladen werden.",
+      "kpisAria": "Kennzahlen",
+      "kpi": {
+        "activeCodes": "Aktive Codes",
+        "totalScans": "Scans gesamt",
+        "periodScans": "Scans im Zeitraum",
+        "avgScansPerCode": "Ø Scans / Code"
+      },
+      "scansOverTime": "Scans im Zeitverlauf",
+      "periodAria": "Zeitraum",
+      "period": {
+        "7d": "7 T",
+        "30d": "30 T",
+        "90d": "90 T"
+      },
+      "chart": {
+        "scansLabel": "Scans"
+      },
+      "empty": {
+        "noScansTitle": "Noch keine Scans.",
+        "noScansBefore": "Teile einen QR oder seinen Link ",
+        "noScansAfter": " und die Scans erscheinen hier.",
+        "noPeriodScansTitle": "Keine Scans in diesem Zeitraum.",
+        "noPeriodScansHint": "Versuche einen längeren Zeitraum oder teile deine Codes breiter."
+      },
+      "topLinks": "Top-Links",
+      "topLinksEmpty": "Noch keine Scans zum Einstufen.",
+      "byDevice": "Nach Gerät",
+      "byDeviceEmpty": "Noch keine Gerätedaten.",
+      "device": {
+        "mobile": "Mobil",
+        "desktop": "Desktop",
+        "tablet": "Tablet",
+        "tv": "TV",
+        "console": "Konsole",
+        "unknown": "Unbekannt"
+      },
+      "planUsage": "Tarif & Nutzung",
+      "plan": "Tarif",
+      "status": {
+        "trialing": "Testphase",
+        "active": "Aktiv",
+        "pastDue": "Überfällig",
+        "canceled": "Gekündigt",
+        "expired": "Abgelaufen"
+      },
+      "trialDaysLeft": "{{days}} Tage in der Testphase verbleibend",
+      "codesUsed": "Verwendete Codes",
+      "limitReached": "Du hast das Code-Limit deines Tarifs erreicht. Abonniere, um mehr zu erstellen.",
+      "lapse": {
+        "label": "Wenn dein Abonnement ausläuft",
+        "before": "funktionieren die Codes noch {{days}} Tage und leiten dann auf die Fallback-URL jedes Codes weiter (pro Code festgelegt in ",
+        "after": ") — oder auf eine neutrale Inaktivseite, falls keine festgelegt ist. Codes hören nie einfach auf zu funktionieren."
+      },
+      "checkoutPending": "Dein Abonnement wird abgeschlossen… dies aktualisiert sich automatisch, sobald deine Zahlung bestätigt ist.",
+      "openingCheckout": "Bezahlung wird geöffnet…",
+      "startTrial": "Testphase starten / abonnieren",
+      "openingPortal": "Portal wird geöffnet…",
+      "manageSubscription": "Abonnement verwalten",
+      "billingDisabled": "Die Abrechnung ist auf dieser Instanz nicht aktiviert.",
+      "billing": {
+        "loadError": "Abrechnungsdaten konnten nicht geladen werden.",
+        "checkoutError": "Die Bezahlung ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+        "portalError": "Das Kundenportal konnte nicht geöffnet werden. Bitte versuche es später erneut."
+      }
+    }
+  }
+}

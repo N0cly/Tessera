@@ -33,10 +33,12 @@ export class AuthService {
       .pipe(tap((res) => this.setToken(res.token)));
   }
 
-  register(email: string, password: string): Observable<RegisterResponse> {
+  register(email: string, password: string, locale?: string): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${environment.apiBaseUrl}/api/register`, {
       email,
       password,
+      // The new account starts in the language the visitor chose / was browsing.
+      ...(locale ? { locale } : {}),
     });
   }
 

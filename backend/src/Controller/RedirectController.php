@@ -70,6 +70,7 @@ final class RedirectController
             return new RedirectResponse($hit['fallbackUrl'], Response::HTTP_FOUND);
         }
 
-        return $this->inactivePage->render();
+        // Render in the scanner's language (request locale = Accept-Language).
+        return $this->inactivePage->render($request->getLocale());
     }
 }

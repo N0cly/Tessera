@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The neutral "this link is currently inactive" page, shown for a lapsed code
@@ -14,19 +15,32 @@ use Symfony\Component\HttpFoundation\Response;
  * design — NO link to Tessera's marketing site. A scanned code that has lapsed
  * must not become an ad. Returns 200 with a real page (it's terminal content,
  * not a redirect, so the 301-vs-302 rule doesn't apply here).
+ *
+ * Localized in the scanner's language (CLAUDE.md i18n): the copy comes from the
+ * `inactive` translation domain, defaulting to English.
  */
 final class InactivePageRenderer
 {
-    public function render(): Response
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
+    public function render(string $locale = 'en'): Response
     {
-        $html = <<<'HTML'
+        $lang = htmlspecialchars($locale, ENT_QUOTES);
+        $title = $this->t('inactive.title', $locale);
+        $heading = $this->t('inactive.heading', $locale);
+        $body = $this->t('inactive.body', $locale);
+
+        $html = <<<HTML
             <!doctype html>
-            <html lang="en">
+            <html lang="{$lang}">
             <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="robots" content="noindex, nofollow">
-            <title>Link inactive</title>
+            <title>{$title}</title>
             <style>
               :root { color-scheme: light dark; }
               html, body { height: 100%; margin: 0; }
@@ -55,8 +69,8 @@ final class InactivePageRenderer
             <body>
               <main class="card">
                 <span class="dot" aria-hidden="true"></span>
-                <h1>This link is currently inactive</h1>
-                <p>The owner's subscription has lapsed, so this code isn't pointing anywhere right now. If it's yours, renewing your plan will bring it back.</p>
+                <h1>{$heading}</h1>
+                <p>{$body}</p>
               </main>
             </body>
             </html>
@@ -65,6 +79,15 @@ final class InactivePageRenderer
         return new Response($html, Response::HTTP_OK, [
             'Content-Type' => 'text/html; charset=utf-8',
             'Cache-Control' => 'no-store',
+            'Content-Language' => $locale,
         ]);
+    }
+
+    private function t(string $key, string $locale): string
+    {
+        return htmlspecialchars(
+            $this->translator->trans($key, [], 'messages', $locale),
+            ENT_QUOTES,
+        );
     }
 }

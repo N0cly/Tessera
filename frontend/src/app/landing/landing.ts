@@ -6,11 +6,17 @@ import {
   ViewChild,
   computed,
   effect,
+  inject,
   signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import QRCode from 'qrcode';
 
+import { LanguageSwitcherComponent } from '../core/language-switcher';
+import { LocaleService } from '../core/locale.service';
+import { withLocalePrefix } from '../core/locale';
+import { SeoService } from '../core/seo.service';
 import { token } from '../core/tessera-tokens';
 
 interface DemoCase {
@@ -24,11 +30,21 @@ interface DemoCase {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoDirective, LanguageSwitcherComponent],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })
 export class LandingComponent implements AfterViewInit, OnDestroy {
+  private readonly transloco = inject(TranslocoService);
+  private readonly locale = inject(LocaleService);
+  private readonly seo = inject(SeoService);
+  private readonly seoSub = this.seo.apply('landing');
+
+  /** Locale-prefixed internal path for marketing links (keeps /fr, /es, … space). */
+  localeLink(path: string): string {
+    return withLocalePrefix(this.locale.lang(), path);
+  }
+
   @ViewChild('qrCanvas', { static: false }) qrCanvasRef?: ElementRef<HTMLCanvasElement>;
 
   // Fake but believable. The slug is decorative — landing is FE-only,
@@ -36,35 +52,45 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
   readonly fakeSlug = 'mZ4kPx7';
   readonly fakeShortUrl = `qr.example.com/r/${this.fakeSlug}`;
 
-  readonly cases: DemoCase[] = [
+  // Decorative emoji + (fake) destination are data, not copy — they stay as-is.
+  // Labels and blurbs are translated; they re-resolve when the language changes.
+  private readonly caseData: Pick<DemoCase, 'key' | 'emoji' | 'destination'>[] = [
     {
       key: 'menu',
-      label: 'Restaurant menu',
       emoji: '🍽️',
       destination: 'https://chez-mathilde.example.com/menu/spring-2026',
-      blurb: 'On the table tents. Reprint never — swap the menu link every season.',
     },
     {
       key: 'event',
-      label: 'Event signup',
       emoji: '🎟️',
       destination: 'https://meetup.example.com/devops-paris/feb-26',
-      blurb:
-        'On the conference poster. Same QR for every edition; just redirect to the new signup page.',
     },
     {
       key: 'bio',
-      label: 'Social bio link',
       emoji: '🔗',
       destination: 'https://linktr.example.com/elara-music',
-      blurb:
-        'On a business card or sticker. Update the destination as your link-in-bio service changes.',
     },
   ];
 
+  private readonly activeLang = signal(this.transloco.getActiveLang());
+
+  readonly cases = computed<DemoCase[]>(() => {
+    // depend on the active language so labels/blurbs re-resolve on switch
+    this.activeLang();
+    return this.caseData.map((c) => ({
+      ...c,
+      label: this.transloco.translate(`landing.demo.cases.${c.key}.label`),
+      blurb: this.transloco.translate(`landing.demo.cases.${c.key}.blurb`),
+    }));
+  });
+
   readonly activeKey = signal<DemoCase['key']>('menu');
   readonly active = computed(
-    () => this.cases.find((c) => c.key === this.activeKey()) ?? this.cases[0],
+    () => this.cases().find((c) => c.key === this.activeKey()) ?? this.cases()[0],
+  );
+
+  private readonly langSub = this.transloco.langChanges$.subscribe((lang) =>
+    this.activeLang.set(lang),
   );
 
   constructor() {
@@ -85,6 +111,8 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     // No resources to release; canvas is GC'd with the host.
+    this.langSub.unsubscribe();
+    this.seoSub.unsubscribe();
   }
 
   selectCase(key: DemoCase['key']): void {

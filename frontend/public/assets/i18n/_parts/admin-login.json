@@ -1,0 +1,60 @@
+{
+  "namespace": "adminAuth",
+  "translations": {
+    "en": {
+      "title": "Operator sign-in",
+      "subtitle": "Restricted area. Admin access requires two-factor authentication.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "codeLabel": "Authenticator code",
+      "errors": {
+        "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
+        "invalidCredentials": "Invalid credentials."
+      }
+    },
+    "fr": {
+      "title": "Connexion opérateur",
+      "subtitle": "Zone réservée. L'accès administrateur exige une authentification à deux facteurs.",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "codeLabel": "Code d'authentification",
+      "errors": {
+        "tooManyAttempts": "Trop de tentatives. Veuillez patienter un instant avant de réessayer.",
+        "invalidCredentials": "Identifiants invalides."
+      }
+    },
+    "es": {
+      "title": "Acceso de operador",
+      "subtitle": "Área restringida. El acceso de administrador requiere autenticación de dos factores.",
+      "emailLabel": "Correo electrónico",
+      "passwordLabel": "Contraseña",
+      "codeLabel": "Código del autenticador",
+      "errors": {
+        "tooManyAttempts": "Demasiados intentos. Espera un momento y vuelve a intentarlo.",
+        "invalidCredentials": "Credenciales no válidas."
+      }
+    },
+    "it": {
+      "title": "Accesso operatore",
+      "subtitle": "Area riservata. L'accesso amministratore richiede l'autenticazione a due fattori.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "codeLabel": "Codice dell'autenticatore",
+      "errors": {
+        "tooManyAttempts": "Troppi tentativi. Attendi un momento e riprova.",
+        "invalidCredentials": "Credenziali non valide."
+      }
+    },
+    "de": {
+      "title": "Betreiber-Anmeldung",
+      "subtitle": "Geschützter Bereich. Der Administratorzugang erfordert eine Zwei-Faktor-Authentifizierung.",
+      "emailLabel": "E-Mail",
+      "passwordLabel": "Passwort",
+      "codeLabel": "Authenticator-Code",
+      "errors": {
+        "tooManyAttempts": "Zu viele Versuche. Bitte warte einen Moment und versuche es erneut.",
+        "invalidCredentials": "Ungültige Anmeldedaten."
+      }
+    }
+  }
+}

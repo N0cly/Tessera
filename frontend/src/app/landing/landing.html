@@ -1,248 +1,224 @@
-<header class="topbar">
-  <a class="brand" routerLink="/">
-    <img
-      class="brand-mark"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <span class="brand-name">Tessera</span>
-  </a>
-  <nav class="nav">
-    <a class="nav-link" href="#how">How it works</a>
-    <a class="nav-link" href="#self-host">Self-host</a>
-    <a class="nav-link" routerLink="/pricing">Pricing</a>
-    <a class="nav-link" href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener"
-      >GitHub</a
-    >
-    <a class="nav-cta" routerLink="/app">Open dashboard →</a>
-  </nav>
-</header>
+<ng-container *transloco="let t">
+  <header class="topbar">
+    <a class="brand" [routerLink]="localeLink('/')">
+      <img
+        class="brand-mark"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <span class="brand-name">Tessera</span>
+      <app-language-switcher />
+    </a>
+    <nav class="nav">
+      <a class="nav-link" href="#how">{{ t('landing.nav.howItWorks') }}</a>
+      <a class="nav-link" href="#self-host">{{ t('landing.nav.selfHost') }}</a>
+      <a class="nav-link" [routerLink]="localeLink('/pricing')">{{ t('common.nav.pricing') }}</a>
+      <a class="nav-link" href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">{{
+        t('common.nav.github')
+      }}</a>
+      <a class="nav-cta" routerLink="/app">{{ t('common.nav.openDashboard') }} →</a>
+    </nav>
+  </header>
 
-<!-- ─────────────────────────  HERO  ───────────────────────── -->
-<section class="hero">
-  <div class="hero-copy">
-    <p class="eyebrow">Open-source dynamic QR codes</p>
-    <h1>
-      Print the QR once.<br />
-      Change the destination <em>forever</em>.
-    </h1>
-    <p class="lede">
-      Each QR encodes a short permanent URL hosted on <strong>your</strong>
-      infrastructure. Edit where it points whenever you want — no reprint, no expiry, no third party
-      between your scanners and your data.
-    </p>
-    <ul class="chips" role="list">
-      <li>🇪🇺 EU-hostable</li>
-      <li>🔒 IP never stored</li>
-      <li>♾️ Codes never expire</li>
-      <li>📜 MIT licensed</li>
-    </ul>
+  <!-- ─────────────────────────  HERO  ───────────────────────── -->
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ t('landing.hero.eyebrow') }}</p>
+      <h1>
+        {{ t('landing.hero.titleLine1') }}<br />
+        {{ t('landing.hero.titleLine2Pre') }} <em>{{ t('landing.hero.titleLine2Em') }}</em
+        >.
+      </h1>
+      <p class="lede">{{ t('landing.hero.lede') }}</p>
+      <ul class="chips" role="list">
+        <li>🇪🇺 {{ t('landing.hero.chips.eu') }}</li>
+        <li>🔒 {{ t('landing.hero.chips.ip') }}</li>
+        <li>♾️ {{ t('landing.hero.chips.expire') }}</li>
+        <li>📜 {{ t('landing.hero.chips.license') }}</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#self-host">{{ t('landing.hero.ctaSelfHost') }}</a>
+        <a
+          class="btn btn-ghost"
+          href="https://github.com/N0cly/Tessera"
+          target="_blank"
+          rel="noopener"
+        >
+          ★ {{ t('landing.hero.ctaStar') }}
+        </a>
+      </div>
+      <p class="hero-foot">{{ t('landing.hero.foot') }}</p>
+    </div>
+
+    <!-- ─────────────  INTERACTIVE QR DEMO (front-end only)  ───────────── -->
+    <aside class="demo" [attr.aria-label]="t('landing.demo.ariaLabel')">
+      <div class="demo-tabs" role="tablist" [attr.aria-label]="t('landing.demo.tablistLabel')">
+        @for (c of cases(); track c.key) {
+          <button
+            type="button"
+            role="tab"
+            [class.active]="activeKey() === c.key"
+            [attr.aria-selected]="activeKey() === c.key"
+            (click)="selectCase(c.key)"
+          >
+            <span class="tab-emoji" aria-hidden="true">{{ c.emoji }}</span>
+            <span>{{ c.label }}</span>
+          </button>
+        }
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-qr">
+          <canvas
+            #qrCanvas
+            width="320"
+            height="320"
+            [attr.aria-label]="t('landing.demo.qrAriaLabel')"
+          ></canvas>
+          <p class="demo-shorturl">
+            <span class="muted">{{ t('landing.demo.scansGoTo') }} </span>
+            <code>{{ fakeShortUrl }}</code>
+          </p>
+        </div>
+
+        <div class="demo-side">
+          <div class="demo-dest">
+            <div class="demo-dest-header">
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <p class="muted small">{{ t('landing.demo.destinationNow') }}</p>
+            </div>
+            <code class="demo-url">{{ active().destination }}</code>
+            <p class="demo-blurb">{{ active().blurb }}</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="demo-note">⚡ {{ t('landing.demo.note') }}</p>
+    </aside>
+  </section>
+
+  <!-- ─────────────────────────  USE CASES  ───────────────────────── -->
+  <section class="use-cases" id="use-cases">
+    <h2>{{ t('landing.useCases.title') }}</h2>
+    <p class="section-lede">{{ t('landing.useCases.lede') }}</p>
+    <div class="case-grid">
+      <article class="case-card">
+        <span class="case-emoji" aria-hidden="true">🍽️</span>
+        <h3>{{ t('landing.useCases.restaurants.title') }}</h3>
+        <p>{{ t('landing.useCases.restaurants.body') }}</p>
+      </article>
+      <article class="case-card">
+        <span class="case-emoji" aria-hidden="true">🎟️</span>
+        <h3>{{ t('landing.useCases.events.title') }}</h3>
+        <p>{{ t('landing.useCases.events.body') }}</p>
+      </article>
+      <article class="case-card">
+        <span class="case-emoji" aria-hidden="true">🔗</span>
+        <h3>{{ t('landing.useCases.social.title') }}</h3>
+        <p>{{ t('landing.useCases.social.body') }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────  HOW IT WORKS  ───────────────────────── -->
+  <section class="how" id="how">
+    <h2>{{ t('landing.how.title') }}</h2>
+    <ol class="steps">
+      <li>
+        <span class="step-n">1</span>
+        <h3>{{ t('landing.how.step1.title') }}</h3>
+        <p>
+          {{ t('landing.how.step1.bodyPre') }} <code>http(s)</code>
+          {{ t('landing.how.step1.bodyPost') }}
+        </p>
+      </li>
+      <li>
+        <span class="step-n">2</span>
+        <h3>{{ t('landing.how.step2.title') }}</h3>
+        <p>{{ t('landing.how.step2.body') }}</p>
+      </li>
+      <li>
+        <span class="step-n">3</span>
+        <h3>{{ t('landing.how.step3.title') }}</h3>
+        <p>{{ t('landing.how.step3.body') }}</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ─────────────────────────  DIFFERENTIATORS  ───────────────────────── -->
+  <section class="diff">
+    <h2>{{ t('landing.diff.title') }}</h2>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <h3>🛠️ {{ t('landing.diff.openSource.title') }}</h3>
+        <p>{{ t('landing.diff.openSource.body') }}</p>
+      </div>
+      <div class="diff-card">
+        <h3>🕶️ {{ t('landing.diff.privacy.title') }}</h3>
+        <p>
+          {{ t('landing.diff.privacy.bodyPre') }} <code>scans</code>
+          {{ t('landing.diff.privacy.bodyPost') }}
+        </p>
+      </div>
+      <div class="diff-card">
+        <h3>♾️ {{ t('landing.diff.neverExpire.title') }}</h3>
+        <p>{{ t('landing.diff.neverExpire.body') }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────  SELF-HOST  ───────────────────────── -->
+  <section class="self-host" id="self-host">
+    <h2>{{ t('landing.selfHost.title') }}</h2>
+    <p class="section-lede">{{ t('landing.selfHost.lede') }}</p>
+    <pre
+      class="snippet"
+      [attr.aria-label]="t('landing.selfHost.snippetAriaLabel')"
+    ><code>git clone https://github.com/N0cly/Tessera.git
+cd Tessera
+cp .env.example .env       <span class="comment"># {{ t('landing.selfHost.snippetComment') }}</span>
+docker compose up -d --build</code></pre>
+    <p class="self-host-foot">{{ t('landing.selfHost.foot') }}</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="#self-host">Self-host in 1 minute</a>
       <a
-        class="btn btn-ghost"
+        class="btn btn-primary"
         href="https://github.com/N0cly/Tessera"
         target="_blank"
         rel="noopener"
       >
-        ★ Star on GitHub
+        {{ t('common.actions.viewOnGithub') }}
       </a>
+      <a class="btn btn-ghost" routerLink="/app">{{ t('landing.selfHost.tryDashboard') }}</a>
     </div>
-    <p class="hero-foot">No tracking pixels, no signup wall, no “community edition” trick.</p>
-  </div>
+  </section>
 
-  <!-- ─────────────  INTERACTIVE QR DEMO (front-end only)  ───────────── -->
-  <aside class="demo" aria-label="Interactive demo">
-    <div class="demo-tabs" role="tablist" aria-label="Choose a use case">
-      @for (c of cases; track c.key) {
-        <button
-          type="button"
-          role="tab"
-          [class.active]="activeKey() === c.key"
-          [attr.aria-selected]="activeKey() === c.key"
-          (click)="selectCase(c.key)"
-        >
-          <span class="tab-emoji" aria-hidden="true">{{ c.emoji }}</span>
-          <span>{{ c.label }}</span>
-        </button>
-      }
+  <!-- ─────────────────────────  FOOTER  ───────────────────────── -->
+  <footer class="footer">
+    <div class="foot-row">
+      <img
+        class="brand-mark"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <strong>Tessera</strong>
+      <span class="muted">— {{ t('common.tagline') }}</span>
     </div>
-
-    <div class="demo-card">
-      <div class="demo-qr">
-        <canvas
-          #qrCanvas
-          width="320"
-          height="320"
-          aria-label="QR code for the demo short URL"
-        ></canvas>
-        <p class="demo-shorturl">
-          <span class="muted">scans go to </span>
-          <code>{{ fakeShortUrl }}</code>
-        </p>
-      </div>
-
-      <div class="demo-side">
-        <div class="demo-dest">
-          <div class="demo-dest-header">
-            <div class="demo-arrow" aria-hidden="true">→</div>
-            <p class="muted small">Destination right now</p>
-          </div>
-          <code class="demo-url">{{ active().destination }}</code>
-          <p class="demo-blurb">{{ active().blurb }}</p>
-        </div>
-      </div>
-    </div>
-
-    <p class="demo-note">
-      ⚡ The QR above doesn't change — only the destination does. That's the whole point. Try
-      clicking another tab; the canvas re-renders the same encoded URL.
-    </p>
-  </aside>
-</section>
-
-<!-- ─────────────────────────  USE CASES  ───────────────────────── -->
-<section class="use-cases" id="use-cases">
-  <h2>One engine, many shapes</h2>
-  <p class="section-lede">
-    The data model is deliberately generic. Slap a QR on anything that needs a redirectable link.
-  </p>
-  <div class="case-grid">
-    <article class="case-card">
-      <span class="case-emoji" aria-hidden="true">🍽️</span>
-      <h3>Restaurants &amp; cafés</h3>
-      <p>
-        Menu QRs that survive seasonal changes. New spring menu? Edit the destination. The printed
-        table tents keep working.
-      </p>
-    </article>
-    <article class="case-card">
-      <span class="case-emoji" aria-hidden="true">🎟️</span>
-      <h3>Events &amp; posters</h3>
-      <p>
-        Print the QR on next year's posters before knowing the signup URL. Set the destination later
-        — even hours before the event opens.
-      </p>
-    </article>
-    <article class="case-card">
-      <span class="case-emoji" aria-hidden="true">🔗</span>
-      <h3>Social bios &amp; cards</h3>
-      <p>
-        A single QR on your business card or sticker, rerouted as your platform-of-the-month
-        link-in-bio service changes.
-      </p>
-    </article>
-  </div>
-</section>
-
-<!-- ─────────────────────────  HOW IT WORKS  ───────────────────────── -->
-<section class="how" id="how">
-  <h2>Three steps, no surprises</h2>
-  <ol class="steps">
-    <li>
-      <span class="step-n">1</span>
-      <h3>Create the link</h3>
-      <p>
-        Paste any <code>http(s)</code> URL. You get a short permanent identifier — that's what gets
-        encoded into the QR.
-      </p>
-    </li>
-    <li>
-      <span class="step-n">2</span>
-      <h3>Print or share the QR</h3>
-      <p>
-        Download the QR as PNG or SVG. Put it on a menu, poster, sticker, business card — whatever
-        the physical world needs.
-      </p>
-    </li>
-    <li>
-      <span class="step-n">3</span>
-      <h3>Change the destination, anytime</h3>
-      <p>
-        Edit where the link points whenever you want. Every previously printed QR keeps working and
-        now leads to the new target.
-      </p>
-    </li>
-  </ol>
-</section>
-
-<!-- ─────────────────────────  DIFFERENTIATORS  ───────────────────────── -->
-<section class="diff">
-  <h2>What makes this different</h2>
-  <div class="diff-grid">
-    <div class="diff-card">
-      <h3>🛠️ Open-source, MIT</h3>
-      <p>
-        The full code is on GitHub. Fork it, audit it, run it, sell what you build on top of it. No
-        “community edition” with the good parts missing.
-      </p>
-    </div>
-    <div class="diff-card">
-      <h3>🕶️ IP never stored</h3>
-      <p>
-        Scan logging is async. The visitor's IP is resolved to a country code in flight, then
-        dropped. The <code>scans</code> table literally has no IP column.
-      </p>
-    </div>
-    <div class="diff-card">
-      <h3>♾️ Codes that never expire</h3>
-      <p>
-        As long as your instance is running, the QR you printed three years ago still works — and
-        still points wherever you tell it to today. No hostage model.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────  SELF-HOST  ───────────────────────── -->
-<section class="self-host" id="self-host">
-  <h2>Self-host in one command</h2>
-  <p class="section-lede">Docker + Docker Compose. That's the entire dependency list.</p>
-  <pre
-    class="snippet"
-    aria-label="Self-host command"
-  ><code>git clone https://github.com/N0cly/Tessera.git
-cd Tessera
-cp .env.example .env       <span class="comment"># tweak APP_SECRET, JWT_PASSPHRASE, etc.</span>
-docker compose up -d --build</code></pre>
-  <p class="self-host-foot">
-    Brings up Postgres, Redis, the API, the dashboard, the async worker, and the periodic janitor —
-    with healthchecks, restart policies, and JWT/migrations handled automatically on first boot.
-  </p>
-  <div class="cta-row">
-    <a
-      class="btn btn-primary"
-      href="https://github.com/N0cly/Tessera"
-      target="_blank"
-      rel="noopener"
-    >
-      View on GitHub
-    </a>
-    <a class="btn btn-ghost" routerLink="/app">Try the dashboard</a>
-  </div>
-</section>
-
-<!-- ─────────────────────────  FOOTER  ───────────────────────── -->
-<footer class="footer">
-  <div class="foot-row">
-    <img
-      class="brand-mark"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <strong>Tessera</strong>
-    <span class="muted">— privacy-first dynamic QR codes you actually own.</span>
-  </div>
-  <nav class="foot-links">
-    <a routerLink="/pricing">Pricing</a>
-    <a href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">License: MIT</a>
-    <a routerLink="/app">Dashboard</a>
-  </nav>
-</footer>
+    <nav class="foot-links">
+      <a [routerLink]="localeLink('/pricing')">{{ t('common.nav.pricing') }}</a>
+      <a href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">{{
+        t('common.nav.github')
+      }}</a>
+      <a href="https://github.com/N0cly/Tessera" target="_blank" rel="noopener">{{
+        t('landing.footer.license')
+      }}</a>
+      <a routerLink="/app">{{ t('common.nav.dashboard') }}</a>
+      <app-language-switcher />
+    </nav>
+  </footer>
+</ng-container>

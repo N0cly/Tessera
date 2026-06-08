@@ -172,6 +172,22 @@ It is the highest-value surface in the app, so it is locked down:
 Management actions (suspend / refund / change plan) are intentionally **not**
 here — do those in Paddle.
 
+### Languages
+
+The UI ships in **English, French, Spanish, Italian and German**, switchable at
+runtime (no reload) from the language selector in the header. The frontend uses
+Transloco with one JSON file per locale under
+[`frontend/public/assets/i18n/`](frontend/public/assets/i18n/) (English is the
+fallback for any missing key). Your choice is remembered — on your profile when
+signed in, otherwise in the browser; first-time visitors get their browser
+language. Dates, numbers and prices format per locale.
+
+The marketing pages are also served at locale-prefixed URLs (`/fr`, `/es`, …)
+with `hreflang` and localized titles for SEO. On the backend, the "inactive
+code" page and API/validation messages are translated (Symfony Translation), and
+the Paddle checkout opens in the user's language. Translating customer content
+(your own link names) is out of scope — that's your data, not the UI.
+
 ---
 
 ## How it works

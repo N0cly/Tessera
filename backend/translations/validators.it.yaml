@@ -1,0 +1,5 @@
+destination:
+    not_allowed: 'Questo dominio di destinazione non è consentito su questa istanza.'
+user:
+    email:
+        already_used: 'Esiste già un account con questa e-mail.'

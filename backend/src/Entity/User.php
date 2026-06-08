@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
-#[UniqueEntity(fields: ['email'], message: 'An account with this email already exists.')]
+#[UniqueEntity(fields: ['email'], message: 'user.email.already_used')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,6 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private string $password;
+
+    /**
+     * Preferred UI / communication language (BCP-47 base, one of the supported
+     * locales). System content and emails are produced in this locale; the
+     * frontend syncs it with the runtime language switcher (CLAUDE.md i18n).
+     */
+    #[ORM\Column(length: 5, options: ['default' => 'en'])]
+    private string $locale = 'en';
 
     /**
      * Base32 TOTP secret for two-factor auth. Only ever set for admin accounts
@@ -109,6 +117,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
     public function getTotpSecret(): ?string

@@ -201,6 +201,36 @@ Infra
     - Frontend: separate `AdminAuthService` (own token key) + `adminGuard`; routes
       `/admin/login` + `/admin` (`AdminDashboardComponent`); styled strictly via
       `tessera-tokens.css`.
+18. **i18n — 5 languages (EN default+fallback, FR, ES, IT, DE), runtime switching.**
+    - **Frontend uses Transloco** (`@jsverse/transloco`), NOT `@angular/localize`
+      (compile-time, no runtime switch). One JSON file per locale at
+      `frontend/public/assets/i18n/{en,fr,es,it,de}.json`, organized by feature
+      **namespace** (common, landing, pricing, auth, dashboard, links, stats,
+      admin, adminAuth, seo). **No hardcoded UI strings** — every string is a key
+      (`t('ns.key')` via the `*transloco="let t"` directive, or
+      `TranslocoService.translate` in TS). EN fills any missing key (fallback).
+      The files are assembled from `_parts/*.json` by `frontend/scripts/merge-i18n.mjs`
+      (`node scripts/merge-i18n.mjs`); keep all 5 locales at key parity.
+    - **`LocaleService`** owns the active language + persistence: logged-in →
+      `User.locale` via `GET/PATCH /api/me`; else `localStorage`; first visit →
+      browser language; fallback EN. The **language switcher** is in every header
+      and the public footers. Dates/numbers/currency (€) format per locale —
+      pass `locale.lang()` to the date/number/currency pipes and to
+      `Intl.NumberFormat`; locale data is registered in `app.config.ts`.
+    - **Public SEO** (landing + pricing only): locale-prefixed routes (`/fr`,
+      `/es/pricing`, …; EN unprefixed = canonical) via `localeRouteGuard`, plus
+      localized `<title>`/`<meta>` + `hreflang` alternates (`SeoService`). App +
+      admin routes stay unprefixed (runtime switch is enough).
+    - **Backend (Symfony Translation):** `default_locale: en`,
+      `enabled_locales` = the 5; a `RequestLocaleSubscriber` sets the request +
+      translator locale from the authenticated `User.locale` else Accept-Language.
+      Catalogs in `backend/translations/{messages,validators}.{locale}.yaml` cover
+      the inactive page (rendered in the scanner's language), API/validation error
+      messages. The user's `locale` is stored and passed to the Paddle checkout.
+      No transactional emails exist yet; the translation + per-user locale make
+      them locale-ready when added.
+    - **Out of scope:** translating user content (a customer's link names); any
+      machine-translation pipeline (catalogs are hand-maintained). No RTL.
 
 ## Dev commands
 
@@ -222,6 +252,7 @@ http://localhost:8000, frontend at http://localhost:4200.
 - Frontend dev server: served by the `frontend` container on :4200 (hot reload via volume mount)
 - Frontend tests: `docker compose exec frontend npx ng test --watch=false`
 - Frontend build: `docker compose exec frontend npx ng build`
+- Rebuild i18n locale files from parts: `docker compose exec frontend node scripts/merge-i18n.mjs`
 - Worker logs: `docker compose logs -f worker` (drains the `async` Messenger transport)
 - Cron logs: `docker compose logs -f cron` (periodic demo-link purge; no-op when `DEMO_USER_EMAIL` is empty)
 - Inspect queue: `docker compose exec redis redis-cli XLEN messages`

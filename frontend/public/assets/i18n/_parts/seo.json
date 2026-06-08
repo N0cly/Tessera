@@ -1,0 +1,55 @@
+{
+  "namespace": "seo",
+  "translations": {
+    "en": {
+      "landing": {
+        "title": "Tessera — dynamic QR codes you own",
+        "description": "Open-source, privacy-first dynamic QR codes. Print once, change the destination forever. Self-hostable, EU-friendly, and codes never expire."
+      },
+      "pricing": {
+        "title": "Tessera pricing — simple plans, no lock-in",
+        "description": "Self-host Tessera for free, or let us host it. Transparent pricing, a 14-day trial with no card, and your codes are never held hostage."
+      }
+    },
+    "fr": {
+      "landing": {
+        "title": "Tessera — des QR codes dynamiques qui vous appartiennent",
+        "description": "Des QR codes dynamiques, open source et respectueux de la vie privée. Imprimez une fois, changez la destination à volonté. Auto-hébergeable, hébergé en UE, codes sans expiration."
+      },
+      "pricing": {
+        "title": "Tarifs Tessera — des offres simples, sans verrouillage",
+        "description": "Auto-hébergez Tessera gratuitement, ou laissez-nous l'héberger. Tarifs transparents, essai de 14 jours sans carte, et vos codes ne sont jamais pris en otage."
+      }
+    },
+    "es": {
+      "landing": {
+        "title": "Tessera — códigos QR dinámicos que son tuyos",
+        "description": "Códigos QR dinámicos, de código abierto y centrados en la privacidad. Imprime una vez y cambia el destino cuando quieras. Autoalojable, alojamiento en la UE, los códigos nunca caducan."
+      },
+      "pricing": {
+        "title": "Precios de Tessera — planes sencillos, sin ataduras",
+        "description": "Aloja Tessera gratis o deja que lo alojemos nosotros. Precios transparentes, prueba de 14 días sin tarjeta, y tus códigos nunca quedan retenidos."
+      }
+    },
+    "it": {
+      "landing": {
+        "title": "Tessera — QR code dinamici che sono tuoi",
+        "description": "QR code dinamici, open source e attenti alla privacy. Stampa una volta e cambia la destinazione quando vuoi. Self-hosting, hosting in UE, codici che non scadono mai."
+      },
+      "pricing": {
+        "title": "Prezzi di Tessera — piani semplici, senza vincoli",
+        "description": "Ospita Tessera gratis o lascia che lo facciamo noi. Prezzi trasparenti, prova di 14 giorni senza carta e i tuoi codici non vengono mai tenuti in ostaggio."
+      }
+    },
+    "de": {
+      "landing": {
+        "title": "Tessera — dynamische QR-Codes, die dir gehören",
+        "description": "Open-Source-QR-Codes mit Fokus auf Datenschutz. Einmal drucken, das Ziel jederzeit ändern. Selbst hostbar, EU-Hosting, Codes laufen nie ab."
+      },
+      "pricing": {
+        "title": "Tessera-Preise — einfache Tarife, keine Bindung",
+        "description": "Hoste Tessera kostenlos selbst oder lass uns hosten. Transparente Preise, 14-Tage-Test ohne Karte, und deine Codes werden nie als Geisel genommen."
+      }
+    }
+  }
+}

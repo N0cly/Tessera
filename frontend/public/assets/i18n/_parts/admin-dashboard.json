@@ -1,0 +1,425 @@
+{
+  "namespace": "admin",
+  "translations": {
+    "en": {
+      "operatorBadge": "operator",
+      "periodGroup": "Period",
+      "sections": "Sections",
+      "dbSource": "your database",
+      "periods": {
+        "7d": "7 days",
+        "30d": "30 days",
+        "90d": "90 days"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "customers": "Customers",
+        "audit": "Audit log"
+      },
+      "errors": {
+        "overview": "Could not load the overview.",
+        "customers": "Could not load customers.",
+        "audit": "Could not load the audit log."
+      },
+      "chart": {
+        "scans": "Scans",
+        "signups": "Signups"
+      },
+      "business": {
+        "title": "Business",
+        "source": "via Paddle",
+        "unavailable": "Business metrics are unavailable — Paddle isn't reachable or configured on this instance. Usage and customer metrics below come from your database.",
+        "mrr": "MRR",
+        "mixedCurrency": "multiple currencies — see Paddle",
+        "activeSubscriptions": "Active subscriptions",
+        "trialing": "Trials in progress",
+        "pastDue": "Failed payments",
+        "trialConversion": "Trial → paid",
+        "churn30d": "Churn (30d)",
+        "activeByPlan": "Active by plan",
+        "hint": "Conversion and churn are derived from synced subscription records; revenue is read from Paddle and never recomputed here. Deeper revenue analytics live in Paddle."
+      },
+      "usage": {
+        "title": "Usage",
+        "totalLinks": "Total links",
+        "totalScans": "Total scans",
+        "periodScans": "Scans ({{period}})",
+        "activeCodes": "Active codes",
+        "noScans": "No scans in this period."
+      },
+      "customers": {
+        "title": "Customers",
+        "total": "Total customers",
+        "churned": "Churned",
+        "byPlan": "By plan",
+        "byStatus": "By status",
+        "noSignups": "No signups in this period.",
+        "piiNotice": "This view contains customer emails (PII). Per the data-minimization rule, each load is recorded in the audit log. Scanner identities are never available — scans store no IP.",
+        "topByUsage": "Top customers by usage ({{period}})",
+        "colCustomer": "Customer",
+        "colLinks": "Links",
+        "colScans": "Scans",
+        "noUsage": "No usage yet.",
+        "allCustomers": "All customers",
+        "colEmail": "Email",
+        "colPlan": "Plan",
+        "colStatus": "Status",
+        "colCodes": "Codes",
+        "colJoined": "Joined",
+        "noCustomers": "No customers."
+      },
+      "audit": {
+        "title": "Audit log",
+        "notice": "Admin logins and customer-data accesses, most recent first.",
+        "colWhen": "When",
+        "colActor": "Actor",
+        "colAction": "Action",
+        "colResult": "Result",
+        "colIp": "IP",
+        "colDetail": "Detail",
+        "ok": "ok",
+        "fail": "fail",
+        "noEntries": "No entries."
+      },
+      "pager": {
+        "page": "Page {{current}} / {{total}} · {{count}} total"
+      }
+    },
+    "fr": {
+      "operatorBadge": "opérateur",
+      "periodGroup": "Période",
+      "sections": "Sections",
+      "dbSource": "votre base de données",
+      "periods": {
+        "7d": "7 jours",
+        "30d": "30 jours",
+        "90d": "90 jours"
+      },
+      "tabs": {
+        "overview": "Vue d'ensemble",
+        "customers": "Clients",
+        "audit": "Journal d'audit"
+      },
+      "errors": {
+        "overview": "Impossible de charger la vue d'ensemble.",
+        "customers": "Impossible de charger les clients.",
+        "audit": "Impossible de charger le journal d'audit."
+      },
+      "chart": {
+        "scans": "Scans",
+        "signups": "Inscriptions"
+      },
+      "business": {
+        "title": "Activité",
+        "source": "via Paddle",
+        "unavailable": "Les indicateurs d'activité sont indisponibles — Paddle n'est pas joignable ou n'est pas configuré sur cette instance. Les indicateurs d'usage et de clients ci-dessous proviennent de votre base de données.",
+        "mrr": "MRR",
+        "mixedCurrency": "plusieurs devises — voir Paddle",
+        "activeSubscriptions": "Abonnements actifs",
+        "trialing": "Essais en cours",
+        "pastDue": "Paiements échoués",
+        "trialConversion": "Essai → payant",
+        "churn30d": "Attrition (30 j)",
+        "activeByPlan": "Actifs par forfait",
+        "hint": "La conversion et l'attrition sont calculées à partir des enregistrements d'abonnement synchronisés ; le chiffre d'affaires est lu depuis Paddle et n'est jamais recalculé ici. Les analyses de revenus plus poussées se trouvent dans Paddle."
+      },
+      "usage": {
+        "title": "Usage",
+        "totalLinks": "Liens au total",
+        "totalScans": "Scans au total",
+        "periodScans": "Scans ({{period}})",
+        "activeCodes": "Codes actifs",
+        "noScans": "Aucun scan sur cette période."
+      },
+      "customers": {
+        "title": "Clients",
+        "total": "Clients au total",
+        "churned": "Partis",
+        "byPlan": "Par forfait",
+        "byStatus": "Par statut",
+        "noSignups": "Aucune inscription sur cette période.",
+        "piiNotice": "Cette vue contient des e-mails de clients (données personnelles). Conformément à la règle de minimisation des données, chaque chargement est consigné dans le journal d'audit. L'identité des personnes qui scannent n'est jamais disponible — les scans ne stockent aucune adresse IP.",
+        "topByUsage": "Principaux clients par usage ({{period}})",
+        "colCustomer": "Client",
+        "colLinks": "Liens",
+        "colScans": "Scans",
+        "noUsage": "Aucun usage pour l'instant.",
+        "allCustomers": "Tous les clients",
+        "colEmail": "E-mail",
+        "colPlan": "Forfait",
+        "colStatus": "Statut",
+        "colCodes": "Codes",
+        "colJoined": "Inscrit le",
+        "noCustomers": "Aucun client."
+      },
+      "audit": {
+        "title": "Journal d'audit",
+        "notice": "Connexions des administrateurs et accès aux données clients, les plus récents en premier.",
+        "colWhen": "Quand",
+        "colActor": "Acteur",
+        "colAction": "Action",
+        "colResult": "Résultat",
+        "colIp": "IP",
+        "colDetail": "Détail",
+        "ok": "ok",
+        "fail": "échec",
+        "noEntries": "Aucune entrée."
+      },
+      "pager": {
+        "page": "Page {{current}} / {{total}} · {{count}} au total"
+      }
+    },
+    "es": {
+      "operatorBadge": "operador",
+      "periodGroup": "Periodo",
+      "sections": "Secciones",
+      "dbSource": "tu base de datos",
+      "periods": {
+        "7d": "7 días",
+        "30d": "30 días",
+        "90d": "90 días"
+      },
+      "tabs": {
+        "overview": "Resumen",
+        "customers": "Clientes",
+        "audit": "Registro de auditoría"
+      },
+      "errors": {
+        "overview": "No se pudo cargar el resumen.",
+        "customers": "No se pudieron cargar los clientes.",
+        "audit": "No se pudo cargar el registro de auditoría."
+      },
+      "chart": {
+        "scans": "Escaneos",
+        "signups": "Altas"
+      },
+      "business": {
+        "title": "Negocio",
+        "source": "vía Paddle",
+        "unavailable": "Las métricas de negocio no están disponibles — Paddle no es accesible o no está configurado en esta instancia. Las métricas de uso y de clientes que aparecen abajo provienen de tu base de datos.",
+        "mrr": "MRR",
+        "mixedCurrency": "varias monedas — consulta Paddle",
+        "activeSubscriptions": "Suscripciones activas",
+        "trialing": "Pruebas en curso",
+        "pastDue": "Pagos fallidos",
+        "trialConversion": "Prueba → pago",
+        "churn30d": "Cancelaciones (30 d)",
+        "activeByPlan": "Activos por plan",
+        "hint": "La conversión y las cancelaciones se derivan de los registros de suscripción sincronizados; los ingresos se leen desde Paddle y nunca se recalculan aquí. Las analíticas de ingresos más detalladas están en Paddle."
+      },
+      "usage": {
+        "title": "Uso",
+        "totalLinks": "Enlaces totales",
+        "totalScans": "Escaneos totales",
+        "periodScans": "Escaneos ({{period}})",
+        "activeCodes": "Códigos activos",
+        "noScans": "Sin escaneos en este periodo."
+      },
+      "customers": {
+        "title": "Clientes",
+        "total": "Clientes totales",
+        "churned": "Bajas",
+        "byPlan": "Por plan",
+        "byStatus": "Por estado",
+        "noSignups": "Sin altas en este periodo.",
+        "piiNotice": "Esta vista contiene correos de clientes (datos personales). Conforme a la regla de minimización de datos, cada carga se registra en el registro de auditoría. La identidad de quien escanea nunca está disponible — los escaneos no almacenan ninguna IP.",
+        "topByUsage": "Principales clientes por uso ({{period}})",
+        "colCustomer": "Cliente",
+        "colLinks": "Enlaces",
+        "colScans": "Escaneos",
+        "noUsage": "Aún sin uso.",
+        "allCustomers": "Todos los clientes",
+        "colEmail": "Correo",
+        "colPlan": "Plan",
+        "colStatus": "Estado",
+        "colCodes": "Códigos",
+        "colJoined": "Alta",
+        "noCustomers": "Sin clientes."
+      },
+      "audit": {
+        "title": "Registro de auditoría",
+        "notice": "Inicios de sesión de administradores y accesos a datos de clientes, los más recientes primero.",
+        "colWhen": "Cuándo",
+        "colActor": "Actor",
+        "colAction": "Acción",
+        "colResult": "Resultado",
+        "colIp": "IP",
+        "colDetail": "Detalle",
+        "ok": "ok",
+        "fail": "fallo",
+        "noEntries": "Sin entradas."
+      },
+      "pager": {
+        "page": "Página {{current}} / {{total}} · {{count}} en total"
+      }
+    },
+    "it": {
+      "operatorBadge": "operatore",
+      "periodGroup": "Periodo",
+      "sections": "Sezioni",
+      "dbSource": "il tuo database",
+      "periods": {
+        "7d": "7 giorni",
+        "30d": "30 giorni",
+        "90d": "90 giorni"
+      },
+      "tabs": {
+        "overview": "Panoramica",
+        "customers": "Clienti",
+        "audit": "Registro di audit"
+      },
+      "errors": {
+        "overview": "Impossibile caricare la panoramica.",
+        "customers": "Impossibile caricare i clienti.",
+        "audit": "Impossibile caricare il registro di audit."
+      },
+      "chart": {
+        "scans": "Scansioni",
+        "signups": "Iscrizioni"
+      },
+      "business": {
+        "title": "Attività",
+        "source": "tramite Paddle",
+        "unavailable": "Le metriche di attività non sono disponibili — Paddle non è raggiungibile o non è configurato su questa istanza. Le metriche di utilizzo e dei clienti qui sotto provengono dal tuo database.",
+        "mrr": "MRR",
+        "mixedCurrency": "più valute — vedi Paddle",
+        "activeSubscriptions": "Abbonamenti attivi",
+        "trialing": "Prove in corso",
+        "pastDue": "Pagamenti falliti",
+        "trialConversion": "Prova → a pagamento",
+        "churn30d": "Abbandono (30 g)",
+        "activeByPlan": "Attivi per piano",
+        "hint": "La conversione e l'abbandono derivano dai record di abbonamento sincronizzati; i ricavi vengono letti da Paddle e non vengono mai ricalcolati qui. Le analisi sui ricavi più approfondite sono in Paddle."
+      },
+      "usage": {
+        "title": "Utilizzo",
+        "totalLinks": "Link totali",
+        "totalScans": "Scansioni totali",
+        "periodScans": "Scansioni ({{period}})",
+        "activeCodes": "Codici attivi",
+        "noScans": "Nessuna scansione in questo periodo."
+      },
+      "customers": {
+        "title": "Clienti",
+        "total": "Clienti totali",
+        "churned": "Persi",
+        "byPlan": "Per piano",
+        "byStatus": "Per stato",
+        "noSignups": "Nessuna iscrizione in questo periodo.",
+        "piiNotice": "Questa vista contiene email dei clienti (dati personali). Secondo la regola di minimizzazione dei dati, ogni caricamento viene registrato nel registro di audit. L'identità di chi scansiona non è mai disponibile — le scansioni non memorizzano alcun IP.",
+        "topByUsage": "Migliori clienti per utilizzo ({{period}})",
+        "colCustomer": "Cliente",
+        "colLinks": "Link",
+        "colScans": "Scansioni",
+        "noUsage": "Ancora nessun utilizzo.",
+        "allCustomers": "Tutti i clienti",
+        "colEmail": "Email",
+        "colPlan": "Piano",
+        "colStatus": "Stato",
+        "colCodes": "Codici",
+        "colJoined": "Iscritto il",
+        "noCustomers": "Nessun cliente."
+      },
+      "audit": {
+        "title": "Registro di audit",
+        "notice": "Accessi degli amministratori e accessi ai dati dei clienti, i più recenti per primi.",
+        "colWhen": "Quando",
+        "colActor": "Attore",
+        "colAction": "Azione",
+        "colResult": "Esito",
+        "colIp": "IP",
+        "colDetail": "Dettaglio",
+        "ok": "ok",
+        "fail": "errore",
+        "noEntries": "Nessuna voce."
+      },
+      "pager": {
+        "page": "Pagina {{current}} / {{total}} · {{count}} in totale"
+      }
+    },
+    "de": {
+      "operatorBadge": "Betreiber",
+      "periodGroup": "Zeitraum",
+      "sections": "Bereiche",
+      "dbSource": "deine Datenbank",
+      "periods": {
+        "7d": "7 Tage",
+        "30d": "30 Tage",
+        "90d": "90 Tage"
+      },
+      "tabs": {
+        "overview": "Übersicht",
+        "customers": "Kunden",
+        "audit": "Audit-Log"
+      },
+      "errors": {
+        "overview": "Die Übersicht konnte nicht geladen werden.",
+        "customers": "Die Kunden konnten nicht geladen werden.",
+        "audit": "Das Audit-Log konnte nicht geladen werden."
+      },
+      "chart": {
+        "scans": "Scans",
+        "signups": "Anmeldungen"
+      },
+      "business": {
+        "title": "Geschäft",
+        "source": "über Paddle",
+        "unavailable": "Geschäftskennzahlen sind nicht verfügbar — Paddle ist nicht erreichbar oder auf dieser Instanz nicht konfiguriert. Die Nutzungs- und Kundenkennzahlen unten stammen aus deiner Datenbank.",
+        "mrr": "MRR",
+        "mixedCurrency": "mehrere Währungen — siehe Paddle",
+        "activeSubscriptions": "Aktive Abos",
+        "trialing": "Laufende Testphasen",
+        "pastDue": "Fehlgeschlagene Zahlungen",
+        "trialConversion": "Test → bezahlt",
+        "churn30d": "Abwanderung (30 T)",
+        "activeByPlan": "Aktiv nach Tarif",
+        "hint": "Konversion und Abwanderung werden aus synchronisierten Abo-Datensätzen abgeleitet; der Umsatz wird aus Paddle gelesen und hier nie neu berechnet. Tiefergehende Umsatzanalysen findest du in Paddle."
+      },
+      "usage": {
+        "title": "Nutzung",
+        "totalLinks": "Links insgesamt",
+        "totalScans": "Scans insgesamt",
+        "periodScans": "Scans ({{period}})",
+        "activeCodes": "Aktive Codes",
+        "noScans": "Keine Scans in diesem Zeitraum."
+      },
+      "customers": {
+        "title": "Kunden",
+        "total": "Kunden insgesamt",
+        "churned": "Abgewandert",
+        "byPlan": "Nach Tarif",
+        "byStatus": "Nach Status",
+        "noSignups": "Keine Anmeldungen in diesem Zeitraum.",
+        "piiNotice": "Diese Ansicht enthält Kunden-E-Mails (personenbezogene Daten). Gemäß der Regel zur Datensparsamkeit wird jeder Aufruf im Audit-Log festgehalten. Die Identität der Scannenden ist nie verfügbar — Scans speichern keine IP.",
+        "topByUsage": "Top-Kunden nach Nutzung ({{period}})",
+        "colCustomer": "Kunde",
+        "colLinks": "Links",
+        "colScans": "Scans",
+        "noUsage": "Noch keine Nutzung.",
+        "allCustomers": "Alle Kunden",
+        "colEmail": "E-Mail",
+        "colPlan": "Tarif",
+        "colStatus": "Status",
+        "colCodes": "Codes",
+        "colJoined": "Beigetreten",
+        "noCustomers": "Keine Kunden."
+      },
+      "audit": {
+        "title": "Audit-Log",
+        "notice": "Administrator-Anmeldungen und Zugriffe auf Kundendaten, die neuesten zuerst.",
+        "colWhen": "Wann",
+        "colActor": "Akteur",
+        "colAction": "Aktion",
+        "colResult": "Ergebnis",
+        "colIp": "IP",
+        "colDetail": "Detail",
+        "ok": "ok",
+        "fail": "Fehler",
+        "noEntries": "Keine Einträge."
+      },
+      "pager": {
+        "page": "Seite {{current}} / {{total}} · {{count}} insgesamt"
+      }
+    }
+  }
+}

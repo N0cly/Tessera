@@ -1,39 +1,48 @@
-<section class="auth">
-  <h2>{{ mode() === 'login' ? 'Sign in' : 'Create an account' }}</h2>
+<ng-container *transloco="let t">
+  <section class="auth">
+    <div class="auth-lang"><app-language-switcher /></div>
+    <h2>{{ mode() === 'login' ? t('common.nav.signIn') : t('auth.createAccountTitle') }}</h2>
 
-  <form (submit)="$event.preventDefault(); submit()">
-    <label>
-      Email
-      <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
-    </label>
-    <label>
-      Password
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        required
-        minlength="8"
-        autocomplete="{{ mode() === 'login' ? 'current-password' : 'new-password' }}"
-      />
-    </label>
+    <form (submit)="$event.preventDefault(); submit()">
+      <label>
+        {{ t('auth.emailLabel') }}
+        <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
+      </label>
+      <label>
+        {{ t('auth.passwordLabel') }}
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          minlength="8"
+          autocomplete="{{ mode() === 'login' ? 'current-password' : 'new-password' }}"
+        />
+      </label>
 
-    @if (error()) {
-      <p class="error" role="alert">{{ error() }}</p>
-    }
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
 
-    <button type="submit" [disabled]="busy()">
-      {{ busy() ? 'Working…' : mode() === 'login' ? 'Sign in' : 'Create account' }}
-    </button>
-  </form>
+      <button type="submit" [disabled]="busy()">
+        {{
+          busy()
+            ? t('common.actions.loading')
+            : mode() === 'login'
+              ? t('common.nav.signIn')
+              : t('auth.createAccountSubmit')
+        }}
+      </button>
+    </form>
 
-  <p class="toggle">
-    @if (mode() === 'login') {
-      No account yet?
-      <button type="button" class="link" (click)="toggle()">Register</button>
-    } @else {
-      Already registered?
-      <button type="button" class="link" (click)="toggle()">Sign in</button>
-    }
-  </p>
-</section>
+    <p class="toggle">
+      @if (mode() === 'login') {
+        {{ t('auth.noAccountPrompt') }}
+        <button type="button" class="link" (click)="toggle()">{{ t('auth.registerLink') }}</button>
+      } @else {
+        {{ t('auth.alreadyRegisteredPrompt') }}
+        <button type="button" class="link" (click)="toggle()">{{ t('common.nav.signIn') }}</button>
+      }
+    </p>
+  </section>
+</ng-container>

@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 import { AuthService } from '../core/auth.service';
+import { LanguageSwitcherComponent } from '../core/language-switcher';
+import { LocaleService } from '../core/locale.service';
 import { Link, LinksService } from '../core/links.service';
 import { LinkStatsComponent } from '../stats/link-stats';
 
@@ -14,13 +17,21 @@ interface EditState {
 
 @Component({
   selector: 'app-links',
-  imports: [FormsModule, RouterLink, LinkStatsComponent],
+  imports: [
+    FormsModule,
+    RouterLink,
+    LinkStatsComponent,
+    TranslocoDirective,
+    LanguageSwitcherComponent,
+  ],
   templateUrl: './links.html',
   styleUrl: './links.scss',
 })
 export class LinksComponent implements OnInit, OnDestroy {
   private readonly api = inject(LinksService);
   private readonly auth = inject(AuthService);
+  private readonly transloco = inject(TranslocoService);
+  readonly locale = inject(LocaleService);
 
   readonly links = signal<Link[]>([]);
   readonly loading = signal(true);
@@ -61,7 +72,7 @@ export class LinksComponent implements OnInit, OnDestroy {
         links.forEach((l) => this.loadQrPreview(l));
       },
       error: () => {
-        this.error.set('Could not load links.');
+        this.error.set(this.transloco.translate('links.errors.load'));
         this.loading.set(false);
       },
     });
@@ -94,7 +105,7 @@ export class LinksComponent implements OnInit, OnDestroy {
         if (err?.status === 402) {
           this.upgradeNeeded.set(true);
         }
-        this.error.set(this.extractError(err) ?? 'Could not create link.');
+        this.error.set(this.extractError(err) ?? this.transloco.translate('links.errors.create'));
       },
     });
   }
@@ -136,13 +147,13 @@ export class LinksComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.savingEdit.set(false);
-          this.error.set(this.extractError(err) ?? 'Could not save changes.');
+          this.error.set(this.extractError(err) ?? this.transloco.translate('links.errors.save'));
         },
       });
   }
 
   remove(link: Link): void {
-    if (!confirm(`Delete /r/${link.slug}? This cannot be undone.`)) return;
+    if (!confirm(this.transloco.translate('links.confirmDelete', { slug: link.slug }))) return;
     this.api.remove(link['@id']).subscribe({
       next: () => {
         this.revokePreview(link.id);
@@ -152,7 +163,7 @@ export class LinksComponent implements OnInit, OnDestroy {
         });
         this.links.update((curr) => curr.filter((l) => l['@id'] !== link['@id']));
       },
-      error: () => this.error.set('Could not delete link.'),
+      error: () => this.error.set(this.transloco.translate('links.errors.delete')),
     });
   }
 
@@ -179,7 +190,10 @@ export class LinksComponent implements OnInit, OnDestroy {
         a.remove();
         URL.revokeObjectURL(url);
       },
-      error: () => this.error.set(`Could not download ${format.toUpperCase()}.`),
+      error: () =>
+        this.error.set(
+          this.transloco.translate('links.errors.download', { format: format.toUpperCase() }),
+        ),
     });
   }
 

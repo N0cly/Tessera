@@ -1,164 +1,181 @@
-<header class="topbar">
-  <div class="topbar-brand">
-    <img
-      class="topbar-logo"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <h1>Your links</h1>
-  </div>
-  <nav class="topnav" aria-label="Dashboard sections">
-    <a routerLink="/app" class="nav-link">Overview</a>
-    <a routerLink="/app/links" class="nav-link active" aria-current="page">Your links</a>
-    <button type="button" class="ghost" (click)="logout()">Sign out</button>
-  </nav>
-</header>
-
-<section class="create">
-  <h2>Create a new link</h2>
-  <form (submit)="$event.preventDefault(); create()">
-    <label>
-      Destination URL
-      <input
-        type="url"
-        name="destination"
-        placeholder="https://example.com/long-path"
-        [(ngModel)]="newDestination"
-        required
+<ng-container *transloco="let t">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img
+        class="topbar-logo"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
       />
-    </label>
-    <label>
-      Name (optional)
-      <input
-        type="text"
-        name="name"
-        maxlength="120"
-        placeholder="Spring menu, support page, …"
-        [(ngModel)]="newName"
-      />
-    </label>
-    <button type="submit" [disabled]="creating() || !newDestination">
-      {{ creating() ? 'Creating…' : 'Create link' }}
-    </button>
-  </form>
-</section>
+      <h1>{{ t('links.title') }}</h1>
+    </div>
+    <nav class="topnav" [attr.aria-label]="t('links.navSections')">
+      <a routerLink="/app" class="nav-link">{{ t('links.navOverview') }}</a>
+      <a routerLink="/app/links" class="nav-link active" aria-current="page">{{
+        t('links.title')
+      }}</a>
+      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>
+      <app-language-switcher />
+    </nav>
+  </header>
 
-@if (error()) {
-  <p class="error" role="alert">
-    {{ error() }}
-    @if (upgradeNeeded()) {
-      <a routerLink="/app" class="upgrade-link">View plans &amp; upgrade →</a>
-    }
-  </p>
-}
+  <section class="create">
+    <h2>{{ t('links.create.heading') }}</h2>
+    <form (submit)="$event.preventDefault(); create()">
+      <label>
+        {{ t('links.create.destinationLabel') }}
+        <input
+          type="url"
+          name="destination"
+          [attr.placeholder]="t('links.create.destinationPlaceholder')"
+          [(ngModel)]="newDestination"
+          required
+        />
+      </label>
+      <label>
+        {{ t('links.create.nameLabel') }}
+        <input
+          type="text"
+          name="name"
+          maxlength="120"
+          [attr.placeholder]="t('links.create.namePlaceholder')"
+          [(ngModel)]="newName"
+        />
+      </label>
+      <button type="submit" [disabled]="creating() || !newDestination">
+        {{ creating() ? t('links.create.submitting') : t('links.create.submit') }}
+      </button>
+    </form>
+  </section>
 
-<section class="list">
-  @if (loading()) {
-    <p>Loading…</p>
-  } @else if (links().length === 0) {
-    <p class="empty">No links yet. Create one above.</p>
-  } @else {
-    <ul>
-      @for (link of links(); track link['@id']) {
-        <li class="card">
-          <div class="card-body">
-            <div class="card-main">
-              <div class="row">
-                <a class="slug" [href]="redirectUrl(link.slug)" target="_blank" rel="noopener">
-                  /r/{{ link.slug }}
-                </a>
-                <button type="button" class="ghost" (click)="copySlug(link.slug)">Copy</button>
-              </div>
+  @if (error()) {
+    <p class="error" role="alert">
+      {{ error() }}
+      @if (upgradeNeeded()) {
+        <a routerLink="/app" class="upgrade-link">{{ t('links.upgradeLink') }}</a>
+      }
+    </p>
+  }
 
-              @if (link.name) {
-                <div class="name">{{ link.name }}</div>
-              }
-
-              @if (editing()?.iri === link['@id']) {
-                <form class="edit" (submit)="$event.preventDefault(); saveEdit()">
-                  <label class="edit-field">
-                    <span class="edit-label">Destination URL</span>
-                    <input
-                      type="url"
-                      required
-                      [ngModel]="editing()?.destinationUrl"
-                      (ngModelChange)="patchEditing({ destinationUrl: $event })"
-                      name="dest-{{ link.id }}"
-                    />
-                  </label>
-                  <label class="edit-field">
-                    <span class="edit-label">Fallback URL (optional)</span>
-                    <input
-                      type="url"
-                      placeholder="https://… where this code goes if your plan lapses"
-                      [ngModel]="editing()?.fallbackUrl"
-                      (ngModelChange)="patchEditing({ fallbackUrl: $event })"
-                      name="fallback-{{ link.id }}"
-                    />
-                    <span class="edit-hint">
-                      If your subscription lapses, this code redirects here instead of breaking.
-                    </span>
-                  </label>
-                  <div class="edit-actions">
-                    <button type="submit" [disabled]="savingEdit()">
-                      {{ savingEdit() ? 'Saving…' : 'Save' }}
-                    </button>
-                    <button type="button" class="ghost" (click)="cancelEdit()">Cancel</button>
-                  </div>
-                </form>
-              } @else {
-                <div class="row dest">
-                  <span class="muted">→</span>
-                  <a [href]="link.destinationUrl" target="_blank" rel="noopener">{{
-                    link.destinationUrl
-                  }}</a>
+  <section class="list">
+    @if (loading()) {
+      <p>{{ t('common.actions.loading') }}</p>
+    } @else if (links().length === 0) {
+      <p class="empty">{{ t('links.empty') }}</p>
+    } @else {
+      <ul>
+        @for (link of links(); track link['@id']) {
+          <li class="card">
+            <div class="card-body">
+              <div class="card-main">
+                <div class="row">
+                  <a class="slug" [href]="redirectUrl(link.slug)" target="_blank" rel="noopener">
+                    /r/{{ link.slug }}
+                  </a>
+                  <button type="button" class="ghost" (click)="copySlug(link.slug)">
+                    {{ t('common.actions.copy') }}
+                  </button>
                 </div>
-                @if (link.fallbackUrl) {
-                  <div class="row dest fallback">
-                    <span class="muted" title="Used if your subscription lapses">↳ fallback</span>
-                    <a [href]="link.fallbackUrl" target="_blank" rel="noopener">{{
-                      link.fallbackUrl
+
+                @if (link.name) {
+                  <div class="name">{{ link.name }}</div>
+                }
+
+                @if (editing()?.iri === link['@id']) {
+                  <form class="edit" (submit)="$event.preventDefault(); saveEdit()">
+                    <label class="edit-field">
+                      <span class="edit-label">{{ t('links.edit.destinationLabel') }}</span>
+                      <input
+                        type="url"
+                        required
+                        [ngModel]="editing()?.destinationUrl"
+                        (ngModelChange)="patchEditing({ destinationUrl: $event })"
+                        name="dest-{{ link.id }}"
+                      />
+                    </label>
+                    <label class="edit-field">
+                      <span class="edit-label">{{ t('links.edit.fallbackLabel') }}</span>
+                      <input
+                        type="url"
+                        [attr.placeholder]="t('links.edit.fallbackPlaceholder')"
+                        [ngModel]="editing()?.fallbackUrl"
+                        (ngModelChange)="patchEditing({ fallbackUrl: $event })"
+                        name="fallback-{{ link.id }}"
+                      />
+                      <span class="edit-hint">
+                        {{ t('links.edit.fallbackHint') }}
+                      </span>
+                    </label>
+                    <div class="edit-actions">
+                      <button type="submit" [disabled]="savingEdit()">
+                        {{ savingEdit() ? t('links.edit.saving') : t('common.actions.save') }}
+                      </button>
+                      <button type="button" class="ghost" (click)="cancelEdit()">
+                        {{ t('common.actions.cancel') }}
+                      </button>
+                    </div>
+                  </form>
+                } @else {
+                  <div class="row dest">
+                    <span class="muted">→</span>
+                    <a [href]="link.destinationUrl" target="_blank" rel="noopener">{{
+                      link.destinationUrl
                     }}</a>
                   </div>
+                  @if (link.fallbackUrl) {
+                    <div class="row dest fallback">
+                      <span class="muted" [title]="t('links.fallbackTitle')">{{
+                        t('links.fallbackBadge')
+                      }}</span>
+                      <a [href]="link.fallbackUrl" target="_blank" rel="noopener">{{
+                        link.fallbackUrl
+                      }}</a>
+                    </div>
+                  }
+                  <div class="row actions">
+                    <button type="button" (click)="startEdit(link)">
+                      {{ t('links.editLinks') }}
+                    </button>
+                    <button
+                      type="button"
+                      class="ghost"
+                      (click)="toggleStats(link)"
+                      [attr.aria-expanded]="isExpanded(link.id)"
+                    >
+                      {{ isExpanded(link.id) ? t('links.hideStats') : t('links.showStats') }}
+                    </button>
+                    <button type="button" class="ghost" (click)="download(link, 'png')">
+                      {{ t('links.downloadPng') }}
+                    </button>
+                    <button type="button" class="ghost" (click)="download(link, 'svg')">
+                      {{ t('links.downloadSvg') }}
+                    </button>
+                    <button type="button" class="danger" (click)="remove(link)">
+                      {{ t('common.actions.delete') }}
+                    </button>
+                  </div>
                 }
-                <div class="row actions">
-                  <button type="button" (click)="startEdit(link)">Edit links</button>
-                  <button
-                    type="button"
-                    class="ghost"
-                    (click)="toggleStats(link)"
-                    [attr.aria-expanded]="isExpanded(link.id)"
-                  >
-                    {{ isExpanded(link.id) ? 'Hide stats' : 'Show stats' }}
-                  </button>
-                  <button type="button" class="ghost" (click)="download(link, 'png')">
-                    Download PNG
-                  </button>
-                  <button type="button" class="ghost" (click)="download(link, 'svg')">
-                    Download SVG
-                  </button>
-                  <button type="button" class="danger" (click)="remove(link)">Delete</button>
-                </div>
-              }
+              </div>
+
+              <div class="card-qr" [attr.aria-label]="t('links.qrAria')">
+                @if (qrPreviewUrl(link.id); as src) {
+                  <img [src]="src" [alt]="t('links.qrAlt', { slug: link.slug })" />
+                } @else {
+                  <div class="qr-placeholder" aria-hidden="true">
+                    {{ t('links.qrPlaceholder') }}
+                  </div>
+                }
+              </div>
             </div>
 
-            <div class="card-qr" aria-label="QR code for this link">
-              @if (qrPreviewUrl(link.id); as src) {
-                <img [src]="src" alt="QR code for /r/{{ link.slug }}" />
-              } @else {
-                <div class="qr-placeholder" aria-hidden="true">QR…</div>
-              }
-            </div>
-          </div>
-
-          @if (isExpanded(link.id)) {
-            <app-link-stats [linkIri]="link['@id']" />
-          }
-        </li>
-      }
-    </ul>
-  }
-</section>
+            @if (isExpanded(link.id)) {
+              <app-link-stats [linkIri]="link['@id']" />
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</ng-container>

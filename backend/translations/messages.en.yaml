@@ -1,0 +1,19 @@
+inactive:
+    title: 'Link inactive'
+    heading: 'This link is currently inactive'
+    body: "The owner's subscription has lapsed, so this code isn't pointing anywhere right now. If it's yours, renewing your plan will bring it back."
+registration:
+    invalid_json: 'Invalid JSON body.'
+    invalid_input: 'Email and password (at least 8 characters) are required.'
+    email_taken: 'An account with this email already exists.'
+    validation_failed: 'Validation failed.'
+link:
+    limit_reached: "You've reached your plan's limit of %count% codes. Upgrade your plan to create more."
+    rate_limited: 'Too many link creations. Please slow down.'
+    invalid_qr_format: 'format must be "png" or "svg".'
+billing:
+    not_configured: 'Billing is not configured on this instance.'
+    no_subscription: 'No active subscription to manage yet.'
+    portal_failed: 'Could not open the customer portal.'
+me:
+    invalid_locale: 'locale must be one of %locales%.'

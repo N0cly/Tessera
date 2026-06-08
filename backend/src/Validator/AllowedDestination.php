@@ -13,5 +13,7 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class AllowedDestination extends Constraint
 {
-    public string $message = 'This destination domain is not allowed on this instance.';
+    // Translation key resolved against the `validators` domain in the request
+    // locale (CLAUDE.md i18n); see translations/validators.*.yaml.
+    public string $message = 'destination.not_allowed';
 }

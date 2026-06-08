@@ -1,0 +1,462 @@
+{
+  "admin": {
+    "operatorBadge": "Betreiber",
+    "periodGroup": "Zeitraum",
+    "sections": "Bereiche",
+    "dbSource": "deine Datenbank",
+    "periods": {
+      "7d": "7 Tage",
+      "30d": "30 Tage",
+      "90d": "90 Tage"
+    },
+    "tabs": {
+      "overview": "Übersicht",
+      "customers": "Kunden",
+      "audit": "Audit-Log"
+    },
+    "errors": {
+      "overview": "Die Übersicht konnte nicht geladen werden.",
+      "customers": "Die Kunden konnten nicht geladen werden.",
+      "audit": "Das Audit-Log konnte nicht geladen werden."
+    },
+    "chart": {
+      "scans": "Scans",
+      "signups": "Anmeldungen"
+    },
+    "business": {
+      "title": "Geschäft",
+      "source": "über Paddle",
+      "unavailable": "Geschäftskennzahlen sind nicht verfügbar — Paddle ist nicht erreichbar oder auf dieser Instanz nicht konfiguriert. Die Nutzungs- und Kundenkennzahlen unten stammen aus deiner Datenbank.",
+      "mrr": "MRR",
+      "mixedCurrency": "mehrere Währungen — siehe Paddle",
+      "activeSubscriptions": "Aktive Abos",
+      "trialing": "Laufende Testphasen",
+      "pastDue": "Fehlgeschlagene Zahlungen",
+      "trialConversion": "Test → bezahlt",
+      "churn30d": "Abwanderung (30 T)",
+      "activeByPlan": "Aktiv nach Tarif",
+      "hint": "Konversion und Abwanderung werden aus synchronisierten Abo-Datensätzen abgeleitet; der Umsatz wird aus Paddle gelesen und hier nie neu berechnet. Tiefergehende Umsatzanalysen findest du in Paddle."
+    },
+    "usage": {
+      "title": "Nutzung",
+      "totalLinks": "Links insgesamt",
+      "totalScans": "Scans insgesamt",
+      "periodScans": "Scans ({{period}})",
+      "activeCodes": "Aktive Codes",
+      "noScans": "Keine Scans in diesem Zeitraum."
+    },
+    "customers": {
+      "title": "Kunden",
+      "total": "Kunden insgesamt",
+      "churned": "Abgewandert",
+      "byPlan": "Nach Tarif",
+      "byStatus": "Nach Status",
+      "noSignups": "Keine Anmeldungen in diesem Zeitraum.",
+      "piiNotice": "Diese Ansicht enthält Kunden-E-Mails (personenbezogene Daten). Gemäß der Regel zur Datensparsamkeit wird jeder Aufruf im Audit-Log festgehalten. Die Identität der Scannenden ist nie verfügbar — Scans speichern keine IP.",
+      "topByUsage": "Top-Kunden nach Nutzung ({{period}})",
+      "colCustomer": "Kunde",
+      "colLinks": "Links",
+      "colScans": "Scans",
+      "noUsage": "Noch keine Nutzung.",
+      "allCustomers": "Alle Kunden",
+      "colEmail": "E-Mail",
+      "colPlan": "Tarif",
+      "colStatus": "Status",
+      "colCodes": "Codes",
+      "colJoined": "Beigetreten",
+      "noCustomers": "Keine Kunden."
+    },
+    "audit": {
+      "title": "Audit-Log",
+      "notice": "Administrator-Anmeldungen und Zugriffe auf Kundendaten, die neuesten zuerst.",
+      "colWhen": "Wann",
+      "colActor": "Akteur",
+      "colAction": "Aktion",
+      "colResult": "Ergebnis",
+      "colIp": "IP",
+      "colDetail": "Detail",
+      "ok": "ok",
+      "fail": "Fehler",
+      "noEntries": "Keine Einträge."
+    },
+    "pager": {
+      "page": "Seite {{current}} / {{total}} · {{count}} insgesamt"
+    }
+  },
+  "adminAuth": {
+    "title": "Betreiber-Anmeldung",
+    "subtitle": "Geschützter Bereich. Der Administratorzugang erfordert eine Zwei-Faktor-Authentifizierung.",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "codeLabel": "Authenticator-Code",
+    "errors": {
+      "tooManyAttempts": "Zu viele Versuche. Bitte warte einen Moment und versuche es erneut.",
+      "invalidCredentials": "Ungültige Anmeldedaten."
+    }
+  },
+  "auth": {
+    "createAccountTitle": "Konto erstellen",
+    "createAccountSubmit": "Konto erstellen",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "noAccountPrompt": "Noch kein Konto?",
+    "registerLink": "Registrieren",
+    "alreadyRegisteredPrompt": "Bereits registriert?",
+    "errors": {
+      "invalidCredentials": "E-Mail oder Passwort ungültig.",
+      "loginAfterRegister": "Konto erstellt, aber die Anmeldung ist fehlgeschlagen. Versuche es erneut.",
+      "registrationFailed": "Registrierung fehlgeschlagen."
+    }
+  },
+  "common": {
+    "language": "Sprache",
+    "tagline": "datenschutzfreundliche dynamische QR-Codes, die wirklich dir gehören.",
+    "nav": {
+      "home": "Start",
+      "pricing": "Preise",
+      "github": "GitHub",
+      "dashboard": "Dashboard",
+      "openDashboard": "Dashboard öffnen",
+      "signIn": "Anmelden",
+      "signOut": "Abmelden",
+      "links": "Links"
+    },
+    "actions": {
+      "loading": "Laden…",
+      "retry": "Erneut versuchen",
+      "copy": "Kopieren",
+      "copied": "Kopiert",
+      "download": "Herunterladen",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "create": "Erstellen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "close": "Schließen",
+      "viewOnGithub": "Auf GitHub ansehen"
+    },
+    "comingSoon": "demnächst",
+    "unavailable": "Nicht verfügbar",
+    "perMonth": "pro Monat",
+    "unlimited": "Unbegrenzt"
+  },
+  "dashboard": {
+    "title": "Übersicht",
+    "sectionsAria": "Dashboard-Bereiche",
+    "yourLinks": "Deine Links",
+    "loadingOverview": "Übersicht wird geladen…",
+    "loadingBilling": "Abrechnungsdaten werden geladen…",
+    "loadError": "Übersicht konnte nicht geladen werden.",
+    "kpisAria": "Kennzahlen",
+    "kpi": {
+      "activeCodes": "Aktive Codes",
+      "totalScans": "Scans gesamt",
+      "periodScans": "Scans im Zeitraum",
+      "avgScansPerCode": "Ø Scans / Code"
+    },
+    "scansOverTime": "Scans im Zeitverlauf",
+    "periodAria": "Zeitraum",
+    "period": {
+      "7d": "7 T",
+      "30d": "30 T",
+      "90d": "90 T"
+    },
+    "chart": {
+      "scansLabel": "Scans"
+    },
+    "empty": {
+      "noScansTitle": "Noch keine Scans.",
+      "noScansBefore": "Teile einen QR oder seinen Link ",
+      "noScansAfter": " und die Scans erscheinen hier.",
+      "noPeriodScansTitle": "Keine Scans in diesem Zeitraum.",
+      "noPeriodScansHint": "Versuche einen längeren Zeitraum oder teile deine Codes breiter."
+    },
+    "topLinks": "Top-Links",
+    "topLinksEmpty": "Noch keine Scans zum Einstufen.",
+    "byDevice": "Nach Gerät",
+    "byDeviceEmpty": "Noch keine Gerätedaten.",
+    "device": {
+      "mobile": "Mobil",
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "tv": "TV",
+      "console": "Konsole",
+      "unknown": "Unbekannt"
+    },
+    "planUsage": "Tarif & Nutzung",
+    "plan": "Tarif",
+    "status": {
+      "trialing": "Testphase",
+      "active": "Aktiv",
+      "pastDue": "Überfällig",
+      "canceled": "Gekündigt",
+      "expired": "Abgelaufen"
+    },
+    "trialDaysLeft": "{{days}} Tage in der Testphase verbleibend",
+    "codesUsed": "Verwendete Codes",
+    "limitReached": "Du hast das Code-Limit deines Tarifs erreicht. Abonniere, um mehr zu erstellen.",
+    "lapse": {
+      "label": "Wenn dein Abonnement ausläuft",
+      "before": "funktionieren die Codes noch {{days}} Tage und leiten dann auf die Fallback-URL jedes Codes weiter (pro Code festgelegt in ",
+      "after": ") — oder auf eine neutrale Inaktivseite, falls keine festgelegt ist. Codes hören nie einfach auf zu funktionieren."
+    },
+    "checkoutPending": "Dein Abonnement wird abgeschlossen… dies aktualisiert sich automatisch, sobald deine Zahlung bestätigt ist.",
+    "openingCheckout": "Bezahlung wird geöffnet…",
+    "startTrial": "Testphase starten / abonnieren",
+    "openingPortal": "Portal wird geöffnet…",
+    "manageSubscription": "Abonnement verwalten",
+    "billingDisabled": "Die Abrechnung ist auf dieser Instanz nicht aktiviert.",
+    "billing": {
+      "loadError": "Abrechnungsdaten konnten nicht geladen werden.",
+      "checkoutError": "Die Bezahlung ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+      "portalError": "Das Kundenportal konnte nicht geöffnet werden. Bitte versuche es später erneut."
+    }
+  },
+  "landing": {
+    "nav": {
+      "howItWorks": "So funktioniert's",
+      "selfHost": "Selbst hosten"
+    },
+    "hero": {
+      "eyebrow": "Open-Source-QR-Codes mit dynamischem Ziel",
+      "titleLine1": "Den QR-Code einmal drucken.",
+      "titleLine2Pre": "Das Ziel ändern",
+      "titleLine2Em": "für immer",
+      "lede": "Jeder QR-Code kodiert eine kurze, dauerhafte URL, die auf deiner Infrastruktur liegt. Ändere das Ziel, wann immer du willst — kein Nachdruck, kein Ablauf, kein Dritter zwischen deinen Scannern und deinen Daten.",
+      "chips": {
+        "eu": "In der EU hostbar",
+        "ip": "IP wird nie gespeichert",
+        "expire": "Codes laufen nie ab",
+        "license": "MIT-lizenziert"
+      },
+      "ctaSelfHost": "In 1 Minute selbst hosten",
+      "ctaStar": "Auf GitHub mit einem Stern markieren",
+      "foot": "Keine Tracking-Pixel, keine Registrierungsschranke, kein „Community-Edition“-Trick."
+    },
+    "demo": {
+      "ariaLabel": "Interaktive Demo",
+      "tablistLabel": "Anwendungsfall wählen",
+      "qrAriaLabel": "QR-Code der Demo-Kurz-URL",
+      "scansGoTo": "Scans führen zu",
+      "destinationNow": "Aktuelles Ziel",
+      "note": "Der QR-Code oben ändert sich nicht — nur das Ziel ändert sich. Genau darum geht es. Klick auf einen anderen Tab; das Canvas zeichnet dieselbe kodierte URL neu.",
+      "cases": {
+        "menu": {
+          "label": "Restaurant-Menü",
+          "blurb": "Auf den Tischaufstellern. Nie wieder nachdrucken — tausch den Menü-Link jede Saison aus."
+        },
+        "event": {
+          "label": "Event-Anmeldung",
+          "blurb": "Auf dem Konferenzplakat. Derselbe QR-Code für jede Ausgabe; leite einfach zur neuen Anmeldeseite um."
+        },
+        "bio": {
+          "label": "Social-Bio-Link",
+          "blurb": "Auf einer Visitenkarte oder einem Aufkleber. Aktualisiere das Ziel, wenn sich dein Link-in-Bio-Dienst ändert."
+        }
+      }
+    },
+    "useCases": {
+      "title": "Eine Engine, viele Formen",
+      "lede": "Das Datenmodell ist bewusst generisch. Pack einen QR-Code auf alles, was einen umleitbaren Link braucht.",
+      "restaurants": {
+        "title": "Restaurants & Cafés",
+        "body": "Menü-QR-Codes, die saisonale Änderungen überstehen. Neues Frühlingsmenü? Ändere das Ziel. Die gedruckten Tischaufsteller funktionieren weiter."
+      },
+      "events": {
+        "title": "Events & Plakate",
+        "body": "Druck den QR-Code auf die Plakate fürs nächste Jahr, bevor du die Anmelde-URL kennst. Leg das Ziel später fest — sogar Stunden bevor das Event öffnet."
+      },
+      "social": {
+        "title": "Social-Bios & Karten",
+        "body": "Ein einziger QR-Code auf deiner Visitenkarte oder deinem Aufkleber, umgeleitet, sobald sich dein gerade aktueller Link-in-Bio-Dienst ändert."
+      }
+    },
+    "how": {
+      "title": "Drei Schritte, keine Überraschungen",
+      "step1": {
+        "title": "Link erstellen",
+        "bodyPre": "Füg eine beliebige",
+        "bodyPost": "-URL ein. Du bekommst eine kurze, dauerhafte Kennung — genau die wird in den QR-Code kodiert."
+      },
+      "step2": {
+        "title": "QR-Code drucken oder teilen",
+        "body": "Lade den QR-Code als PNG oder SVG herunter. Pack ihn auf ein Menü, ein Plakat, einen Aufkleber, eine Visitenkarte — alles, was die physische Welt braucht."
+      },
+      "step3": {
+        "title": "Ziel jederzeit ändern",
+        "body": "Ändere das Ziel des Links, wann immer du willst. Jeder bereits gedruckte QR-Code funktioniert weiter und führt nun zum neuen Ziel."
+      }
+    },
+    "diff": {
+      "title": "Was es anders macht",
+      "openSource": {
+        "title": "Open Source, MIT",
+        "body": "Der gesamte Code liegt auf GitHub. Forke ihn, prüf ihn, betreib ihn, verkauf, was du darauf aufbaust. Keine „Community-Edition“, der die guten Teile fehlen."
+      },
+      "privacy": {
+        "title": "IP wird nie gespeichert",
+        "bodyPre": "Das Scan-Logging läuft asynchron. Die IP des Besuchers wird im Flug zu einem Ländercode aufgelöst und dann verworfen. Die Tabelle",
+        "bodyPost": "hat schlicht keine IP-Spalte."
+      },
+      "neverExpire": {
+        "title": "Codes, die nie ablaufen",
+        "body": "Solange deine Instanz läuft, funktioniert der QR-Code, den du vor drei Jahren gedruckt hast, immer noch — und zeigt weiterhin dorthin, wohin du es heute festlegst. Kein Geiselmodell."
+      }
+    },
+    "selfHost": {
+      "title": "Mit einem Befehl selbst hosten",
+      "lede": "Docker + Docker Compose. Das ist die gesamte Abhängigkeitsliste.",
+      "snippetAriaLabel": "Self-Hosting-Befehl",
+      "snippetComment": "APP_SECRET, JWT_PASSPHRASE usw. anpassen",
+      "foot": "Startet Postgres, Redis, die API, das Dashboard, den asynchronen Worker und den periodischen Aufräumdienst — mit Health-Checks, Neustart-Richtlinien und automatisch beim ersten Start eingerichteten JWT/Migrationen.",
+      "tryDashboard": "Dashboard ausprobieren"
+    },
+    "footer": {
+      "license": "Lizenz: MIT"
+    }
+  },
+  "links": {
+    "title": "Deine Links",
+    "navSections": "Dashboard-Bereiche",
+    "navOverview": "Übersicht",
+    "create": {
+      "heading": "Neuen Link erstellen",
+      "destinationLabel": "Ziel-URL",
+      "destinationPlaceholder": "https://beispiel.de/langer-pfad",
+      "nameLabel": "Name (optional)",
+      "namePlaceholder": "Frühlingsmenü, Hilfeseite, …",
+      "submit": "Link erstellen",
+      "submitting": "Erstellen…"
+    },
+    "upgradeLink": "Tarife ansehen und upgraden →",
+    "empty": "Noch keine Links. Erstelle oben einen.",
+    "edit": {
+      "destinationLabel": "Ziel-URL",
+      "fallbackLabel": "Ausweich-URL (optional)",
+      "fallbackPlaceholder": "https://… wohin dieser Code führt, wenn dein Tarif ausläuft",
+      "fallbackHint": "Wenn dein Abonnement ausläuft, leitet dieser Code hierher um, statt zu brechen.",
+      "saving": "Speichern…"
+    },
+    "fallbackBadge": "↳ Ausweich",
+    "fallbackTitle": "Wird verwendet, wenn dein Abonnement ausläuft",
+    "editLinks": "Links bearbeiten",
+    "showStats": "Statistiken anzeigen",
+    "hideStats": "Statistiken ausblenden",
+    "downloadPng": "PNG herunterladen",
+    "downloadSvg": "SVG herunterladen",
+    "qrAria": "QR-Code für diesen Link",
+    "qrAlt": "QR-Code für /r/{{ slug }}",
+    "qrPlaceholder": "QR…",
+    "confirmDelete": "/r/{{ slug }} löschen? Das kann nicht rückgängig gemacht werden.",
+    "errors": {
+      "load": "Links konnten nicht geladen werden.",
+      "create": "Link konnte nicht erstellt werden.",
+      "save": "Änderungen konnten nicht gespeichert werden.",
+      "delete": "Link konnte nicht gelöscht werden.",
+      "download": "{{ format }} konnte nicht heruntergeladen werden."
+    }
+  },
+  "pricing": {
+    "heroTitle": "Faire Preise. Keine Geiseln.",
+    "heroLede": "Hoste den vollständigen Open-Source-Kern selbst, kostenlos und für immer. Oder lass uns das für dich auf EU-Infrastruktur übernehmen. So oder so: Deine Codes laufen nie ab und deine Daten bleiben deine.",
+    "plansAriaLabel": "Tarife",
+    "free": "Kostenlos",
+    "hostedPlans": "Gehostete Tarife",
+    "pricingUnavailableLead": "Die Preise sind vorübergehend nicht verfügbar. Bitte versuche es gleich erneut — oder",
+    "selfHostForFree": "hoste kostenlos selbst",
+    "offerEnds": "Angebot endet am {{date}}.",
+    "notEnabled": "Gehosteter Tarif — auf dieser Instanz nicht aktiviert.",
+    "priceUnavailable": "Preise vorübergehend nicht verfügbar.",
+    "redirecting": "Weiterleitung…",
+    "startTrial": "14-Tage-Test starten",
+    "selfHostInstead": "Stattdessen selbst hosten",
+    "trialNote": "14 Tage testen, keine Kreditkarte nötig. Jederzeit kündbar.",
+    "checkoutError": "Die Zahlung ist gerade nicht verfügbar. Bitte versuche es später erneut.",
+    "selfHost": {
+      "name": "Selbst hosten",
+      "priceNote": "Open Source, MIT-lizenziert. Auf deinem eigenen Server betreiben."
+    },
+    "interval": {
+      "month": "/Mon.",
+      "year": "/Jahr",
+      "week": "/Wo.",
+      "day": "/Tag"
+    },
+    "promo": {
+      "badge": "Aktion"
+    },
+    "codeLimit": {
+      "unlimited": "Unbegrenzte Codes",
+      "upTo": "Bis zu {{count}} Codes"
+    },
+    "features": {
+      "starter": {
+        "core": "Vollständiger Open-Source-Kern",
+        "analytics": "Vollständige Scan-Statistiken",
+        "fallback": "Fallback-URL, wenn ein Abo ausläuft",
+        "euHosting": "Hosting in der EU"
+      },
+      "pro": {
+        "everythingStarter": "Alles aus Starter",
+        "customDomain": "Eigene Domain",
+        "branding": "QR-Branding (Logo und Farben)",
+        "team": "Teammitglieder",
+        "prioritySupport": "Priorisierter Support"
+      },
+      "selfHost": {
+        "unlimited": "Unbegrenzte Codes",
+        "forever": "Der vollständige Kern, für immer",
+        "openSource": "Open Source (MIT)",
+        "yourData": "Deine Daten, dein Server"
+      }
+    },
+    "faqAriaLabel": "Häufige Fragen",
+    "faqTitle": "Fragen zum Vertrauen",
+    "faq": {
+      "stopPaying": {
+        "q": "Was passiert, wenn ich aufhöre zu zahlen?",
+        "a": "Deine Codes funktionieren während einer Kulanzfrist weiter und greifen danach auf eine von dir gewählte URL zurück — nichts wird als Geisel gehalten. Und weil der Kern Open Source ist, kannst du jederzeit kostenlos selbst hosten und jeden Code am Leben halten."
+      },
+      "trialCharge": {
+        "q": "Werde ich für den Test belastet?",
+        "a": "Nein. Der 14-Tage-Test benötigt keine Kreditkarte. Du fügst nur dann eine Zahlung hinzu, wenn du dich nach dem Test fürs Weitermachen entscheidest."
+      },
+      "selfHost": {
+        "q": "Kann ich selbst hosten, statt zu abonnieren?",
+        "a": "Immer. Tessera ist MIT-lizenziert. Betreibe es auf deinem eigenen Server mit unbegrenzten Codes ohne Kosten — die gehosteten Tarife ersparen dir nur die Betriebsarbeit."
+      },
+      "data": {
+        "q": "Wo liegen meine Daten?",
+        "a": "Bei den gehosteten Tarifen betreiben wir alles in der EU. Besucher-IPs werden nie gespeichert — sie werden im Flug zu einem Land aufgelöst und dann verworfen. Die Scans-Tabelle hat bewusst keine IP-Spalte."
+      }
+    }
+  },
+  "seo": {
+    "landing": {
+      "title": "Tessera — dynamische QR-Codes, die dir gehören",
+      "description": "Open-Source-QR-Codes mit Fokus auf Datenschutz. Einmal drucken, das Ziel jederzeit ändern. Selbst hostbar, EU-Hosting, Codes laufen nie ab."
+    },
+    "pricing": {
+      "title": "Tessera-Preise — einfache Tarife, keine Bindung",
+      "description": "Hoste Tessera kostenlos selbst oder lass uns hosten. Transparente Preise, 14-Tage-Test ohne Karte, und deine Codes werden nie als Geisel genommen."
+    }
+  },
+  "stats": {
+    "periodLabel": "Zeitraum:",
+    "periodDays": "{{ days }} T",
+    "totalScans": "{{ count }} Scan seit {{ since }}",
+    "totalScansPlural": "{{ count }} Scans seit {{ since }}",
+    "loadError": "Statistiken konnten nicht geladen werden.",
+    "loading": "Statistiken werden geladen…",
+    "empty": "Noch keine Scans für den gewählten Zeitraum. Teile den QR oder den /r/-Link, um mit dem Sammeln von Daten zu beginnen.",
+    "scansPerDay": "Scans / Tag",
+    "scansLabel": "Scans",
+    "byCountry": "Nach Land",
+    "byDevice": "Nach Gerät",
+    "byOs": "Nach System",
+    "noData": "Keine Daten.",
+    "unknown": "Unbekannt"
+  }
+}

@@ -1,0 +1,380 @@
+{
+  "namespace": "pricing",
+  "translations": {
+    "en": {
+      "heroTitle": "Honest pricing. No hostages.",
+      "heroLede": "Self-host the full open-source core for free, forever. Or let us run it for you on EU infrastructure. Either way, your codes never expire and your data stays yours.",
+      "plansAriaLabel": "Plans",
+      "free": "Free",
+      "hostedPlans": "Hosted plans",
+      "pricingUnavailableLead": "Pricing is temporarily unavailable. Please try again shortly — or",
+      "selfHostForFree": "self-host for free",
+      "offerEnds": "Offer ends {{date}}.",
+      "notEnabled": "Hosted plan — not enabled on this instance.",
+      "priceUnavailable": "Pricing temporarily unavailable.",
+      "redirecting": "Redirecting…",
+      "startTrial": "Start 14-day trial",
+      "selfHostInstead": "Self-host instead",
+      "trialNote": "14-day trial, no credit card required. Cancel anytime.",
+      "checkoutError": "Checkout is unavailable right now. Please try again later.",
+      "selfHost": {
+        "name": "Self-host",
+        "priceNote": "Open source, MIT licensed. Run it on your own server."
+      },
+      "interval": {
+        "month": "/mo",
+        "year": "/yr",
+        "week": "/wk",
+        "day": "/day"
+      },
+      "promo": {
+        "badge": "Promo"
+      },
+      "codeLimit": {
+        "unlimited": "Unlimited codes",
+        "upTo": "Up to {{count}} codes"
+      },
+      "features": {
+        "starter": {
+          "core": "Full open-source core",
+          "analytics": "Complete scan analytics",
+          "fallback": "Fallback URL when a subscription lapses",
+          "euHosting": "EU hosting"
+        },
+        "pro": {
+          "everythingStarter": "Everything in Starter",
+          "customDomain": "Custom domain",
+          "branding": "QR branding (logo & colours)",
+          "team": "Team members",
+          "prioritySupport": "Priority support"
+        },
+        "selfHost": {
+          "unlimited": "Unlimited codes",
+          "forever": "The full core, forever",
+          "openSource": "Open source (MIT)",
+          "yourData": "Your data, your server"
+        }
+      },
+      "faqAriaLabel": "Frequently asked questions",
+      "faqTitle": "Questions about trust",
+      "faq": {
+        "stopPaying": {
+          "q": "What happens if I stop paying?",
+          "a": "Your codes keep working through a grace period, then fall back to a URL you choose — nothing is held hostage. And because the core is open source, you can always self-host for free and keep every code alive."
+        },
+        "trialCharge": {
+          "q": "Does the trial charge me?",
+          "a": "No. The 14-day trial needs no credit card. You only add payment if you decide to continue after the trial."
+        },
+        "selfHost": {
+          "q": "Can I self-host instead of subscribing?",
+          "a": "Always. Tessera is MIT-licensed. Run it on your own server with unlimited codes at no cost — the hosted plans just save you the ops work."
+        },
+        "data": {
+          "q": "Where is my data?",
+          "a": "On the hosted plans we run in the EU. Visitor IPs are never stored — they're resolved to a country in flight and discarded. The scans table has no IP column by design."
+        }
+      }
+    },
+    "fr": {
+      "heroTitle": "Des tarifs honnêtes. Sans prise d'otage.",
+      "heroLede": "Hébergez vous-même le cœur open source complet, gratuitement et pour toujours. Ou laissez-nous le faire pour vous sur une infrastructure européenne. Dans les deux cas, vos codes n'expirent jamais et vos données restent les vôtres.",
+      "plansAriaLabel": "Formules",
+      "free": "Gratuit",
+      "hostedPlans": "Formules hébergées",
+      "pricingUnavailableLead": "Les tarifs sont momentanément indisponibles. Réessayez dans un instant — ou",
+      "selfHostForFree": "hébergez-vous gratuitement",
+      "offerEnds": "Offre valable jusqu'au {{date}}.",
+      "notEnabled": "Formule hébergée — non activée sur cette instance.",
+      "priceUnavailable": "Tarifs momentanément indisponibles.",
+      "redirecting": "Redirection…",
+      "startTrial": "Démarrer l'essai de 14 jours",
+      "selfHostInstead": "Héberger soi-même",
+      "trialNote": "Essai de 14 jours, sans carte bancaire. Annulez à tout moment.",
+      "checkoutError": "Le paiement est indisponible pour le moment. Veuillez réessayer plus tard.",
+      "selfHost": {
+        "name": "Auto-hébergement",
+        "priceNote": "Open source, sous licence MIT. À faire tourner sur votre propre serveur."
+      },
+      "interval": {
+        "month": "/mois",
+        "year": "/an",
+        "week": "/sem.",
+        "day": "/jour"
+      },
+      "promo": {
+        "badge": "Promo"
+      },
+      "codeLimit": {
+        "unlimited": "Codes illimités",
+        "upTo": "Jusqu'à {{count}} codes"
+      },
+      "features": {
+        "starter": {
+          "core": "Cœur open source complet",
+          "analytics": "Statistiques de scan complètes",
+          "fallback": "URL de repli en cas d'abonnement échu",
+          "euHosting": "Hébergement dans l'UE"
+        },
+        "pro": {
+          "everythingStarter": "Tout ce qui est inclus dans Starter",
+          "customDomain": "Domaine personnalisé",
+          "branding": "Personnalisation du QR (logo et couleurs)",
+          "team": "Membres d'équipe",
+          "prioritySupport": "Assistance prioritaire"
+        },
+        "selfHost": {
+          "unlimited": "Codes illimités",
+          "forever": "Le cœur complet, pour toujours",
+          "openSource": "Open source (MIT)",
+          "yourData": "Vos données, votre serveur"
+        }
+      },
+      "faqAriaLabel": "Questions fréquentes",
+      "faqTitle": "Questions de confiance",
+      "faq": {
+        "stopPaying": {
+          "q": "Que se passe-t-il si j'arrête de payer ?",
+          "a": "Vos codes continuent de fonctionner pendant une période de grâce, puis basculent vers une URL de votre choix — rien n'est pris en otage. Et comme le cœur est open source, vous pouvez toujours l'héberger vous-même gratuitement et garder chaque code actif."
+        },
+        "trialCharge": {
+          "q": "L'essai est-il facturé ?",
+          "a": "Non. L'essai de 14 jours ne nécessite aucune carte bancaire. Vous n'ajoutez un moyen de paiement que si vous décidez de continuer après l'essai."
+        },
+        "selfHost": {
+          "q": "Puis-je m'auto-héberger au lieu de m'abonner ?",
+          "a": "Toujours. Tessera est sous licence MIT. Faites-le tourner sur votre propre serveur avec des codes illimités, sans frais — les formules hébergées vous épargnent simplement le travail d'exploitation."
+        },
+        "data": {
+          "q": "Où sont mes données ?",
+          "a": "Sur les formules hébergées, nous fonctionnons dans l'UE. Les adresses IP des visiteurs ne sont jamais stockées — elles sont converties en pays à la volée puis supprimées. La table des scans n'a volontairement aucune colonne IP."
+        }
+      }
+    },
+    "es": {
+      "heroTitle": "Precios honestos. Sin rehenes.",
+      "heroLede": "Aloja tú mismo el núcleo open source completo, gratis y para siempre. O deja que lo ejecutemos por ti en infraestructura de la UE. En cualquier caso, tus códigos nunca caducan y tus datos siguen siendo tuyos.",
+      "plansAriaLabel": "Planes",
+      "free": "Gratis",
+      "hostedPlans": "Planes alojados",
+      "pricingUnavailableLead": "Los precios no están disponibles temporalmente. Inténtalo de nuevo en breve — o",
+      "selfHostForFree": "aloja tú mismo gratis",
+      "offerEnds": "La oferta termina el {{date}}.",
+      "notEnabled": "Plan alojado — no habilitado en esta instancia.",
+      "priceUnavailable": "Precios temporalmente no disponibles.",
+      "redirecting": "Redirigiendo…",
+      "startTrial": "Iniciar prueba de 14 días",
+      "selfHostInstead": "Alojar por mi cuenta",
+      "trialNote": "Prueba de 14 días, sin tarjeta de crédito. Cancela cuando quieras.",
+      "checkoutError": "El pago no está disponible en este momento. Inténtalo de nuevo más tarde.",
+      "selfHost": {
+        "name": "Autoalojamiento",
+        "priceNote": "Open source, con licencia MIT. Ejecútalo en tu propio servidor."
+      },
+      "interval": {
+        "month": "/mes",
+        "year": "/año",
+        "week": "/sem.",
+        "day": "/día"
+      },
+      "promo": {
+        "badge": "Promo"
+      },
+      "codeLimit": {
+        "unlimited": "Códigos ilimitados",
+        "upTo": "Hasta {{count}} códigos"
+      },
+      "features": {
+        "starter": {
+          "core": "Núcleo open source completo",
+          "analytics": "Analítica de escaneos completa",
+          "fallback": "URL de respaldo cuando caduca una suscripción",
+          "euHosting": "Alojamiento en la UE"
+        },
+        "pro": {
+          "everythingStarter": "Todo lo de Starter",
+          "customDomain": "Dominio personalizado",
+          "branding": "Personalización del QR (logo y colores)",
+          "team": "Miembros del equipo",
+          "prioritySupport": "Soporte prioritario"
+        },
+        "selfHost": {
+          "unlimited": "Códigos ilimitados",
+          "forever": "El núcleo completo, para siempre",
+          "openSource": "Open source (MIT)",
+          "yourData": "Tus datos, tu servidor"
+        }
+      },
+      "faqAriaLabel": "Preguntas frecuentes",
+      "faqTitle": "Preguntas sobre la confianza",
+      "faq": {
+        "stopPaying": {
+          "q": "¿Qué pasa si dejo de pagar?",
+          "a": "Tus códigos siguen funcionando durante un periodo de gracia y luego pasan a una URL que tú elijas — nada queda retenido. Y como el núcleo es open source, siempre puedes alojarlo tú mismo gratis y mantener vivo cada código."
+        },
+        "trialCharge": {
+          "q": "¿La prueba me cobra?",
+          "a": "No. La prueba de 14 días no necesita tarjeta de crédito. Solo añades un método de pago si decides continuar después de la prueba."
+        },
+        "selfHost": {
+          "q": "¿Puedo autoalojarme en lugar de suscribirme?",
+          "a": "Siempre. Tessera tiene licencia MIT. Ejecútalo en tu propio servidor con códigos ilimitados sin coste — los planes alojados solo te ahorran el trabajo de operación."
+        },
+        "data": {
+          "q": "¿Dónde están mis datos?",
+          "a": "En los planes alojados operamos en la UE. Las IP de los visitantes nunca se almacenan — se resuelven a un país sobre la marcha y se descartan. La tabla de escaneos no tiene columna de IP por diseño."
+        }
+      }
+    },
+    "it": {
+      "heroTitle": "Prezzi onesti. Niente ostaggi.",
+      "heroLede": "Ospita tu stesso il core open source completo, gratis e per sempre. Oppure lascia che lo gestiamo noi per te su infrastruttura UE. In ogni caso, i tuoi codici non scadono mai e i tuoi dati restano tuoi.",
+      "plansAriaLabel": "Piani",
+      "free": "Gratis",
+      "hostedPlans": "Piani ospitati",
+      "pricingUnavailableLead": "I prezzi sono temporaneamente non disponibili. Riprova tra poco — oppure",
+      "selfHostForFree": "ospita tu stesso gratis",
+      "offerEnds": "L'offerta termina il {{date}}.",
+      "notEnabled": "Piano ospitato — non abilitato su questa istanza.",
+      "priceUnavailable": "Prezzi temporaneamente non disponibili.",
+      "redirecting": "Reindirizzamento…",
+      "startTrial": "Inizia la prova di 14 giorni",
+      "selfHostInstead": "Ospita tu stesso",
+      "trialNote": "Prova di 14 giorni, senza carta di credito. Annulla quando vuoi.",
+      "checkoutError": "Il pagamento non è disponibile al momento. Riprova più tardi.",
+      "selfHost": {
+        "name": "Self-hosting",
+        "priceNote": "Open source, con licenza MIT. Eseguilo sul tuo server."
+      },
+      "interval": {
+        "month": "/mese",
+        "year": "/anno",
+        "week": "/sett.",
+        "day": "/giorno"
+      },
+      "promo": {
+        "badge": "Promo"
+      },
+      "codeLimit": {
+        "unlimited": "Codici illimitati",
+        "upTo": "Fino a {{count}} codici"
+      },
+      "features": {
+        "starter": {
+          "core": "Core open source completo",
+          "analytics": "Analisi delle scansioni complete",
+          "fallback": "URL di riserva quando un abbonamento scade",
+          "euHosting": "Hosting nell'UE"
+        },
+        "pro": {
+          "everythingStarter": "Tutto ciò che c'è in Starter",
+          "customDomain": "Dominio personalizzato",
+          "branding": "Personalizzazione del QR (logo e colori)",
+          "team": "Membri del team",
+          "prioritySupport": "Supporto prioritario"
+        },
+        "selfHost": {
+          "unlimited": "Codici illimitati",
+          "forever": "Il core completo, per sempre",
+          "openSource": "Open source (MIT)",
+          "yourData": "I tuoi dati, il tuo server"
+        }
+      },
+      "faqAriaLabel": "Domande frequenti",
+      "faqTitle": "Domande sulla fiducia",
+      "faq": {
+        "stopPaying": {
+          "q": "Cosa succede se smetto di pagare?",
+          "a": "I tuoi codici continuano a funzionare per un periodo di tolleranza, poi reindirizzano a un URL che scegli tu — niente viene tenuto in ostaggio. E poiché il core è open source, puoi sempre ospitarlo tu stesso gratis e mantenere attivo ogni codice."
+        },
+        "trialCharge": {
+          "q": "La prova mi addebita qualcosa?",
+          "a": "No. La prova di 14 giorni non richiede alcuna carta di credito. Aggiungi un metodo di pagamento solo se decidi di continuare dopo la prova."
+        },
+        "selfHost": {
+          "q": "Posso ospitare da solo invece di abbonarmi?",
+          "a": "Sempre. Tessera ha licenza MIT. Eseguila sul tuo server con codici illimitati senza costi — i piani ospitati ti risparmiano solo il lavoro operativo."
+        },
+        "data": {
+          "q": "Dove sono i miei dati?",
+          "a": "Sui piani ospitati operiamo nell'UE. Gli IP dei visitatori non vengono mai memorizzati — vengono risolti in un paese al volo e poi scartati. La tabella delle scansioni non ha una colonna IP per scelta progettuale."
+        }
+      }
+    },
+    "de": {
+      "heroTitle": "Faire Preise. Keine Geiseln.",
+      "heroLede": "Hoste den vollständigen Open-Source-Kern selbst, kostenlos und für immer. Oder lass uns das für dich auf EU-Infrastruktur übernehmen. So oder so: Deine Codes laufen nie ab und deine Daten bleiben deine.",
+      "plansAriaLabel": "Tarife",
+      "free": "Kostenlos",
+      "hostedPlans": "Gehostete Tarife",
+      "pricingUnavailableLead": "Die Preise sind vorübergehend nicht verfügbar. Bitte versuche es gleich erneut — oder",
+      "selfHostForFree": "hoste kostenlos selbst",
+      "offerEnds": "Angebot endet am {{date}}.",
+      "notEnabled": "Gehosteter Tarif — auf dieser Instanz nicht aktiviert.",
+      "priceUnavailable": "Preise vorübergehend nicht verfügbar.",
+      "redirecting": "Weiterleitung…",
+      "startTrial": "14-Tage-Test starten",
+      "selfHostInstead": "Stattdessen selbst hosten",
+      "trialNote": "14 Tage testen, keine Kreditkarte nötig. Jederzeit kündbar.",
+      "checkoutError": "Die Zahlung ist gerade nicht verfügbar. Bitte versuche es später erneut.",
+      "selfHost": {
+        "name": "Selbst hosten",
+        "priceNote": "Open Source, MIT-lizenziert. Auf deinem eigenen Server betreiben."
+      },
+      "interval": {
+        "month": "/Mon.",
+        "year": "/Jahr",
+        "week": "/Wo.",
+        "day": "/Tag"
+      },
+      "promo": {
+        "badge": "Aktion"
+      },
+      "codeLimit": {
+        "unlimited": "Unbegrenzte Codes",
+        "upTo": "Bis zu {{count}} Codes"
+      },
+      "features": {
+        "starter": {
+          "core": "Vollständiger Open-Source-Kern",
+          "analytics": "Vollständige Scan-Statistiken",
+          "fallback": "Fallback-URL, wenn ein Abo ausläuft",
+          "euHosting": "Hosting in der EU"
+        },
+        "pro": {
+          "everythingStarter": "Alles aus Starter",
+          "customDomain": "Eigene Domain",
+          "branding": "QR-Branding (Logo und Farben)",
+          "team": "Teammitglieder",
+          "prioritySupport": "Priorisierter Support"
+        },
+        "selfHost": {
+          "unlimited": "Unbegrenzte Codes",
+          "forever": "Der vollständige Kern, für immer",
+          "openSource": "Open Source (MIT)",
+          "yourData": "Deine Daten, dein Server"
+        }
+      },
+      "faqAriaLabel": "Häufige Fragen",
+      "faqTitle": "Fragen zum Vertrauen",
+      "faq": {
+        "stopPaying": {
+          "q": "Was passiert, wenn ich aufhöre zu zahlen?",
+          "a": "Deine Codes funktionieren während einer Kulanzfrist weiter und greifen danach auf eine von dir gewählte URL zurück — nichts wird als Geisel gehalten. Und weil der Kern Open Source ist, kannst du jederzeit kostenlos selbst hosten und jeden Code am Leben halten."
+        },
+        "trialCharge": {
+          "q": "Werde ich für den Test belastet?",
+          "a": "Nein. Der 14-Tage-Test benötigt keine Kreditkarte. Du fügst nur dann eine Zahlung hinzu, wenn du dich nach dem Test fürs Weitermachen entscheidest."
+        },
+        "selfHost": {
+          "q": "Kann ich selbst hosten, statt zu abonnieren?",
+          "a": "Immer. Tessera ist MIT-lizenziert. Betreibe es auf deinem eigenen Server mit unbegrenzten Codes ohne Kosten — die gehosteten Tarife ersparen dir nur die Betriebsarbeit."
+        },
+        "data": {
+          "q": "Wo liegen meine Daten?",
+          "a": "Bei den gehosteten Tarifen betreiben wir alles in der EU. Besucher-IPs werden nie gespeichert — sie werden im Flug zu einem Land aufgelöst und dann verworfen. Die Scans-Tabelle hat bewusst keine IP-Spalte."
+        }
+      }
+    }
+  }
+}

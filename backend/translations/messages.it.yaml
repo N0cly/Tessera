@@ -1,0 +1,19 @@
+inactive:
+    title: 'Link inattivo'
+    heading: 'Questo link al momento non è attivo'
+    body: "L'abbonamento del proprietario è scaduto, quindi questo codice al momento non punta a nulla. Se è tuo, rinnovando il piano tornerà attivo."
+registration:
+    invalid_json: 'Corpo JSON non valido.'
+    invalid_input: 'Sono richiesti un indirizzo e-mail e una password (almeno 8 caratteri).'
+    email_taken: 'Esiste già un account con questa e-mail.'
+    validation_failed: 'Validazione non riuscita.'
+link:
+    limit_reached: 'Hai raggiunto il limite di %count% codici del tuo piano. Passa a un piano superiore per crearne altri.'
+    rate_limited: 'Troppe creazioni di link. Rallenta, per favore.'
+    invalid_qr_format: 'il formato deve essere "png" o "svg".'
+billing:
+    not_configured: 'La fatturazione non è configurata su questa istanza.'
+    no_subscription: 'Nessun abbonamento attivo da gestire per ora.'
+    portal_failed: 'Impossibile aprire il portale clienti.'
+me:
+    invalid_locale: 'La lingua deve essere una di: %locales%.'

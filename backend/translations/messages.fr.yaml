@@ -1,0 +1,19 @@
+inactive:
+    title: 'Lien inactif'
+    heading: 'Ce lien est actuellement inactif'
+    body: "L'abonnement du propriétaire a expiré : ce code ne pointe vers rien pour le moment. S'il est à vous, le renouvellement de votre offre le réactivera."
+registration:
+    invalid_json: 'Corps JSON invalide.'
+    invalid_input: 'Un e-mail et un mot de passe (au moins 8 caractères) sont requis.'
+    email_taken: 'Un compte avec cet e-mail existe déjà.'
+    validation_failed: 'La validation a échoué.'
+link:
+    limit_reached: "Vous avez atteint la limite de %count% codes de votre offre. Passez à une offre supérieure pour en créer davantage."
+    rate_limited: 'Trop de créations de liens. Veuillez ralentir.'
+    invalid_qr_format: 'le format doit être « png » ou « svg ».'
+billing:
+    not_configured: "La facturation n'est pas configurée sur cette instance."
+    no_subscription: "Aucun abonnement actif à gérer pour l'instant."
+    portal_failed: "Impossible d'ouvrir le portail client."
+me:
+    invalid_locale: "La langue doit être l'une de : %locales%."

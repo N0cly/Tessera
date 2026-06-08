@@ -1,0 +1,19 @@
+inactive:
+    title: 'Link inaktiv'
+    heading: 'Dieser Link ist derzeit inaktiv'
+    body: 'Das Abonnement des Inhabers ist abgelaufen, daher verweist dieser Code momentan auf nichts. Wenn er dir gehört, wird er durch eine Verlängerung deines Tarifs wieder aktiv.'
+registration:
+    invalid_json: 'Ungültiger JSON-Body.'
+    invalid_input: 'E-Mail und Passwort (mindestens 8 Zeichen) sind erforderlich.'
+    email_taken: 'Ein Konto mit dieser E-Mail existiert bereits.'
+    validation_failed: 'Validierung fehlgeschlagen.'
+link:
+    limit_reached: 'Du hast das Limit von %count% Codes deines Tarifs erreicht. Wechsle zu einem höheren Tarif, um mehr zu erstellen.'
+    rate_limited: 'Zu viele Link-Erstellungen. Bitte langsamer.'
+    invalid_qr_format: 'Format muss „png“ oder „svg“ sein.'
+billing:
+    not_configured: 'Die Abrechnung ist auf dieser Instanz nicht konfiguriert.'
+    no_subscription: 'Noch kein aktives Abonnement zum Verwalten.'
+    portal_failed: 'Das Kundenportal konnte nicht geöffnet werden.'
+me:
+    invalid_locale: 'Die Sprache muss eine von folgenden sein: %locales%.'

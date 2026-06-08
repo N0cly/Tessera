@@ -55,11 +55,12 @@ final class PaddleClient
      * Create a hosted-checkout transaction for the current user against a
      * specific Paddle price and return the Paddle-hosted checkout URL. The user
      * id rides along in custom_data so the webhook can map the result back to
-     * the account.
+     * the account. When a locale is given it is appended to the checkout URL so
+     * Paddle displays the checkout in the user's language (CLAUDE.md i18n).
      *
      * @throws \RuntimeException if billing is not configured or Paddle errors
      */
-    public function createCheckoutUrl(User $user, string $priceId): string
+    public function createCheckoutUrl(User $user, string $priceId, ?string $locale = null): string
     {
         if (!$this->isConfigured() || '' === $priceId) {
             throw new \RuntimeException('Billing is not configured on this instance.');
@@ -80,7 +81,21 @@ final class PaddleClient
             throw new \RuntimeException('Paddle did not return a checkout URL.');
         }
 
-        return $url;
+        return $this->withLocale($url, $locale);
+    }
+
+    /**
+     * Append a `?locale=` (or `&locale=`) to the hosted-checkout URL so Paddle
+     * renders in the user's language. No-op when no/blank locale.
+     */
+    private function withLocale(string $url, ?string $locale): string
+    {
+        if (null === $locale || '' === $locale) {
+            return $url;
+        }
+        $sep = str_contains($url, '?') ? '&' : '?';
+
+        return $url.$sep.'locale='.rawurlencode($locale);
     }
 
     /**

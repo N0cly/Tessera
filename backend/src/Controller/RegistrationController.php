@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\LocaleResolver;
 use App\Service\SubscriptionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RegistrationController
 {
@@ -22,6 +24,8 @@ final class RegistrationController
         private readonly UserRepository $users,
         private readonly ValidatorInterface $validator,
         private readonly SubscriptionManager $subscriptions,
+        private readonly TranslatorInterface $translator,
+        private readonly LocaleResolver $locales,
     ) {
     }
 
@@ -30,22 +34,28 @@ final class RegistrationController
     {
         $payload = json_decode($request->getContent(), true);
         if (!is_array($payload)) {
-            return new JsonResponse(['error' => 'Invalid JSON body.'], 400);
+            return new JsonResponse(['error' => $this->translator->trans('registration.invalid_json')], 400);
         }
 
         $email = is_string($payload['email'] ?? null) ? trim($payload['email']) : '';
         $password = is_string($payload['password'] ?? null) ? $payload['password'] : '';
+        // The new account's language: an explicit choice from the client, else
+        // the browser's Accept-Language (the locale they were browsing in).
+        $locale = is_string($payload['locale'] ?? null)
+            ? $this->locales->normalize($payload['locale'])
+            : $this->locales->fromAcceptLanguage($request);
 
         if ('' === $email || strlen($password) < 8) {
-            return new JsonResponse(['error' => 'Email and password (>= 8 chars) are required.'], 400);
+            return new JsonResponse(['error' => $this->translator->trans('registration.invalid_input')], 400);
         }
 
         if (null !== $this->users->findOneBy(['email' => $email])) {
-            return new JsonResponse(['error' => 'An account with this email already exists.'], 409);
+            return new JsonResponse(['error' => $this->translator->trans('registration.email_taken')], 409);
         }
 
         $user = new User();
         $user->setEmail($email);
+        $user->setLocale($locale);
         $user->setPassword($this->hasher->hashPassword($user, $password));
 
         $violations = $this->validator->validate($user);
@@ -55,7 +65,10 @@ final class RegistrationController
                 $errors[$v->getPropertyPath()] = (string) $v->getMessage();
             }
 
-            return new JsonResponse(['error' => 'Validation failed', 'violations' => $errors], 422);
+            return new JsonResponse([
+                'error' => $this->translator->trans('registration.validation_failed'),
+                'violations' => $errors,
+            ], 422);
         }
 
         $this->em->persist($user);

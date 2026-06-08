@@ -1,56 +1,59 @@
-<main class="wrap">
-  <form class="card" (ngSubmit)="submit()" autocomplete="off">
-    <div class="head">
-      <img src="/tessera-logo.svg" alt="" aria-hidden="true" width="32" height="32" />
-      <h1>Operator sign-in</h1>
-      <p class="sub">Restricted area. Admin access requires two-factor authentication.</p>
-    </div>
+<ng-container *transloco="let t">
+  <main class="wrap">
+    <form class="card" (ngSubmit)="submit()" autocomplete="off">
+      <div class="head">
+        <img src="/tessera-logo.svg" alt="" aria-hidden="true" width="32" height="32" />
+        <h1>{{ t('adminAuth.title') }}</h1>
+        <p class="sub">{{ t('adminAuth.subtitle') }}</p>
+        <app-language-switcher />
+      </div>
 
-    <label class="field">
-      <span>Email</span>
-      <input
-        type="email"
-        name="email"
-        [(ngModel)]="email"
-        autocomplete="username"
-        required
-        [disabled]="busy()"
-      />
-    </label>
+      <label class="field">
+        <span>{{ t('adminAuth.emailLabel') }}</span>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          autocomplete="username"
+          required
+          [disabled]="busy()"
+        />
+      </label>
 
-    <label class="field">
-      <span>Password</span>
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        autocomplete="current-password"
-        required
-        [disabled]="busy()"
-      />
-    </label>
+      <label class="field">
+        <span>{{ t('adminAuth.passwordLabel') }}</span>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          autocomplete="current-password"
+          required
+          [disabled]="busy()"
+        />
+      </label>
 
-    <label class="field">
-      <span>Authenticator code</span>
-      <input
-        type="text"
-        name="code"
-        [(ngModel)]="code"
-        inputmode="numeric"
-        autocomplete="one-time-code"
-        maxlength="6"
-        placeholder="123456"
-        required
-        [disabled]="busy()"
-      />
-    </label>
+      <label class="field">
+        <span>{{ t('adminAuth.codeLabel') }}</span>
+        <input
+          type="text"
+          name="code"
+          [(ngModel)]="code"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          maxlength="6"
+          placeholder="123456"
+          required
+          [disabled]="busy()"
+        />
+      </label>
 
-    @if (error()) {
-      <p class="error" role="alert">{{ error() }}</p>
-    }
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
 
-    <button type="submit" class="btn" [disabled]="busy()">
-      {{ busy() ? 'Signing in…' : 'Sign in' }}
-    </button>
-  </form>
-</main>
+      <button type="submit" class="btn" [disabled]="busy()">
+        {{ busy() ? t('common.actions.loading') : t('common.nav.signIn') }}
+      </button>
+    </form>
+  </main>
+</ng-container>

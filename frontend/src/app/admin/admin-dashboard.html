@@ -1,317 +1,343 @@
-<header class="bar">
-  <div class="brand">
-    <img src="/tessera-logo.svg" alt="" aria-hidden="true" width="26" height="26" />
-    <span class="name">Tessera</span>
-    <span class="badge">operator</span>
-  </div>
-  <div class="actions">
-    <div class="periods" role="group" aria-label="Period">
-      @for (p of periods; track p.value) {
-        <button type="button" [class.active]="period() === p.value" (click)="selectPeriod(p.value)">
-          {{ p.label }}
-        </button>
-      }
+<ng-container *transloco="let t">
+  <header class="bar">
+    <div class="brand">
+      <img src="/tessera-logo.svg" alt="" aria-hidden="true" width="26" height="26" />
+      <span class="name">Tessera</span>
+      <span class="badge">{{ t('admin.operatorBadge') }}</span>
+      <app-language-switcher />
     </div>
-    <button type="button" class="logout" (click)="logout()">Sign out</button>
-  </div>
-</header>
+    <div class="actions">
+      <div class="periods" role="group" [attr.aria-label]="t('admin.periodGroup')">
+        @for (p of periods; track p.value) {
+          <button
+            type="button"
+            [class.active]="period() === p.value"
+            (click)="selectPeriod(p.value)"
+          >
+            {{ t(p.labelKey) }}
+          </button>
+        }
+      </div>
+      <button type="button" class="logout" (click)="logout()">{{ t('common.nav.signOut') }}</button>
+    </div>
+  </header>
 
-<nav class="tabs" aria-label="Sections">
-  <button type="button" [class.active]="tab() === 'overview'" (click)="selectTab('overview')">
-    Overview
-  </button>
-  <button type="button" [class.active]="tab() === 'customers'" (click)="selectTab('customers')">
-    Customers
-  </button>
-  <button type="button" [class.active]="tab() === 'audit'" (click)="selectTab('audit')">
-    Audit log
-  </button>
-</nav>
+  <nav class="tabs" [attr.aria-label]="t('admin.sections')">
+    <button type="button" [class.active]="tab() === 'overview'" (click)="selectTab('overview')">
+      {{ t('admin.tabs.overview') }}
+    </button>
+    <button type="button" [class.active]="tab() === 'customers'" (click)="selectTab('customers')">
+      {{ t('admin.tabs.customers') }}
+    </button>
+    <button type="button" [class.active]="tab() === 'audit'" (click)="selectTab('audit')">
+      {{ t('admin.tabs.audit') }}
+    </button>
+  </nav>
 
-<main class="content">
-  <!-- ───────────────  OVERVIEW (aggregates only)  ─────────────── -->
-  @if (tab() === 'overview') {
-    @if (loading()) {
-      <p class="muted">Loading…</p>
-    } @else if (error()) {
-      <p class="err" role="alert">{{ error() }}</p>
-    } @else if (overview(); as d) {
-      <section class="block">
-        <h2>Business <span class="src">via Paddle</span></h2>
-        @if (!d.business.available) {
-          <p class="notice">
-            Business metrics are unavailable — Paddle isn't reachable or configured on this
-            instance. Usage and customer metrics below come from your database.
+  <main class="content">
+    <!-- ───────────────  OVERVIEW (aggregates only)  ─────────────── -->
+    @if (tab() === 'overview') {
+      @if (loading()) {
+        <p class="muted">{{ t('common.actions.loading') }}</p>
+      } @else if (error()) {
+        <p class="err" role="alert">{{ error() }}</p>
+      } @else if (overview(); as d) {
+        <section class="block">
+          <h2>
+            {{ t('admin.business.title') }}
+            <span class="src">{{ t('admin.business.source') }}</span>
+          </h2>
+          @if (!d.business.available) {
+            <p class="notice">
+              {{ t('admin.business.unavailable') }}
+            </p>
+          } @else {
+            <div class="kpis">
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.mrr') }}</span>
+                <span class="v">{{ money(d.business.mrr, d.business.currency) }}</span>
+                <span class="sub">
+                  @if (d.business.mixedCurrency) {
+                    {{ t('admin.business.mixedCurrency') }}
+                  } @else {
+                    {{ t('common.perMonth') }}
+                  }
+                </span>
+              </div>
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.activeSubscriptions') }}</span>
+                <span class="v">{{
+                  d.business.activeSubscriptions | number: undefined : locale.lang()
+                }}</span>
+              </div>
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.trialing') }}</span>
+                <span class="v">{{ d.business.trialing | number: undefined : locale.lang() }}</span>
+              </div>
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.pastDue') }}</span>
+                <span class="v">{{ d.business.pastDue | number: undefined : locale.lang() }}</span>
+              </div>
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.trialConversion') }}</span>
+                <span class="v">{{ pct(d.business.trialConversionRate) }}</span>
+              </div>
+              <div class="kpi">
+                <span class="k">{{ t('admin.business.churn30d') }}</span>
+                <span class="v">{{ pct(d.business.churnRateLast30d) }}</span>
+              </div>
+            </div>
+            <div class="breakdown">
+              <h3>{{ t('admin.business.activeByPlan') }}</h3>
+              <ul>
+                @for (kv of d.business.byPlan | keyvalue; track kv.key) {
+                  <li>
+                    <span>{{ kv.key }}</span
+                    ><span>{{ kv.value | number: undefined : locale.lang() }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+          <p class="hint">
+            {{ t('admin.business.hint') }}
           </p>
-        } @else {
+        </section>
+
+        <section class="block">
+          <h2>
+            {{ t('admin.usage.title') }} <span class="src">{{ t('admin.dbSource') }}</span>
+          </h2>
           <div class="kpis">
             <div class="kpi">
-              <span class="k">MRR</span>
-              <span class="v">{{ money(d.business.mrr, d.business.currency) }}</span>
-              <span class="sub">
-                @if (d.business.mixedCurrency) {
-                  multiple currencies — see Paddle
-                } @else {
-                  per month
-                }
-              </span>
+              <span class="k">{{ t('admin.usage.totalLinks') }}</span
+              ><span class="v">{{ d.usage.totalLinks | number: undefined : locale.lang() }}</span>
             </div>
             <div class="kpi">
-              <span class="k">Active subscriptions</span>
-              <span class="v">{{ d.business.activeSubscriptions | number }}</span>
+              <span class="k">{{ t('admin.usage.totalScans') }}</span
+              ><span class="v">{{ d.usage.totalScans | number: undefined : locale.lang() }}</span>
             </div>
             <div class="kpi">
-              <span class="k">Trials in progress</span>
-              <span class="v">{{ d.business.trialing | number }}</span>
+              <span class="k">{{
+                t('admin.usage.periodScans', { period: t(periodLabelKey()) })
+              }}</span>
+              <span class="v">{{ d.usage.periodScans | number: undefined : locale.lang() }}</span>
             </div>
             <div class="kpi">
-              <span class="k">Failed payments</span>
-              <span class="v">{{ d.business.pastDue | number }}</span>
-            </div>
-            <div class="kpi">
-              <span class="k">Trial → paid</span>
-              <span class="v">{{ pct(d.business.trialConversionRate) }}</span>
-            </div>
-            <div class="kpi">
-              <span class="k">Churn (30d)</span>
-              <span class="v">{{ pct(d.business.churnRateLast30d) }}</span>
+              <span class="k">{{ t('admin.usage.activeCodes') }}</span
+              ><span class="v">{{ d.usage.activeCodes | number: undefined : locale.lang() }}</span>
             </div>
           </div>
-          <div class="breakdown">
-            <h3>Active by plan</h3>
-            <ul>
-              @for (kv of d.business.byPlan | keyvalue; track kv.key) {
-                <li>
-                  <span>{{ kv.key }}</span
-                  ><span>{{ kv.value | number }}</span>
-                </li>
+          <div class="chart-wrap">
+            @if (scansChart(); as cfg) {
+              <app-chart-canvas [config]="cfg" />
+            } @else {
+              <p class="muted">{{ t('admin.usage.noScans') }}</p>
+            }
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>
+            {{ t('admin.customers.title') }} <span class="src">{{ t('admin.dbSource') }}</span>
+          </h2>
+          <div class="kpis">
+            <div class="kpi">
+              <span class="k">{{ t('admin.customers.total') }}</span>
+              <span class="v">{{ d.customers.total | number: undefined : locale.lang() }}</span>
+            </div>
+            <div class="kpi">
+              <span class="k">{{ t('admin.customers.churned') }}</span
+              ><span class="v">{{ d.customers.churned | number: undefined : locale.lang() }}</span>
+            </div>
+          </div>
+          <div class="cols">
+            <div class="breakdown">
+              <h3>{{ t('admin.customers.byPlan') }}</h3>
+              <ul>
+                @for (kv of d.customers.byPlan | keyvalue; track kv.key) {
+                  <li>
+                    <span>{{ kv.key }}</span
+                    ><span>{{ kv.value | number: undefined : locale.lang() }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+            <div class="breakdown">
+              <h3>{{ t('admin.customers.byStatus') }}</h3>
+              <ul>
+                @for (kv of d.customers.byStatus | keyvalue; track kv.key) {
+                  <li>
+                    <span>{{ kv.key }}</span
+                    ><span>{{ kv.value | number: undefined : locale.lang() }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            @if (signupsChart(); as cfg) {
+              <app-chart-canvas [config]="cfg" />
+            } @else {
+              <p class="muted">{{ t('admin.customers.noSignups') }}</p>
+            }
+          </div>
+        </section>
+      }
+    }
+
+    <!-- ───────────────  CUSTOMERS (PII — audit-logged)  ─────────────── -->
+    @if (tab() === 'customers') {
+      <section class="block">
+        <h2>{{ t('admin.customers.title') }}</h2>
+        <p class="notice">
+          {{ t('admin.customers.piiNotice') }}
+        </p>
+        @if (customersLoading()) {
+          <p class="muted">{{ t('common.actions.loading') }}</p>
+        } @else if (customersError()) {
+          <p class="err" role="alert">{{ customersError() }}</p>
+        } @else if (customers(); as c) {
+          <h3>{{ t('admin.customers.topByUsage', { period: t(periodLabelKey()) }) }}</h3>
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>{{ t('admin.customers.colCustomer') }}</th>
+                <th class="num">{{ t('admin.customers.colLinks') }}</th>
+                <th class="num">{{ t('admin.customers.colScans') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (tc of c.topByUsage; track tc.email) {
+                <tr>
+                  <td class="mono">{{ tc.email }}</td>
+                  <td class="num">{{ tc.links | number: undefined : locale.lang() }}</td>
+                  <td class="num">{{ tc.scans | number: undefined : locale.lang() }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="3" class="muted">{{ t('admin.customers.noUsage') }}</td>
+                </tr>
               }
-            </ul>
+            </tbody>
+          </table>
+
+          <h3>{{ t('admin.customers.allCustomers') }}</h3>
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>{{ t('admin.customers.colEmail') }}</th>
+                <th>{{ t('admin.customers.colPlan') }}</th>
+                <th>{{ t('admin.customers.colStatus') }}</th>
+                <th class="num">{{ t('admin.customers.colCodes') }}</th>
+                <th>{{ t('admin.customers.colJoined') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (cu of c.customers; track cu.email) {
+                <tr>
+                  <td class="mono">{{ cu.email }}</td>
+                  <td>{{ cu.plan ?? '—' }}</td>
+                  <td>{{ cu.status ?? '—' }}</td>
+                  <td class="num">{{ cu.codeCount | number: undefined : locale.lang() }}</td>
+                  <td>{{ formatDate(cu.createdAt) }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="muted">{{ t('admin.customers.noCustomers') }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+          <div class="pager">
+            <button type="button" (click)="changeCustomerPage(-1)" [disabled]="customerPage() <= 1">
+              ← {{ t('common.actions.prev') }}
+            </button>
+            <span>{{
+              t('admin.pager.page', {
+                current: customerPage(),
+                total: customerPages(),
+                count: (c.total | number: undefined : locale.lang()),
+              })
+            }}</span>
+            <button
+              type="button"
+              (click)="changeCustomerPage(1)"
+              [disabled]="customerPage() >= customerPages()"
+            >
+              {{ t('common.actions.next') }} →
+            </button>
           </div>
         }
-        <p class="hint">
-          Conversion and churn are derived from synced subscription records; revenue is read from
-          Paddle and never recomputed here. Deeper revenue analytics live in Paddle.
-        </p>
-      </section>
-
-      <section class="block">
-        <h2>Usage <span class="src">your database</span></h2>
-        <div class="kpis">
-          <div class="kpi">
-            <span class="k">Total links</span
-            ><span class="v">{{ d.usage.totalLinks | number }}</span>
-          </div>
-          <div class="kpi">
-            <span class="k">Total scans</span
-            ><span class="v">{{ d.usage.totalScans | number }}</span>
-          </div>
-          <div class="kpi">
-            <span class="k">Scans ({{ period() }})</span>
-            <span class="v">{{ d.usage.periodScans | number }}</span>
-          </div>
-          <div class="kpi">
-            <span class="k">Active codes</span
-            ><span class="v">{{ d.usage.activeCodes | number }}</span>
-          </div>
-        </div>
-        <div class="chart-wrap">
-          @if (scansChart(); as cfg) {
-            <app-chart-canvas [config]="cfg" />
-          } @else {
-            <p class="muted">No scans in this period.</p>
-          }
-        </div>
-      </section>
-
-      <section class="block">
-        <h2>Customers <span class="src">your database</span></h2>
-        <div class="kpis">
-          <div class="kpi">
-            <span class="k">Total customers</span>
-            <span class="v">{{ d.customers.total | number }}</span>
-          </div>
-          <div class="kpi">
-            <span class="k">Churned</span><span class="v">{{ d.customers.churned | number }}</span>
-          </div>
-        </div>
-        <div class="cols">
-          <div class="breakdown">
-            <h3>By plan</h3>
-            <ul>
-              @for (kv of d.customers.byPlan | keyvalue; track kv.key) {
-                <li>
-                  <span>{{ kv.key }}</span
-                  ><span>{{ kv.value | number }}</span>
-                </li>
-              }
-            </ul>
-          </div>
-          <div class="breakdown">
-            <h3>By status</h3>
-            <ul>
-              @for (kv of d.customers.byStatus | keyvalue; track kv.key) {
-                <li>
-                  <span>{{ kv.key }}</span
-                  ><span>{{ kv.value | number }}</span>
-                </li>
-              }
-            </ul>
-          </div>
-        </div>
-        <div class="chart-wrap">
-          @if (signupsChart(); as cfg) {
-            <app-chart-canvas [config]="cfg" />
-          } @else {
-            <p class="muted">No signups in this period.</p>
-          }
-        </div>
       </section>
     }
-  }
 
-  <!-- ───────────────  CUSTOMERS (PII — audit-logged)  ─────────────── -->
-  @if (tab() === 'customers') {
-    <section class="block">
-      <h2>Customers</h2>
-      <p class="notice">
-        This view contains customer emails (PII). Per the data-minimization rule, each load is
-        recorded in the audit log. Scanner identities are never available — scans store no IP.
-      </p>
-      @if (customersLoading()) {
-        <p class="muted">Loading…</p>
-      } @else if (customersError()) {
-        <p class="err" role="alert">{{ customersError() }}</p>
-      } @else if (customers(); as c) {
-        <h3>Top customers by usage ({{ period() }})</h3>
-        <table class="tbl">
-          <thead>
-            <tr>
-              <th>Customer</th>
-              <th class="num">Links</th>
-              <th class="num">Scans</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (t of c.topByUsage; track t.email) {
+    <!-- ───────────────  AUDIT LOG  ─────────────── -->
+    @if (tab() === 'audit') {
+      <section class="block">
+        <h2>{{ t('admin.audit.title') }}</h2>
+        <p class="notice">{{ t('admin.audit.notice') }}</p>
+        @if (auditLoading()) {
+          <p class="muted">{{ t('common.actions.loading') }}</p>
+        } @else if (auditError()) {
+          <p class="err" role="alert">{{ auditError() }}</p>
+        } @else if (audit(); as a) {
+          <table class="tbl">
+            <thead>
               <tr>
-                <td class="mono">{{ t.email }}</td>
-                <td class="num">{{ t.links | number }}</td>
-                <td class="num">{{ t.scans | number }}</td>
+                <th>{{ t('admin.audit.colWhen') }}</th>
+                <th>{{ t('admin.audit.colActor') }}</th>
+                <th>{{ t('admin.audit.colAction') }}</th>
+                <th>{{ t('admin.audit.colResult') }}</th>
+                <th>{{ t('admin.audit.colIp') }}</th>
+                <th>{{ t('admin.audit.colDetail') }}</th>
               </tr>
-            } @empty {
-              <tr>
-                <td colspan="3" class="muted">No usage yet.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-
-        <h3>All customers</h3>
-        <table class="tbl">
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Plan</th>
-              <th>Status</th>
-              <th class="num">Codes</th>
-              <th>Joined</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (cu of c.customers; track cu.email) {
-              <tr>
-                <td class="mono">{{ cu.email }}</td>
-                <td>{{ cu.plan ?? '—' }}</td>
-                <td>{{ cu.status ?? '—' }}</td>
-                <td class="num">{{ cu.codeCount | number }}</td>
-                <td>{{ formatDate(cu.createdAt) }}</td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="5" class="muted">No customers.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-
-        <div class="pager">
-          <button type="button" (click)="changeCustomerPage(-1)" [disabled]="customerPage() <= 1">
-            ← Prev
-          </button>
-          <span
-            >Page {{ customerPage() }} / {{ customerPages() }} · {{ c.total | number }} total</span
-          >
-          <button
-            type="button"
-            (click)="changeCustomerPage(1)"
-            [disabled]="customerPage() >= customerPages()"
-          >
-            Next →
-          </button>
-        </div>
-      }
-    </section>
-  }
-
-  <!-- ───────────────  AUDIT LOG  ─────────────── -->
-  @if (tab() === 'audit') {
-    <section class="block">
-      <h2>Audit log</h2>
-      <p class="notice">Admin logins and customer-data accesses, most recent first.</p>
-      @if (auditLoading()) {
-        <p class="muted">Loading…</p>
-      } @else if (auditError()) {
-        <p class="err" role="alert">{{ auditError() }}</p>
-      } @else if (audit(); as a) {
-        <table class="tbl">
-          <thead>
-            <tr>
-              <th>When</th>
-              <th>Actor</th>
-              <th>Action</th>
-              <th>Result</th>
-              <th>IP</th>
-              <th>Detail</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (e of a.entries; track $index) {
-              <tr>
-                <td>{{ formatDate(e.at) }}</td>
-                <td class="mono">{{ e.actorEmail }}</td>
-                <td>{{ e.action }}</td>
-                <td>
-                  @if (e.success) {
-                    <span class="ok">ok</span>
-                  } @else {
-                    <span class="fail">fail</span>
-                  }
-                </td>
-                <td class="mono">{{ e.ip ?? '—' }}</td>
-                <td class="mono detail">{{ detailText(e.detail) }}</td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="6" class="muted">No entries.</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-        <div class="pager">
-          <button type="button" (click)="changeAuditPage(-1)" [disabled]="auditPage() <= 1">
-            ← Prev
-          </button>
-          <span>Page {{ auditPage() }} / {{ auditPages() }} · {{ a.total | number }} total</span>
-          <button
-            type="button"
-            (click)="changeAuditPage(1)"
-            [disabled]="auditPage() >= auditPages()"
-          >
-            Next →
-          </button>
-        </div>
-      }
-    </section>
-  }
-</main>
+            </thead>
+            <tbody>
+              @for (e of a.entries; track $index) {
+                <tr>
+                  <td>{{ formatDate(e.at) }}</td>
+                  <td class="mono">{{ e.actorEmail }}</td>
+                  <td>{{ e.action }}</td>
+                  <td>
+                    @if (e.success) {
+                      <span class="ok">{{ t('admin.audit.ok') }}</span>
+                    } @else {
+                      <span class="fail">{{ t('admin.audit.fail') }}</span>
+                    }
+                  </td>
+                  <td class="mono">{{ e.ip ?? '—' }}</td>
+                  <td class="mono detail">{{ detailText(e.detail) }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="muted">{{ t('admin.audit.noEntries') }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+          <div class="pager">
+            <button type="button" (click)="changeAuditPage(-1)" [disabled]="auditPage() <= 1">
+              ← {{ t('common.actions.prev') }}
+            </button>
+            <span>{{
+              t('admin.pager.page', {
+                current: auditPage(),
+                total: auditPages(),
+                count: (a.total | number: undefined : locale.lang()),
+              })
+            }}</span>
+            <button
+              type="button"
+              (click)="changeAuditPage(1)"
+              [disabled]="auditPage() >= auditPages()"
+            >
+              {{ t('common.actions.next') }} →
+            </button>
+          </div>
+        }
+      </section>
+    }
+  </main>
+</ng-container>

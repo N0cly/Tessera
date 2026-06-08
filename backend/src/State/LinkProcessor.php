@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @implements ProcessorInterface<Link, Link>
@@ -35,6 +36,7 @@ final class LinkProcessor implements ProcessorInterface
         private readonly SubscriptionManager $subscriptions,
         private readonly PlanCatalog $plans,
         private readonly LinkRepository $links,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -53,10 +55,7 @@ final class LinkProcessor implements ProcessorInterface
             if (null !== $codeLimit && $this->links->countForOwner($user) >= $codeLimit) {
                 throw new HttpException(
                     402,
-                    sprintf(
-                        "You've reached your plan's limit of %d codes. Upgrade your plan to create more.",
-                        $codeLimit,
-                    ),
+                    $this->translator->trans('link.limit_reached', ['%count%' => $codeLimit]),
                 );
             }
 
@@ -68,7 +67,7 @@ final class LinkProcessor implements ProcessorInterface
                 $retryAfterSeconds = max(1, $limit->getRetryAfter()->getTimestamp() - time());
                 throw new TooManyRequestsHttpException(
                     $retryAfterSeconds,
-                    'Too many link creations. Please slow down.',
+                    $this->translator->trans('link.rate_limited'),
                 );
             }
 

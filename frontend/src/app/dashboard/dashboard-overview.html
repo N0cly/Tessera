@@ -1,286 +1,310 @@
-<header class="topbar">
-  <div class="topbar-brand">
-    <img
-      class="topbar-logo"
-      src="/tessera-logo.svg"
-      alt=""
-      aria-hidden="true"
-      width="28"
-      height="28"
-    />
-    <h1>Overview</h1>
-  </div>
-  <nav class="topnav" aria-label="Dashboard sections">
-    <a routerLink="/app" class="nav-link active" aria-current="page">Overview</a>
-    <a routerLink="/app/links" class="nav-link">Your links</a>
-    <button type="button" class="ghost" (click)="logout()">Sign out</button>
-  </nav>
-</header>
+<ng-container *transloco="let t">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img
+        class="topbar-logo"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <h1>{{ t('dashboard.title') }}</h1>
+      <app-language-switcher />
+    </div>
+    <nav class="topnav" [attr.aria-label]="t('dashboard.sectionsAria')">
+      <a routerLink="/app" class="nav-link active" aria-current="page">{{
+        t('dashboard.title')
+      }}</a>
+      <a routerLink="/app/links" class="nav-link">{{ t('dashboard.yourLinks') }}</a>
+      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>
+    </nav>
+  </header>
 
-@if (error()) {
-  <p class="error" role="alert">{{ error() }}</p>
-}
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
 
-@if (loading() && !data()) {
-  <p class="muted">Loading overview…</p>
-} @else if (data(); as d) {
-  <!-- KPI row -->
-  <section class="kpis" aria-label="Key metrics">
-    <div class="kpi">
-      <span class="kpi-label">Active codes</span>
-      <span class="kpi-value">{{ d.kpis.activeCodes }}</span>
-    </div>
-    <div class="kpi">
-      <span class="kpi-label">Total scans</span>
-      <span class="kpi-value">{{ d.kpis.totalScans | number }}</span>
-    </div>
-    <div class="kpi">
-      <span class="kpi-label">Scans this period</span>
-      <span class="kpi-value">
-        {{ d.kpis.periodScans | number }}
-        @if (d.kpis.periodScansChangePct !== 0) {
-          <span class="kpi-delta" [class.down]="d.kpis.periodScansChangePct < 0">
-            {{ d.kpis.periodScansChangePct > 0 ? '+' : '' }}{{ d.kpis.periodScansChangePct }}%
-          </span>
-        }
-      </span>
-    </div>
-    <div class="kpi">
-      <span class="kpi-label">Avg scans / code</span>
-      <span class="kpi-value">{{ d.kpis.avgScansPerCode | number }}</span>
-    </div>
-  </section>
-
-  <!-- Period filter + scans line chart -->
-  <section class="card chart-card">
-    <div class="card-head">
-      <h2>Scans over time</h2>
-      <div class="segmented" role="group" aria-label="Period">
-        @for (p of periods; track p.value) {
-          <button
-            type="button"
-            class="seg"
-            [class.active]="p.value === period()"
-            [attr.aria-pressed]="p.value === period()"
-            [disabled]="loading()"
-            (click)="selectPeriod(p.value)"
-          >
-            {{ p.label }}
-          </button>
-        }
+  @if (loading() && !data()) {
+    <p class="muted">{{ t('dashboard.loadingOverview') }}</p>
+  } @else if (data(); as d) {
+    <!-- KPI row -->
+    <section class="kpis" [attr.aria-label]="t('dashboard.kpisAria')">
+      <div class="kpi">
+        <span class="kpi-label">{{ t('dashboard.kpi.activeCodes') }}</span>
+        <span class="kpi-value">{{ d.kpis.activeCodes | number: undefined : locale.lang() }}</span>
       </div>
-    </div>
-
-    @if (isEmpty()) {
-      <div class="empty">
-        <p>No scans yet.</p>
-        <p class="muted small">
-          Share a QR or its <code>/r/</code> link and scans will show up here.
-        </p>
+      <div class="kpi">
+        <span class="kpi-label">{{ t('dashboard.kpi.totalScans') }}</span>
+        <span class="kpi-value">{{ d.kpis.totalScans | number: undefined : locale.lang() }}</span>
       </div>
-    } @else if (!hasPeriodScans()) {
-      <div class="empty">
-        <p>No scans in this period.</p>
-        <p class="muted small">Try a longer range, or share your codes more widely.</p>
-      </div>
-    } @else if (timeSeriesConfig(); as cfg) {
-      <div class="chart-frame">
-        <app-chart-canvas [config]="cfg" />
-      </div>
-    }
-  </section>
-
-  <!-- Top links | by device -->
-  <div class="two-col">
-    <section class="card">
-      <h2>Top links</h2>
-      @if (d.topLinks.length === 0) {
-        <p class="muted small">No scans to rank yet.</p>
-      } @else {
-        <ul class="bar-list">
-          @for (link of d.topLinks; track link.slug) {
-            <li class="bar-row">
-              <div class="bar-meta">
-                <span class="slug">/r/{{ link.slug }}</span>
-                @if (link.name) {
-                  <span class="bar-name">{{ link.name }}</span>
-                }
-                <span class="bar-count">{{ link.scans | number }}</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" [style.width]="topLinkWidth(link.scans)"></div>
-              </div>
-            </li>
+      <div class="kpi">
+        <span class="kpi-label">{{ t('dashboard.kpi.periodScans') }}</span>
+        <span class="kpi-value">
+          {{ d.kpis.periodScans | number: undefined : locale.lang() }}
+          @if (d.kpis.periodScansChangePct !== 0) {
+            <span class="kpi-delta" [class.down]="d.kpis.periodScansChangePct < 0">
+              {{ d.kpis.periodScansChangePct > 0 ? '+' : '' }}{{ d.kpis.periodScansChangePct }}%
+            </span>
           }
-        </ul>
-      }
+        </span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-label">{{ t('dashboard.kpi.avgScansPerCode') }}</span>
+        <span class="kpi-value">{{
+          d.kpis.avgScansPerCode | number: undefined : locale.lang()
+        }}</span>
+      </div>
     </section>
 
-    <section class="card">
-      <h2>By device</h2>
-      @if (d.byDevice.length === 0) {
-        <p class="muted small">No device data yet.</p>
-      } @else {
-        <ul class="bar-list">
-          @for (row of d.byDevice; track row.device) {
-            <li class="bar-row">
-              <div class="bar-meta">
-                <span class="device-icon" aria-hidden="true">
-                  @switch (deviceIcon(row.device)) {
-                    @case ('mobile') {
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <rect x="7" y="3" width="10" height="18" rx="2" />
-                        <line x1="11" y1="18" x2="13" y2="18" />
-                      </svg>
-                    }
-                    @case ('tablet') {
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <rect x="5" y="3" width="14" height="18" rx="2" />
-                        <line x1="11" y1="18" x2="13" y2="18" />
-                      </svg>
-                    }
-                    @case ('desktop') {
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <rect x="3" y="4" width="18" height="12" rx="2" />
-                        <line x1="9" y1="20" x2="15" y2="20" />
-                        <line x1="12" y1="16" x2="12" y2="20" />
-                      </svg>
-                    }
-                    @default {
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                      >
-                        <circle cx="12" cy="12" r="9" />
-                        <line x1="12" y1="8" x2="12" y2="12" />
-                        <line x1="12" y1="16" x2="12" y2="16" />
-                      </svg>
-                    }
-                  }
-                </span>
-                <span class="device-label">{{ deviceLabel(row.device) }}</span>
-                <span class="bar-count">{{ row.pct }}%</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" [style.width.%]="row.pct"></div>
-              </div>
-            </li>
-          }
-        </ul>
-      }
-    </section>
-  </div>
-
-  <!-- Plan & usage + billing -->
-  <section class="card plan">
-    <h2>Plan &amp; usage</h2>
-    @if (subscription(); as sub) {
-      <div class="plan-grid">
-        <div class="plan-line">
-          <span class="muted small">Plan</span>
-          <span class="plan-value">{{ sub.planName }}</span>
-          <span class="status-badge" [attr.data-status]="sub.status">{{ statusLabel() }}</span>
-          @if (sub.status === 'trialing' && sub.trialDaysLeft > 0) {
-            <span class="trial-badge">{{ sub.trialDaysLeft }} days left in trial</span>
-          }
-        </div>
-
-        <div class="plan-usage">
-          <div class="plan-usage-head">
-            <span class="muted small">Codes used</span>
-            @if (sub.codeLimit === null) {
-              <span class="plan-value">{{ sub.codesUsed | number }} / unlimited</span>
-            } @else {
-              <span class="plan-value"
-                >{{ sub.codesUsed | number }} / {{ sub.codeLimit | number }}</span
-              >
-            }
-          </div>
-          @if (sub.codeLimit !== null) {
-            <div
-              class="bar-track"
-              role="progressbar"
-              [attr.aria-valuenow]="sub.codesUsed"
-              [attr.aria-valuemin]="0"
-              [attr.aria-valuemax]="sub.codeLimit"
-            >
-              <div class="bar-fill" [style.width.%]="planUsagePct()"></div>
-            </div>
-            @if (sub.codesUsed >= sub.codeLimit) {
-              <p class="muted small">
-                You've reached your plan's code limit. Subscribe to create more.
-              </p>
-            }
-          }
-        </div>
-
-        <div class="plan-line">
-          <span class="muted small">If your subscription lapses</span>
-          <span class="small">
-            codes keep working for {{ sub.graceDays }} days, then redirect to each code's fallback
-            URL (set per code in <a routerLink="/app/links">Your links</a>) — or a neutral inactive
-            page if none is set. Codes never just break.
-          </span>
-        </div>
-
-        @if (checkoutReturned()) {
-          <p class="checkout-pending">
-            Finishing up your subscription… this updates automatically once your payment is
-            confirmed.
-          </p>
-        }
-
-        @if (billingError()) {
-          <p class="error" role="alert">{{ billingError() }}</p>
-        }
-
-        <div class="plan-actions">
-          @if (canSubscribe()) {
-            <button type="button" class="primary" (click)="subscribe()" [disabled]="billingBusy()">
-              {{ billingBusy() ? 'Opening checkout…' : 'Start trial / subscribe' }}
-            </button>
-          } @else if (sub.portalAvailable) {
+    <!-- Period filter + scans line chart -->
+    <section class="card chart-card">
+      <div class="card-head">
+        <h2>{{ t('dashboard.scansOverTime') }}</h2>
+        <div class="segmented" role="group" [attr.aria-label]="t('dashboard.periodAria')">
+          @for (p of periods; track p.value) {
             <button
               type="button"
-              class="primary"
-              (click)="manageSubscription()"
-              [disabled]="billingBusy()"
+              class="seg"
+              [class.active]="p.value === period()"
+              [attr.aria-pressed]="p.value === period()"
+              [disabled]="loading()"
+              (click)="selectPeriod(p.value)"
             >
-              {{ billingBusy() ? 'Opening portal…' : 'Manage subscription' }}
+              {{ t(p.labelKey) }}
             </button>
-          } @else {
-            <button type="button" class="primary" disabled>Manage subscription</button>
-            <span class="muted small">Billing isn't enabled on this instance.</span>
           }
         </div>
       </div>
-    } @else {
-      <p class="muted">Loading billing details…</p>
-    }
-  </section>
-}
+
+      @if (isEmpty()) {
+        <div class="empty">
+          <p>{{ t('dashboard.empty.noScansTitle') }}</p>
+          <p class="muted small">
+            {{ t('dashboard.empty.noScansBefore') }}<code>/r/</code
+            >{{ t('dashboard.empty.noScansAfter') }}
+          </p>
+        </div>
+      } @else if (!hasPeriodScans()) {
+        <div class="empty">
+          <p>{{ t('dashboard.empty.noPeriodScansTitle') }}</p>
+          <p class="muted small">{{ t('dashboard.empty.noPeriodScansHint') }}</p>
+        </div>
+      } @else if (timeSeriesConfig(); as cfg) {
+        <div class="chart-frame">
+          <app-chart-canvas [config]="cfg" />
+        </div>
+      }
+    </section>
+
+    <!-- Top links | by device -->
+    <div class="two-col">
+      <section class="card">
+        <h2>{{ t('dashboard.topLinks') }}</h2>
+        @if (d.topLinks.length === 0) {
+          <p class="muted small">{{ t('dashboard.topLinksEmpty') }}</p>
+        } @else {
+          <ul class="bar-list">
+            @for (link of d.topLinks; track link.slug) {
+              <li class="bar-row">
+                <div class="bar-meta">
+                  <span class="slug">/r/{{ link.slug }}</span>
+                  @if (link.name) {
+                    <span class="bar-name">{{ link.name }}</span>
+                  }
+                  <span class="bar-count">{{
+                    link.scans | number: undefined : locale.lang()
+                  }}</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" [style.width]="topLinkWidth(link.scans)"></div>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="card">
+        <h2>{{ t('dashboard.byDevice') }}</h2>
+        @if (d.byDevice.length === 0) {
+          <p class="muted small">{{ t('dashboard.byDeviceEmpty') }}</p>
+        } @else {
+          <ul class="bar-list">
+            @for (row of d.byDevice; track row.device) {
+              <li class="bar-row">
+                <div class="bar-meta">
+                  <span class="device-icon" aria-hidden="true">
+                    @switch (deviceIcon(row.device)) {
+                      @case ('mobile') {
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                        >
+                          <rect x="7" y="3" width="10" height="18" rx="2" />
+                          <line x1="11" y1="18" x2="13" y2="18" />
+                        </svg>
+                      }
+                      @case ('tablet') {
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                        >
+                          <rect x="5" y="3" width="14" height="18" rx="2" />
+                          <line x1="11" y1="18" x2="13" y2="18" />
+                        </svg>
+                      }
+                      @case ('desktop') {
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                        >
+                          <rect x="3" y="4" width="18" height="12" rx="2" />
+                          <line x1="9" y1="20" x2="15" y2="20" />
+                          <line x1="12" y1="16" x2="12" y2="20" />
+                        </svg>
+                      }
+                      @default {
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                        >
+                          <circle cx="12" cy="12" r="9" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="16" x2="12" y2="16" />
+                        </svg>
+                      }
+                    }
+                  </span>
+                  <span class="device-label">{{ deviceLabel(row.device) }}</span>
+                  <span class="bar-count">{{ row.pct }}%</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" [style.width.%]="row.pct"></div>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    </div>
+
+    <!-- Plan & usage + billing -->
+    <section class="card plan">
+      <h2>{{ t('dashboard.planUsage') }}</h2>
+      @if (subscription(); as sub) {
+        <div class="plan-grid">
+          <div class="plan-line">
+            <span class="muted small">{{ t('dashboard.plan') }}</span>
+            <span class="plan-value">{{ sub.planName }}</span>
+            <span class="status-badge" [attr.data-status]="sub.status">{{ statusLabel() }}</span>
+            @if (sub.status === 'trialing' && sub.trialDaysLeft > 0) {
+              <span class="trial-badge">{{
+                t('dashboard.trialDaysLeft', { days: sub.trialDaysLeft })
+              }}</span>
+            }
+          </div>
+
+          <div class="plan-usage">
+            <div class="plan-usage-head">
+              <span class="muted small">{{ t('dashboard.codesUsed') }}</span>
+              @if (sub.codeLimit === null) {
+                <span class="plan-value"
+                  >{{ sub.codesUsed | number: undefined : locale.lang() }} /
+                  {{ t('common.unlimited') }}</span
+                >
+              } @else {
+                <span class="plan-value"
+                  >{{ sub.codesUsed | number: undefined : locale.lang() }} /
+                  {{ sub.codeLimit | number: undefined : locale.lang() }}</span
+                >
+              }
+            </div>
+            @if (sub.codeLimit !== null) {
+              <div
+                class="bar-track"
+                role="progressbar"
+                [attr.aria-valuenow]="sub.codesUsed"
+                [attr.aria-valuemin]="0"
+                [attr.aria-valuemax]="sub.codeLimit"
+              >
+                <div class="bar-fill" [style.width.%]="planUsagePct()"></div>
+              </div>
+              @if (sub.codesUsed >= sub.codeLimit) {
+                <p class="muted small">
+                  {{ t('dashboard.limitReached') }}
+                </p>
+              }
+            }
+          </div>
+
+          <div class="plan-line">
+            <span class="muted small">{{ t('dashboard.lapse.label') }}</span>
+            <span class="small">
+              {{ t('dashboard.lapse.before', { days: sub.graceDays })
+              }}<a routerLink="/app/links">{{ t('dashboard.yourLinks') }}</a
+              >{{ t('dashboard.lapse.after') }}
+            </span>
+          </div>
+
+          @if (checkoutReturned()) {
+            <p class="checkout-pending">
+              {{ t('dashboard.checkoutPending') }}
+            </p>
+          }
+
+          @if (billingError()) {
+            <p class="error" role="alert">{{ billingError() }}</p>
+          }
+
+          <div class="plan-actions">
+            @if (canSubscribe()) {
+              <button
+                type="button"
+                class="primary"
+                (click)="subscribe()"
+                [disabled]="billingBusy()"
+              >
+                {{ billingBusy() ? t('dashboard.openingCheckout') : t('dashboard.startTrial') }}
+              </button>
+            } @else if (sub.portalAvailable) {
+              <button
+                type="button"
+                class="primary"
+                (click)="manageSubscription()"
+                [disabled]="billingBusy()"
+              >
+                {{
+                  billingBusy() ? t('dashboard.openingPortal') : t('dashboard.manageSubscription')
+                }}
+              </button>
+            } @else {
+              <button type="button" class="primary" disabled>
+                {{ t('dashboard.manageSubscription') }}
+              </button>
+              <span class="muted small">{{ t('dashboard.billingDisabled') }}</span>
+            }
+          </div>
+        </div>
+      } @else {
+        <p class="muted">{{ t('dashboard.loadingBilling') }}</p>
+      }
+    </section>
+  }
+</ng-container>

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Owner-scoped QR generation. Encodes {APP_BASE_URL}/r/{slug} — the permanent
@@ -32,6 +33,7 @@ final class LinkQrController
         private readonly Security $security,
         #[Autowire('%env(APP_BASE_URL)%')]
         private readonly string $appBaseUrl,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -57,7 +59,7 @@ final class LinkQrController
 
         $format = strtolower((string) $request->query->get('format', 'png'));
         if (!\in_array($format, ['png', 'svg'], true)) {
-            throw new BadRequestHttpException('format must be "png" or "svg".');
+            throw new BadRequestHttpException($this->translator->trans('link.invalid_qr_format'));
         }
 
         $encodedUrl = rtrim($this->appBaseUrl, '/').'/r/'.$link->getSlug();

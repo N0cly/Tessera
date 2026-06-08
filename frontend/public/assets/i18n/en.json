@@ -1,0 +1,462 @@
+{
+  "admin": {
+    "operatorBadge": "operator",
+    "periodGroup": "Period",
+    "sections": "Sections",
+    "dbSource": "your database",
+    "periods": {
+      "7d": "7 days",
+      "30d": "30 days",
+      "90d": "90 days"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "customers": "Customers",
+      "audit": "Audit log"
+    },
+    "errors": {
+      "overview": "Could not load the overview.",
+      "customers": "Could not load customers.",
+      "audit": "Could not load the audit log."
+    },
+    "chart": {
+      "scans": "Scans",
+      "signups": "Signups"
+    },
+    "business": {
+      "title": "Business",
+      "source": "via Paddle",
+      "unavailable": "Business metrics are unavailable — Paddle isn't reachable or configured on this instance. Usage and customer metrics below come from your database.",
+      "mrr": "MRR",
+      "mixedCurrency": "multiple currencies — see Paddle",
+      "activeSubscriptions": "Active subscriptions",
+      "trialing": "Trials in progress",
+      "pastDue": "Failed payments",
+      "trialConversion": "Trial → paid",
+      "churn30d": "Churn (30d)",
+      "activeByPlan": "Active by plan",
+      "hint": "Conversion and churn are derived from synced subscription records; revenue is read from Paddle and never recomputed here. Deeper revenue analytics live in Paddle."
+    },
+    "usage": {
+      "title": "Usage",
+      "totalLinks": "Total links",
+      "totalScans": "Total scans",
+      "periodScans": "Scans ({{period}})",
+      "activeCodes": "Active codes",
+      "noScans": "No scans in this period."
+    },
+    "customers": {
+      "title": "Customers",
+      "total": "Total customers",
+      "churned": "Churned",
+      "byPlan": "By plan",
+      "byStatus": "By status",
+      "noSignups": "No signups in this period.",
+      "piiNotice": "This view contains customer emails (PII). Per the data-minimization rule, each load is recorded in the audit log. Scanner identities are never available — scans store no IP.",
+      "topByUsage": "Top customers by usage ({{period}})",
+      "colCustomer": "Customer",
+      "colLinks": "Links",
+      "colScans": "Scans",
+      "noUsage": "No usage yet.",
+      "allCustomers": "All customers",
+      "colEmail": "Email",
+      "colPlan": "Plan",
+      "colStatus": "Status",
+      "colCodes": "Codes",
+      "colJoined": "Joined",
+      "noCustomers": "No customers."
+    },
+    "audit": {
+      "title": "Audit log",
+      "notice": "Admin logins and customer-data accesses, most recent first.",
+      "colWhen": "When",
+      "colActor": "Actor",
+      "colAction": "Action",
+      "colResult": "Result",
+      "colIp": "IP",
+      "colDetail": "Detail",
+      "ok": "ok",
+      "fail": "fail",
+      "noEntries": "No entries."
+    },
+    "pager": {
+      "page": "Page {{current}} / {{total}} · {{count}} total"
+    }
+  },
+  "adminAuth": {
+    "title": "Operator sign-in",
+    "subtitle": "Restricted area. Admin access requires two-factor authentication.",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "codeLabel": "Authenticator code",
+    "errors": {
+      "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
+      "invalidCredentials": "Invalid credentials."
+    }
+  },
+  "auth": {
+    "createAccountTitle": "Create an account",
+    "createAccountSubmit": "Create account",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "noAccountPrompt": "No account yet?",
+    "registerLink": "Register",
+    "alreadyRegisteredPrompt": "Already registered?",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "loginAfterRegister": "Account created, but login failed. Try again.",
+      "registrationFailed": "Registration failed."
+    }
+  },
+  "common": {
+    "language": "Language",
+    "tagline": "privacy-first dynamic QR codes you actually own.",
+    "nav": {
+      "home": "Home",
+      "pricing": "Pricing",
+      "github": "GitHub",
+      "dashboard": "Dashboard",
+      "openDashboard": "Open dashboard",
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "links": "Links"
+    },
+    "actions": {
+      "loading": "Loading…",
+      "retry": "Try again",
+      "copy": "Copy",
+      "copied": "Copied",
+      "download": "Download",
+      "prev": "Prev",
+      "next": "Next",
+      "create": "Create",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "close": "Close",
+      "viewOnGithub": "View on GitHub"
+    },
+    "comingSoon": "coming soon",
+    "unavailable": "Unavailable",
+    "perMonth": "per month",
+    "unlimited": "Unlimited"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "sectionsAria": "Dashboard sections",
+    "yourLinks": "Your links",
+    "loadingOverview": "Loading overview…",
+    "loadingBilling": "Loading billing details…",
+    "loadError": "Could not load the overview.",
+    "kpisAria": "Key metrics",
+    "kpi": {
+      "activeCodes": "Active codes",
+      "totalScans": "Total scans",
+      "periodScans": "Scans this period",
+      "avgScansPerCode": "Avg scans / code"
+    },
+    "scansOverTime": "Scans over time",
+    "periodAria": "Period",
+    "period": {
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d"
+    },
+    "chart": {
+      "scansLabel": "Scans"
+    },
+    "empty": {
+      "noScansTitle": "No scans yet.",
+      "noScansBefore": "Share a QR or its ",
+      "noScansAfter": " link and scans will show up here.",
+      "noPeriodScansTitle": "No scans in this period.",
+      "noPeriodScansHint": "Try a longer range, or share your codes more widely."
+    },
+    "topLinks": "Top links",
+    "topLinksEmpty": "No scans to rank yet.",
+    "byDevice": "By device",
+    "byDeviceEmpty": "No device data yet.",
+    "device": {
+      "mobile": "Mobile",
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "tv": "TV",
+      "console": "Console",
+      "unknown": "Unknown"
+    },
+    "planUsage": "Plan & usage",
+    "plan": "Plan",
+    "status": {
+      "trialing": "Trialing",
+      "active": "Active",
+      "pastDue": "Past due",
+      "canceled": "Canceled",
+      "expired": "Expired"
+    },
+    "trialDaysLeft": "{{days}} days left in trial",
+    "codesUsed": "Codes used",
+    "limitReached": "You've reached your plan's code limit. Subscribe to create more.",
+    "lapse": {
+      "label": "If your subscription lapses",
+      "before": "codes keep working for {{days}} days, then redirect to each code's fallback URL (set per code in ",
+      "after": ") — or a neutral inactive page if none is set. Codes never just break."
+    },
+    "checkoutPending": "Finishing up your subscription… this updates automatically once your payment is confirmed.",
+    "openingCheckout": "Opening checkout…",
+    "startTrial": "Start trial / subscribe",
+    "openingPortal": "Opening portal…",
+    "manageSubscription": "Manage subscription",
+    "billingDisabled": "Billing isn't enabled on this instance.",
+    "billing": {
+      "loadError": "Could not load billing details.",
+      "checkoutError": "Checkout is unavailable right now. Please try again later.",
+      "portalError": "Could not open the customer portal. Please try again later."
+    }
+  },
+  "landing": {
+    "nav": {
+      "howItWorks": "How it works",
+      "selfHost": "Self-host"
+    },
+    "hero": {
+      "eyebrow": "Open-source dynamic QR codes",
+      "titleLine1": "Print the QR once.",
+      "titleLine2Pre": "Change the destination",
+      "titleLine2Em": "forever",
+      "lede": "Each QR encodes a short permanent URL hosted on your infrastructure. Edit where it points whenever you want — no reprint, no expiry, no third party between your scanners and your data.",
+      "chips": {
+        "eu": "EU-hostable",
+        "ip": "IP never stored",
+        "expire": "Codes never expire",
+        "license": "MIT licensed"
+      },
+      "ctaSelfHost": "Self-host in 1 minute",
+      "ctaStar": "Star on GitHub",
+      "foot": "No tracking pixels, no signup wall, no “community edition” trick."
+    },
+    "demo": {
+      "ariaLabel": "Interactive demo",
+      "tablistLabel": "Choose a use case",
+      "qrAriaLabel": "QR code for the demo short URL",
+      "scansGoTo": "scans go to",
+      "destinationNow": "Destination right now",
+      "note": "The QR above doesn't change — only the destination does. That's the whole point. Try clicking another tab; the canvas re-renders the same encoded URL.",
+      "cases": {
+        "menu": {
+          "label": "Restaurant menu",
+          "blurb": "On the table tents. Reprint never — swap the menu link every season."
+        },
+        "event": {
+          "label": "Event signup",
+          "blurb": "On the conference poster. Same QR for every edition; just redirect to the new signup page."
+        },
+        "bio": {
+          "label": "Social bio link",
+          "blurb": "On a business card or sticker. Update the destination as your link-in-bio service changes."
+        }
+      }
+    },
+    "useCases": {
+      "title": "One engine, many shapes",
+      "lede": "The data model is deliberately generic. Slap a QR on anything that needs a redirectable link.",
+      "restaurants": {
+        "title": "Restaurants & cafés",
+        "body": "Menu QRs that survive seasonal changes. New spring menu? Edit the destination. The printed table tents keep working."
+      },
+      "events": {
+        "title": "Events & posters",
+        "body": "Print the QR on next year's posters before knowing the signup URL. Set the destination later — even hours before the event opens."
+      },
+      "social": {
+        "title": "Social bios & cards",
+        "body": "A single QR on your business card or sticker, rerouted as your platform-of-the-month link-in-bio service changes."
+      }
+    },
+    "how": {
+      "title": "Three steps, no surprises",
+      "step1": {
+        "title": "Create the link",
+        "bodyPre": "Paste any",
+        "bodyPost": "URL. You get a short permanent identifier — that's what gets encoded into the QR."
+      },
+      "step2": {
+        "title": "Print or share the QR",
+        "body": "Download the QR as PNG or SVG. Put it on a menu, poster, sticker, business card — whatever the physical world needs."
+      },
+      "step3": {
+        "title": "Change the destination, anytime",
+        "body": "Edit where the link points whenever you want. Every previously printed QR keeps working and now leads to the new target."
+      }
+    },
+    "diff": {
+      "title": "What makes this different",
+      "openSource": {
+        "title": "Open-source, MIT",
+        "body": "The full code is on GitHub. Fork it, audit it, run it, sell what you build on top of it. No “community edition” with the good parts missing."
+      },
+      "privacy": {
+        "title": "IP never stored",
+        "bodyPre": "Scan logging is async. The visitor's IP is resolved to a country code in flight, then dropped. The",
+        "bodyPost": "table literally has no IP column."
+      },
+      "neverExpire": {
+        "title": "Codes that never expire",
+        "body": "As long as your instance is running, the QR you printed three years ago still works — and still points wherever you tell it to today. No hostage model."
+      }
+    },
+    "selfHost": {
+      "title": "Self-host in one command",
+      "lede": "Docker + Docker Compose. That's the entire dependency list.",
+      "snippetAriaLabel": "Self-host command",
+      "snippetComment": "tweak APP_SECRET, JWT_PASSPHRASE, etc.",
+      "foot": "Brings up Postgres, Redis, the API, the dashboard, the async worker, and the periodic janitor — with healthchecks, restart policies, and JWT/migrations handled automatically on first boot.",
+      "tryDashboard": "Try the dashboard"
+    },
+    "footer": {
+      "license": "License: MIT"
+    }
+  },
+  "links": {
+    "title": "Your links",
+    "navSections": "Dashboard sections",
+    "navOverview": "Overview",
+    "create": {
+      "heading": "Create a new link",
+      "destinationLabel": "Destination URL",
+      "destinationPlaceholder": "https://example.com/long-path",
+      "nameLabel": "Name (optional)",
+      "namePlaceholder": "Spring menu, support page, …",
+      "submit": "Create link",
+      "submitting": "Creating…"
+    },
+    "upgradeLink": "View plans & upgrade →",
+    "empty": "No links yet. Create one above.",
+    "edit": {
+      "destinationLabel": "Destination URL",
+      "fallbackLabel": "Fallback URL (optional)",
+      "fallbackPlaceholder": "https://… where this code goes if your plan lapses",
+      "fallbackHint": "If your subscription lapses, this code redirects here instead of breaking.",
+      "saving": "Saving…"
+    },
+    "fallbackBadge": "↳ fallback",
+    "fallbackTitle": "Used if your subscription lapses",
+    "editLinks": "Edit links",
+    "showStats": "Show stats",
+    "hideStats": "Hide stats",
+    "downloadPng": "Download PNG",
+    "downloadSvg": "Download SVG",
+    "qrAria": "QR code for this link",
+    "qrAlt": "QR code for /r/{{ slug }}",
+    "qrPlaceholder": "QR…",
+    "confirmDelete": "Delete /r/{{ slug }}? This cannot be undone.",
+    "errors": {
+      "load": "Could not load links.",
+      "create": "Could not create link.",
+      "save": "Could not save changes.",
+      "delete": "Could not delete link.",
+      "download": "Could not download {{ format }}."
+    }
+  },
+  "pricing": {
+    "heroTitle": "Honest pricing. No hostages.",
+    "heroLede": "Self-host the full open-source core for free, forever. Or let us run it for you on EU infrastructure. Either way, your codes never expire and your data stays yours.",
+    "plansAriaLabel": "Plans",
+    "free": "Free",
+    "hostedPlans": "Hosted plans",
+    "pricingUnavailableLead": "Pricing is temporarily unavailable. Please try again shortly — or",
+    "selfHostForFree": "self-host for free",
+    "offerEnds": "Offer ends {{date}}.",
+    "notEnabled": "Hosted plan — not enabled on this instance.",
+    "priceUnavailable": "Pricing temporarily unavailable.",
+    "redirecting": "Redirecting…",
+    "startTrial": "Start 14-day trial",
+    "selfHostInstead": "Self-host instead",
+    "trialNote": "14-day trial, no credit card required. Cancel anytime.",
+    "checkoutError": "Checkout is unavailable right now. Please try again later.",
+    "selfHost": {
+      "name": "Self-host",
+      "priceNote": "Open source, MIT licensed. Run it on your own server."
+    },
+    "interval": {
+      "month": "/mo",
+      "year": "/yr",
+      "week": "/wk",
+      "day": "/day"
+    },
+    "promo": {
+      "badge": "Promo"
+    },
+    "codeLimit": {
+      "unlimited": "Unlimited codes",
+      "upTo": "Up to {{count}} codes"
+    },
+    "features": {
+      "starter": {
+        "core": "Full open-source core",
+        "analytics": "Complete scan analytics",
+        "fallback": "Fallback URL when a subscription lapses",
+        "euHosting": "EU hosting"
+      },
+      "pro": {
+        "everythingStarter": "Everything in Starter",
+        "customDomain": "Custom domain",
+        "branding": "QR branding (logo & colours)",
+        "team": "Team members",
+        "prioritySupport": "Priority support"
+      },
+      "selfHost": {
+        "unlimited": "Unlimited codes",
+        "forever": "The full core, forever",
+        "openSource": "Open source (MIT)",
+        "yourData": "Your data, your server"
+      }
+    },
+    "faqAriaLabel": "Frequently asked questions",
+    "faqTitle": "Questions about trust",
+    "faq": {
+      "stopPaying": {
+        "q": "What happens if I stop paying?",
+        "a": "Your codes keep working through a grace period, then fall back to a URL you choose — nothing is held hostage. And because the core is open source, you can always self-host for free and keep every code alive."
+      },
+      "trialCharge": {
+        "q": "Does the trial charge me?",
+        "a": "No. The 14-day trial needs no credit card. You only add payment if you decide to continue after the trial."
+      },
+      "selfHost": {
+        "q": "Can I self-host instead of subscribing?",
+        "a": "Always. Tessera is MIT-licensed. Run it on your own server with unlimited codes at no cost — the hosted plans just save you the ops work."
+      },
+      "data": {
+        "q": "Where is my data?",
+        "a": "On the hosted plans we run in the EU. Visitor IPs are never stored — they're resolved to a country in flight and discarded. The scans table has no IP column by design."
+      }
+    }
+  },
+  "seo": {
+    "landing": {
+      "title": "Tessera — dynamic QR codes you own",
+      "description": "Open-source, privacy-first dynamic QR codes. Print once, change the destination forever. Self-hostable, EU-friendly, and codes never expire."
+    },
+    "pricing": {
+      "title": "Tessera pricing — simple plans, no lock-in",
+      "description": "Self-host Tessera for free, or let us host it. Transparent pricing, a 14-day trial with no card, and your codes are never held hostage."
+    }
+  },
+  "stats": {
+    "periodLabel": "Period:",
+    "periodDays": "{{ days }}d",
+    "totalScans": "{{ count }} scan since {{ since }}",
+    "totalScansPlural": "{{ count }} scans since {{ since }}",
+    "loadError": "Could not load stats.",
+    "loading": "Loading stats…",
+    "empty": "No scans yet for the selected period. Share the QR or the /r/ link to start collecting data.",
+    "scansPerDay": "Scans / day",
+    "scansLabel": "Scans",
+    "byCountry": "By country",
+    "byDevice": "By device",
+    "byOs": "By OS",
+    "noData": "No data.",
+    "unknown": "Unknown"
+  }
+}

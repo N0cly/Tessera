@@ -1,0 +1,19 @@
+inactive:
+    title: 'Enlace inactivo'
+    heading: 'Este enlace está inactivo en este momento'
+    body: 'La suscripción del propietario ha caducado, así que este código no apunta a ningún sitio ahora mismo. Si es tuyo, renovar tu plan lo reactivará.'
+registration:
+    invalid_json: 'Cuerpo JSON no válido.'
+    invalid_input: 'Se requieren un correo electrónico y una contraseña (al menos 8 caracteres).'
+    email_taken: 'Ya existe una cuenta con este correo electrónico.'
+    validation_failed: 'La validación ha fallado.'
+link:
+    limit_reached: 'Has alcanzado el límite de %count% códigos de tu plan. Mejora tu plan para crear más.'
+    rate_limited: 'Demasiadas creaciones de enlaces. Reduce el ritmo, por favor.'
+    invalid_qr_format: 'el formato debe ser «png» o «svg».'
+billing:
+    not_configured: 'La facturación no está configurada en esta instancia.'
+    no_subscription: 'Aún no hay ninguna suscripción activa que gestionar.'
+    portal_failed: 'No se ha podido abrir el portal de cliente.'
+me:
+    invalid_locale: 'El idioma debe ser uno de: %locales%.'

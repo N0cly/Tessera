@@ -1,0 +1,175 @@
+{
+  "namespace": "common",
+  "translations": {
+    "en": {
+      "language": "Language",
+      "tagline": "privacy-first dynamic QR codes you actually own.",
+      "nav": {
+        "home": "Home",
+        "pricing": "Pricing",
+        "github": "GitHub",
+        "dashboard": "Dashboard",
+        "openDashboard": "Open dashboard",
+        "signIn": "Sign in",
+        "signOut": "Sign out",
+        "links": "Links"
+      },
+      "actions": {
+        "loading": "Loading…",
+        "retry": "Try again",
+        "copy": "Copy",
+        "copied": "Copied",
+        "download": "Download",
+        "prev": "Prev",
+        "next": "Next",
+        "create": "Create",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "close": "Close",
+        "viewOnGithub": "View on GitHub"
+      },
+      "comingSoon": "coming soon",
+      "unavailable": "Unavailable",
+      "perMonth": "per month",
+      "unlimited": "Unlimited"
+    },
+    "fr": {
+      "language": "Langue",
+      "tagline": "des QR codes dynamiques, privés, qui vous appartiennent vraiment.",
+      "nav": {
+        "home": "Accueil",
+        "pricing": "Tarifs",
+        "github": "GitHub",
+        "dashboard": "Tableau de bord",
+        "openDashboard": "Ouvrir le tableau de bord",
+        "signIn": "Se connecter",
+        "signOut": "Se déconnecter",
+        "links": "Liens"
+      },
+      "actions": {
+        "loading": "Chargement…",
+        "retry": "Réessayer",
+        "copy": "Copier",
+        "copied": "Copié",
+        "download": "Télécharger",
+        "prev": "Préc.",
+        "next": "Suiv.",
+        "create": "Créer",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "close": "Fermer",
+        "viewOnGithub": "Voir sur GitHub"
+      },
+      "comingSoon": "bientôt",
+      "unavailable": "Indisponible",
+      "perMonth": "par mois",
+      "unlimited": "Illimité"
+    },
+    "es": {
+      "language": "Idioma",
+      "tagline": "códigos QR dinámicos, privados y realmente tuyos.",
+      "nav": {
+        "home": "Inicio",
+        "pricing": "Precios",
+        "github": "GitHub",
+        "dashboard": "Panel",
+        "openDashboard": "Abrir el panel",
+        "signIn": "Iniciar sesión",
+        "signOut": "Cerrar sesión",
+        "links": "Enlaces"
+      },
+      "actions": {
+        "loading": "Cargando…",
+        "retry": "Reintentar",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "download": "Descargar",
+        "prev": "Ant.",
+        "next": "Sig.",
+        "create": "Crear",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "close": "Cerrar",
+        "viewOnGithub": "Ver en GitHub"
+      },
+      "comingSoon": "próximamente",
+      "unavailable": "No disponible",
+      "perMonth": "al mes",
+      "unlimited": "Ilimitado"
+    },
+    "it": {
+      "language": "Lingua",
+      "tagline": "QR code dinamici, privati e davvero tuoi.",
+      "nav": {
+        "home": "Home",
+        "pricing": "Prezzi",
+        "github": "GitHub",
+        "dashboard": "Dashboard",
+        "openDashboard": "Apri la dashboard",
+        "signIn": "Accedi",
+        "signOut": "Esci",
+        "links": "Link"
+      },
+      "actions": {
+        "loading": "Caricamento…",
+        "retry": "Riprova",
+        "copy": "Copia",
+        "copied": "Copiato",
+        "download": "Scarica",
+        "prev": "Prec.",
+        "next": "Succ.",
+        "create": "Crea",
+        "save": "Salva",
+        "cancel": "Annulla",
+        "delete": "Elimina",
+        "edit": "Modifica",
+        "close": "Chiudi",
+        "viewOnGithub": "Vedi su GitHub"
+      },
+      "comingSoon": "in arrivo",
+      "unavailable": "Non disponibile",
+      "perMonth": "al mese",
+      "unlimited": "Illimitato"
+    },
+    "de": {
+      "language": "Sprache",
+      "tagline": "datenschutzfreundliche dynamische QR-Codes, die wirklich dir gehören.",
+      "nav": {
+        "home": "Start",
+        "pricing": "Preise",
+        "github": "GitHub",
+        "dashboard": "Dashboard",
+        "openDashboard": "Dashboard öffnen",
+        "signIn": "Anmelden",
+        "signOut": "Abmelden",
+        "links": "Links"
+      },
+      "actions": {
+        "loading": "Laden…",
+        "retry": "Erneut versuchen",
+        "copy": "Kopieren",
+        "copied": "Kopiert",
+        "download": "Herunterladen",
+        "prev": "Zurück",
+        "next": "Weiter",
+        "create": "Erstellen",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "close": "Schließen",
+        "viewOnGithub": "Auf GitHub ansehen"
+      },
+      "comingSoon": "demnächst",
+      "unavailable": "Nicht verfügbar",
+      "perMonth": "pro Monat",
+      "unlimited": "Unbegrenzt"
+    }
+  }
+}

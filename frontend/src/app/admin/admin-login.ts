@@ -1,19 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+
+import { LanguageSwitcherComponent } from '../core/language-switcher';
 
 import { AdminAuthService } from '../core/admin-auth.service';
 
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, TranslocoDirective, LanguageSwitcherComponent],
   templateUrl: './admin-login.html',
   styleUrl: './admin-login.scss',
 })
 export class AdminLoginComponent {
   private readonly auth = inject(AdminAuthService);
   private readonly router = inject(Router);
+  private readonly transloco = inject(TranslocoService);
 
   email = '';
   password = '';
@@ -35,8 +39,8 @@ export class AdminLoginComponent {
         this.busy.set(false);
         this.error.set(
           err?.status === 429
-            ? 'Too many attempts. Please wait a moment and try again.'
-            : 'Invalid credentials.',
+            ? this.transloco.translate('adminAuth.errors.tooManyAttempts')
+            : this.transloco.translate('adminAuth.errors.invalidCredentials'),
         );
       },
     });

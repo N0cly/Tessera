@@ -1,23 +1,33 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ChartConfiguration } from 'chart.js';
 
 import { AuthService } from '../core/auth.service';
 import { BillingService, SubscriptionStatus, SubscriptionSummary } from '../core/billing.service';
 import { DashboardOverview, DashboardPeriod, DashboardService } from '../core/dashboard.service';
+import { LanguageSwitcherComponent } from '../core/language-switcher';
+import { LocaleService } from '../core/locale.service';
 import { token } from '../core/tessera-tokens';
 import { ChartCanvasComponent } from '../stats/chart-canvas';
 
 interface PeriodOption {
   value: DashboardPeriod;
-  label: string;
+  /** Translation key — resolved reactively in the template, not once in TS. */
+  labelKey: string;
 }
 
 @Component({
   selector: 'app-dashboard-overview',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, ChartCanvasComponent],
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    ChartCanvasComponent,
+    TranslocoDirective,
+    LanguageSwitcherComponent,
+  ],
   templateUrl: './dashboard-overview.html',
   styleUrl: './dashboard-overview.scss',
 })
@@ -26,11 +36,13 @@ export class DashboardOverviewComponent implements OnInit {
   private readonly billing = inject(BillingService);
   private readonly auth = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
+  private readonly transloco = inject(TranslocoService);
+  readonly locale = inject(LocaleService);
 
   readonly periods: PeriodOption[] = [
-    { value: '7d', label: '7 j' },
-    { value: '30d', label: '30 j' },
-    { value: '90d', label: '90 j' },
+    { value: '7d', labelKey: 'dashboard.period.7d' },
+    { value: '30d', labelKey: 'dashboard.period.30d' },
+    { value: '90d', labelKey: 'dashboard.period.90d' },
   ];
   readonly period = signal<DashboardPeriod>('30d');
 
@@ -53,12 +65,13 @@ export class DashboardOverviewComponent implements OnInit {
 
   /** Human-readable subscription status for the billing section. */
   readonly statusLabel = computed(() => {
+    this.locale.lang(); // re-resolve when the language changes
     const labels: Record<SubscriptionStatus, string> = {
-      trialing: 'Trialing',
-      active: 'Active',
-      past_due: 'Past due',
-      canceled: 'Canceled',
-      expired: 'Expired',
+      trialing: this.transloco.translate('dashboard.status.trialing'),
+      active: this.transloco.translate('dashboard.status.active'),
+      past_due: this.transloco.translate('dashboard.status.pastDue'),
+      canceled: this.transloco.translate('dashboard.status.canceled'),
+      expired: this.transloco.translate('dashboard.status.expired'),
     };
     const s = this.subscription();
     return s ? labels[s.status] : '';
@@ -84,16 +97,25 @@ export class DashboardOverviewComponent implements OnInit {
 
   // Chart.js config for the scans line. Colours resolve from tessera tokens
   // at render time — never hardcoded (tessera-design.md).
+  /** Locale-formatted short day label for the chart x-axis. */
+  private dayLabel(iso: string): string {
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime())
+      ? iso
+      : d.toLocaleDateString(this.locale.lang(), { month: 'short', day: 'numeric' });
+  }
+
   readonly timeSeriesConfig = computed<ChartConfiguration | null>(() => {
+    this.locale.lang(); // re-render labels/tooltip label on language switch
     const d = this.data();
     if (!d || !this.hasPeriodScans()) return null;
     return {
       type: 'line',
       data: {
-        labels: d.timeSeries.map((p) => p.date),
+        labels: d.timeSeries.map((p) => this.dayLabel(p.date)),
         datasets: [
           {
-            label: 'Scans',
+            label: this.transloco.translate('dashboard.chart.scansLabel'),
             data: d.timeSeries.map((p) => p.scans),
             borderColor: token('color-accent'),
             backgroundColor: token('color-accent-soft'),
@@ -138,7 +160,7 @@ export class DashboardOverviewComponent implements OnInit {
   loadSubscription(): void {
     this.billing.subscription().subscribe({
       next: (s) => this.subscription.set(s),
-      error: () => this.billingError.set('Could not load billing details.'),
+      error: () => this.billingError.set(this.transloco.translate('dashboard.billing.loadError')),
     });
   }
 
@@ -152,7 +174,7 @@ export class DashboardOverviewComponent implements OnInit {
       },
       error: () => {
         this.billingBusy.set(false);
-        this.billingError.set('Checkout is unavailable right now. Please try again later.');
+        this.billingError.set(this.transloco.translate('dashboard.billing.checkoutError'));
       },
     });
   }
@@ -167,7 +189,7 @@ export class DashboardOverviewComponent implements OnInit {
       },
       error: () => {
         this.billingBusy.set(false);
-        this.billingError.set('Could not open the customer portal. Please try again later.');
+        this.billingError.set(this.transloco.translate('dashboard.billing.portalError'));
       },
     });
   }
@@ -189,7 +211,7 @@ export class DashboardOverviewComponent implements OnInit {
       error: () => {
         this.data.set(null);
         this.loading.set(false);
-        this.error.set('Could not load the overview.');
+        this.error.set(this.transloco.translate('dashboard.loadError'));
       },
     });
   }
@@ -200,14 +222,14 @@ export class DashboardOverviewComponent implements OnInit {
 
   deviceLabel(device: string): string {
     const map: Record<string, string> = {
-      smartphone: 'Mobile',
-      mobile: 'Mobile',
-      phablet: 'Mobile',
-      desktop: 'Desktop',
-      tablet: 'Tablet',
-      tv: 'TV',
-      console: 'Console',
-      unknown: 'Unknown',
+      smartphone: this.transloco.translate('dashboard.device.mobile'),
+      mobile: this.transloco.translate('dashboard.device.mobile'),
+      phablet: this.transloco.translate('dashboard.device.mobile'),
+      desktop: this.transloco.translate('dashboard.device.desktop'),
+      tablet: this.transloco.translate('dashboard.device.tablet'),
+      tv: this.transloco.translate('dashboard.device.tv'),
+      console: this.transloco.translate('dashboard.device.console'),
+      unknown: this.transloco.translate('dashboard.device.unknown'),
     };
     return map[device] ?? device.charAt(0).toUpperCase() + device.slice(1);
   }

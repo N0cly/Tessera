@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Owner-scoped billing surface: read the real subscription, start a hosted
@@ -32,6 +33,7 @@ final class BillingController
         private readonly PaddleClient $paddle,
         private readonly GraceCalculator $grace,
         private readonly Security $security,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -77,13 +79,14 @@ final class BillingController
 
         $priceId = null !== $plan ? $this->plans->priceIdForPlan($plan) : null;
         if (null === $priceId) {
-            throw new ServiceUnavailableHttpException(message: 'Billing is not configured on this instance.');
+            throw new ServiceUnavailableHttpException(message: $this->translator->trans('billing.not_configured'));
         }
 
         try {
-            $url = $this->paddle->createCheckoutUrl($user, $priceId);
+            // Pass the user's locale so the Paddle checkout renders in it.
+            $url = $this->paddle->createCheckoutUrl($user, $priceId, $user->getLocale());
         } catch (\RuntimeException $e) {
-            throw new ServiceUnavailableHttpException(message: $e->getMessage());
+            throw new ServiceUnavailableHttpException(message: $this->translator->trans('billing.not_configured'));
         }
 
         return new JsonResponse(['checkoutUrl' => $url]);
@@ -97,12 +100,12 @@ final class BillingController
 
         $customerId = $sub->getProviderCustomerId();
         if (null === $customerId) {
-            throw new ConflictHttpException('No active subscription to manage yet.');
+            throw new ConflictHttpException($this->translator->trans('billing.no_subscription'));
         }
 
         $url = $this->paddle->createPortalUrl($customerId);
         if (null === $url) {
-            throw new ServiceUnavailableHttpException(message: 'Could not open the customer portal.');
+            throw new ServiceUnavailableHttpException(message: $this->translator->trans('billing.portal_failed'));
         }
 
         return new JsonResponse(['portalUrl' => $url]);

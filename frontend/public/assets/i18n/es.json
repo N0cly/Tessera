@@ -1,0 +1,462 @@
+{
+  "admin": {
+    "operatorBadge": "operador",
+    "periodGroup": "Periodo",
+    "sections": "Secciones",
+    "dbSource": "tu base de datos",
+    "periods": {
+      "7d": "7 días",
+      "30d": "30 días",
+      "90d": "90 días"
+    },
+    "tabs": {
+      "overview": "Resumen",
+      "customers": "Clientes",
+      "audit": "Registro de auditoría"
+    },
+    "errors": {
+      "overview": "No se pudo cargar el resumen.",
+      "customers": "No se pudieron cargar los clientes.",
+      "audit": "No se pudo cargar el registro de auditoría."
+    },
+    "chart": {
+      "scans": "Escaneos",
+      "signups": "Altas"
+    },
+    "business": {
+      "title": "Negocio",
+      "source": "vía Paddle",
+      "unavailable": "Las métricas de negocio no están disponibles — Paddle no es accesible o no está configurado en esta instancia. Las métricas de uso y de clientes que aparecen abajo provienen de tu base de datos.",
+      "mrr": "MRR",
+      "mixedCurrency": "varias monedas — consulta Paddle",
+      "activeSubscriptions": "Suscripciones activas",
+      "trialing": "Pruebas en curso",
+      "pastDue": "Pagos fallidos",
+      "trialConversion": "Prueba → pago",
+      "churn30d": "Cancelaciones (30 d)",
+      "activeByPlan": "Activos por plan",
+      "hint": "La conversión y las cancelaciones se derivan de los registros de suscripción sincronizados; los ingresos se leen desde Paddle y nunca se recalculan aquí. Las analíticas de ingresos más detalladas están en Paddle."
+    },
+    "usage": {
+      "title": "Uso",
+      "totalLinks": "Enlaces totales",
+      "totalScans": "Escaneos totales",
+      "periodScans": "Escaneos ({{period}})",
+      "activeCodes": "Códigos activos",
+      "noScans": "Sin escaneos en este periodo."
+    },
+    "customers": {
+      "title": "Clientes",
+      "total": "Clientes totales",
+      "churned": "Bajas",
+      "byPlan": "Por plan",
+      "byStatus": "Por estado",
+      "noSignups": "Sin altas en este periodo.",
+      "piiNotice": "Esta vista contiene correos de clientes (datos personales). Conforme a la regla de minimización de datos, cada carga se registra en el registro de auditoría. La identidad de quien escanea nunca está disponible — los escaneos no almacenan ninguna IP.",
+      "topByUsage": "Principales clientes por uso ({{period}})",
+      "colCustomer": "Cliente",
+      "colLinks": "Enlaces",
+      "colScans": "Escaneos",
+      "noUsage": "Aún sin uso.",
+      "allCustomers": "Todos los clientes",
+      "colEmail": "Correo",
+      "colPlan": "Plan",
+      "colStatus": "Estado",
+      "colCodes": "Códigos",
+      "colJoined": "Alta",
+      "noCustomers": "Sin clientes."
+    },
+    "audit": {
+      "title": "Registro de auditoría",
+      "notice": "Inicios de sesión de administradores y accesos a datos de clientes, los más recientes primero.",
+      "colWhen": "Cuándo",
+      "colActor": "Actor",
+      "colAction": "Acción",
+      "colResult": "Resultado",
+      "colIp": "IP",
+      "colDetail": "Detalle",
+      "ok": "ok",
+      "fail": "fallo",
+      "noEntries": "Sin entradas."
+    },
+    "pager": {
+      "page": "Página {{current}} / {{total}} · {{count}} en total"
+    }
+  },
+  "adminAuth": {
+    "title": "Acceso de operador",
+    "subtitle": "Área restringida. El acceso de administrador requiere autenticación de dos factores.",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "codeLabel": "Código del autenticador",
+    "errors": {
+      "tooManyAttempts": "Demasiados intentos. Espera un momento y vuelve a intentarlo.",
+      "invalidCredentials": "Credenciales no válidas."
+    }
+  },
+  "auth": {
+    "createAccountTitle": "Crear una cuenta",
+    "createAccountSubmit": "Crear cuenta",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "noAccountPrompt": "¿Aún no tienes cuenta?",
+    "registerLink": "Registrarse",
+    "alreadyRegisteredPrompt": "¿Ya tienes cuenta?",
+    "errors": {
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
+      "loginAfterRegister": "Cuenta creada, pero el inicio de sesión falló. Inténtalo de nuevo.",
+      "registrationFailed": "El registro falló."
+    }
+  },
+  "common": {
+    "language": "Idioma",
+    "tagline": "códigos QR dinámicos, privados y realmente tuyos.",
+    "nav": {
+      "home": "Inicio",
+      "pricing": "Precios",
+      "github": "GitHub",
+      "dashboard": "Panel",
+      "openDashboard": "Abrir el panel",
+      "signIn": "Iniciar sesión",
+      "signOut": "Cerrar sesión",
+      "links": "Enlaces"
+    },
+    "actions": {
+      "loading": "Cargando…",
+      "retry": "Reintentar",
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "download": "Descargar",
+      "prev": "Ant.",
+      "next": "Sig.",
+      "create": "Crear",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "close": "Cerrar",
+      "viewOnGithub": "Ver en GitHub"
+    },
+    "comingSoon": "próximamente",
+    "unavailable": "No disponible",
+    "perMonth": "al mes",
+    "unlimited": "Ilimitado"
+  },
+  "dashboard": {
+    "title": "Resumen",
+    "sectionsAria": "Secciones del panel",
+    "yourLinks": "Tus enlaces",
+    "loadingOverview": "Cargando el resumen…",
+    "loadingBilling": "Cargando los datos de facturación…",
+    "loadError": "No se pudo cargar el resumen.",
+    "kpisAria": "Métricas clave",
+    "kpi": {
+      "activeCodes": "Códigos activos",
+      "totalScans": "Escaneos totales",
+      "periodScans": "Escaneos del periodo",
+      "avgScansPerCode": "Escaneos medios / código"
+    },
+    "scansOverTime": "Escaneos a lo largo del tiempo",
+    "periodAria": "Periodo",
+    "period": {
+      "7d": "7 d",
+      "30d": "30 d",
+      "90d": "90 d"
+    },
+    "chart": {
+      "scansLabel": "Escaneos"
+    },
+    "empty": {
+      "noScansTitle": "Aún no hay escaneos.",
+      "noScansBefore": "Comparte un QR o su enlace ",
+      "noScansAfter": " y los escaneos aparecerán aquí.",
+      "noPeriodScansTitle": "No hay escaneos en este periodo.",
+      "noPeriodScansHint": "Prueba un rango más amplio o comparte tus códigos más ampliamente."
+    },
+    "topLinks": "Enlaces destacados",
+    "topLinksEmpty": "Aún no hay escaneos para clasificar.",
+    "byDevice": "Por dispositivo",
+    "byDeviceEmpty": "Aún no hay datos de dispositivos.",
+    "device": {
+      "mobile": "Móvil",
+      "desktop": "Ordenador",
+      "tablet": "Tableta",
+      "tv": "TV",
+      "console": "Consola",
+      "unknown": "Desconocido"
+    },
+    "planUsage": "Plan y uso",
+    "plan": "Plan",
+    "status": {
+      "trialing": "En prueba",
+      "active": "Activo",
+      "pastDue": "Pago pendiente",
+      "canceled": "Cancelado",
+      "expired": "Caducado"
+    },
+    "trialDaysLeft": "{{days}} días restantes de prueba",
+    "codesUsed": "Códigos usados",
+    "limitReached": "Has alcanzado el límite de códigos de tu plan. Suscríbete para crear más.",
+    "lapse": {
+      "label": "Si tu suscripción caduca",
+      "before": "los códigos siguen funcionando durante {{days}} días y luego redirigen a la URL de reserva de cada código (configurada por código en ",
+      "after": ") — o a una página neutra de inactividad si no se ha definido ninguna. Los códigos nunca dejan de funcionar sin más."
+    },
+    "checkoutPending": "Finalizando tu suscripción… esto se actualiza automáticamente en cuanto se confirme tu pago.",
+    "openingCheckout": "Abriendo el pago…",
+    "startTrial": "Iniciar prueba / suscribirse",
+    "openingPortal": "Abriendo el portal…",
+    "manageSubscription": "Gestionar la suscripción",
+    "billingDisabled": "La facturación no está habilitada en esta instancia.",
+    "billing": {
+      "loadError": "No se pudieron cargar los datos de facturación.",
+      "checkoutError": "El pago no está disponible en este momento. Inténtalo de nuevo más tarde.",
+      "portalError": "No se pudo abrir el portal del cliente. Inténtalo de nuevo más tarde."
+    }
+  },
+  "landing": {
+    "nav": {
+      "howItWorks": "Cómo funciona",
+      "selfHost": "Autoalojamiento"
+    },
+    "hero": {
+      "eyebrow": "Códigos QR dinámicos de código abierto",
+      "titleLine1": "Imprime el QR una sola vez.",
+      "titleLine2Pre": "Cambia el destino",
+      "titleLine2Em": "para siempre",
+      "lede": "Cada QR codifica una URL corta y permanente alojada en tu infraestructura. Edita a dónde apunta cuando quieras: sin reimprimir, sin caducidad, sin terceros entre quienes escanean y tus datos.",
+      "chips": {
+        "eu": "Alojable en la UE",
+        "ip": "La IP nunca se almacena",
+        "expire": "Códigos que no caducan",
+        "license": "Licencia MIT"
+      },
+      "ctaSelfHost": "Autoaloja en 1 minuto",
+      "ctaStar": "Dale una estrella en GitHub",
+      "foot": "Sin píxeles de seguimiento, sin muro de registro, sin truco de «edición comunitaria»."
+    },
+    "demo": {
+      "ariaLabel": "Demo interactiva",
+      "tablistLabel": "Elige un caso de uso",
+      "qrAriaLabel": "Código QR de la URL corta de demostración",
+      "scansGoTo": "los escaneos llevan a",
+      "destinationNow": "Destino actual",
+      "note": "El QR de arriba no cambia, solo cambia el destino. De eso se trata. Prueba a hacer clic en otra pestaña; el lienzo vuelve a dibujar la misma URL codificada.",
+      "cases": {
+        "menu": {
+          "label": "Menú de restaurante",
+          "blurb": "En los caballetes de mesa. Nunca reimprimas: cambia el enlace del menú cada temporada."
+        },
+        "event": {
+          "label": "Registro a un evento",
+          "blurb": "En el cartel de la conferencia. El mismo QR para cada edición; solo redirige a la nueva página de registro."
+        },
+        "bio": {
+          "label": "Enlace de bio social",
+          "blurb": "En una tarjeta de visita o una pegatina. Actualiza el destino a medida que cambia tu servicio de enlace-en-bio."
+        }
+      }
+    },
+    "useCases": {
+      "title": "Un solo motor, muchas formas",
+      "lede": "El modelo de datos es deliberadamente genérico. Pon un QR en cualquier cosa que necesite un enlace redirigible.",
+      "restaurants": {
+        "title": "Restaurantes y cafeterías",
+        "body": "QR de menú que sobreviven a los cambios de temporada. ¿Nuevo menú de primavera? Edita el destino. Los caballetes impresos siguen funcionando."
+      },
+      "events": {
+        "title": "Eventos y carteles",
+        "body": "Imprime el QR en los carteles del año que viene antes de conocer la URL de registro. Define el destino más tarde, incluso horas antes de que abra el evento."
+      },
+      "social": {
+        "title": "Bios sociales y tarjetas",
+        "body": "Un único QR en tu tarjeta de visita o pegatina, redirigido a medida que cambia tu servicio de enlace-en-bio del momento."
+      }
+    },
+    "how": {
+      "title": "Tres pasos, sin sorpresas",
+      "step1": {
+        "title": "Crea el enlace",
+        "bodyPre": "Pega cualquier URL",
+        "bodyPost": ". Obtienes un identificador corto y permanente: eso es lo que se codifica en el QR."
+      },
+      "step2": {
+        "title": "Imprime o comparte el QR",
+        "body": "Descarga el QR como PNG o SVG. Ponlo en un menú, un cartel, una pegatina, una tarjeta de visita: lo que el mundo físico necesite."
+      },
+      "step3": {
+        "title": "Cambia el destino cuando quieras",
+        "body": "Edita a dónde apunta el enlace cuando quieras. Cada QR ya impreso sigue funcionando y ahora lleva al nuevo destino."
+      }
+    },
+    "diff": {
+      "title": "Qué lo hace diferente",
+      "openSource": {
+        "title": "Código abierto, MIT",
+        "body": "Todo el código está en GitHub. Bifúrcalo, audítalo, ejecútalo, vende lo que construyas encima. Sin «edición comunitaria» a la que le faltan las mejores partes."
+      },
+      "privacy": {
+        "title": "La IP nunca se almacena",
+        "bodyPre": "El registro de escaneos es asíncrono. La IP del visitante se convierte en un código de país sobre la marcha y luego se descarta. La tabla",
+        "bodyPost": "literalmente no tiene columna de IP."
+      },
+      "neverExpire": {
+        "title": "Códigos que no caducan nunca",
+        "body": "Mientras tu instancia siga en marcha, el QR que imprimiste hace tres años sigue funcionando, y todavía apunta a donde le indiques hoy. Sin modelo de rehén."
+      }
+    },
+    "selfHost": {
+      "title": "Autoaloja con un solo comando",
+      "lede": "Docker + Docker Compose. Esa es toda la lista de dependencias.",
+      "snippetAriaLabel": "Comando de autoalojamiento",
+      "snippetComment": "ajusta APP_SECRET, JWT_PASSPHRASE, etc.",
+      "foot": "Levanta Postgres, Redis, la API, el panel, el worker asíncrono y el limpiador periódico, con comprobaciones de salud, políticas de reinicio y JWT/migraciones gestionados automáticamente en el primer arranque.",
+      "tryDashboard": "Prueba el panel"
+    },
+    "footer": {
+      "license": "Licencia: MIT"
+    }
+  },
+  "links": {
+    "title": "Tus enlaces",
+    "navSections": "Secciones del panel",
+    "navOverview": "Resumen",
+    "create": {
+      "heading": "Crear un nuevo enlace",
+      "destinationLabel": "URL de destino",
+      "destinationPlaceholder": "https://ejemplo.com/ruta-larga",
+      "nameLabel": "Nombre (opcional)",
+      "namePlaceholder": "Menú de primavera, página de ayuda, …",
+      "submit": "Crear enlace",
+      "submitting": "Creando…"
+    },
+    "upgradeLink": "Ver planes y mejorar →",
+    "empty": "Aún no hay enlaces. Crea uno arriba.",
+    "edit": {
+      "destinationLabel": "URL de destino",
+      "fallbackLabel": "URL de respaldo (opcional)",
+      "fallbackPlaceholder": "https://… a dónde va este código si tu plan caduca",
+      "fallbackHint": "Si tu suscripción caduca, este código redirige aquí en lugar de dejar de funcionar.",
+      "saving": "Guardando…"
+    },
+    "fallbackBadge": "↳ respaldo",
+    "fallbackTitle": "Se usa si tu suscripción caduca",
+    "editLinks": "Editar enlaces",
+    "showStats": "Mostrar estadísticas",
+    "hideStats": "Ocultar estadísticas",
+    "downloadPng": "Descargar PNG",
+    "downloadSvg": "Descargar SVG",
+    "qrAria": "Código QR de este enlace",
+    "qrAlt": "Código QR para /r/{{ slug }}",
+    "qrPlaceholder": "QR…",
+    "confirmDelete": "¿Eliminar /r/{{ slug }}? Esta acción no se puede deshacer.",
+    "errors": {
+      "load": "No se pudieron cargar los enlaces.",
+      "create": "No se pudo crear el enlace.",
+      "save": "No se pudieron guardar los cambios.",
+      "delete": "No se pudo eliminar el enlace.",
+      "download": "No se pudo descargar el {{ format }}."
+    }
+  },
+  "pricing": {
+    "heroTitle": "Precios honestos. Sin rehenes.",
+    "heroLede": "Aloja tú mismo el núcleo open source completo, gratis y para siempre. O deja que lo ejecutemos por ti en infraestructura de la UE. En cualquier caso, tus códigos nunca caducan y tus datos siguen siendo tuyos.",
+    "plansAriaLabel": "Planes",
+    "free": "Gratis",
+    "hostedPlans": "Planes alojados",
+    "pricingUnavailableLead": "Los precios no están disponibles temporalmente. Inténtalo de nuevo en breve — o",
+    "selfHostForFree": "aloja tú mismo gratis",
+    "offerEnds": "La oferta termina el {{date}}.",
+    "notEnabled": "Plan alojado — no habilitado en esta instancia.",
+    "priceUnavailable": "Precios temporalmente no disponibles.",
+    "redirecting": "Redirigiendo…",
+    "startTrial": "Iniciar prueba de 14 días",
+    "selfHostInstead": "Alojar por mi cuenta",
+    "trialNote": "Prueba de 14 días, sin tarjeta de crédito. Cancela cuando quieras.",
+    "checkoutError": "El pago no está disponible en este momento. Inténtalo de nuevo más tarde.",
+    "selfHost": {
+      "name": "Autoalojamiento",
+      "priceNote": "Open source, con licencia MIT. Ejecútalo en tu propio servidor."
+    },
+    "interval": {
+      "month": "/mes",
+      "year": "/año",
+      "week": "/sem.",
+      "day": "/día"
+    },
+    "promo": {
+      "badge": "Promo"
+    },
+    "codeLimit": {
+      "unlimited": "Códigos ilimitados",
+      "upTo": "Hasta {{count}} códigos"
+    },
+    "features": {
+      "starter": {
+        "core": "Núcleo open source completo",
+        "analytics": "Analítica de escaneos completa",
+        "fallback": "URL de respaldo cuando caduca una suscripción",
+        "euHosting": "Alojamiento en la UE"
+      },
+      "pro": {
+        "everythingStarter": "Todo lo de Starter",
+        "customDomain": "Dominio personalizado",
+        "branding": "Personalización del QR (logo y colores)",
+        "team": "Miembros del equipo",
+        "prioritySupport": "Soporte prioritario"
+      },
+      "selfHost": {
+        "unlimited": "Códigos ilimitados",
+        "forever": "El núcleo completo, para siempre",
+        "openSource": "Open source (MIT)",
+        "yourData": "Tus datos, tu servidor"
+      }
+    },
+    "faqAriaLabel": "Preguntas frecuentes",
+    "faqTitle": "Preguntas sobre la confianza",
+    "faq": {
+      "stopPaying": {
+        "q": "¿Qué pasa si dejo de pagar?",
+        "a": "Tus códigos siguen funcionando durante un periodo de gracia y luego pasan a una URL que tú elijas — nada queda retenido. Y como el núcleo es open source, siempre puedes alojarlo tú mismo gratis y mantener vivo cada código."
+      },
+      "trialCharge": {
+        "q": "¿La prueba me cobra?",
+        "a": "No. La prueba de 14 días no necesita tarjeta de crédito. Solo añades un método de pago si decides continuar después de la prueba."
+      },
+      "selfHost": {
+        "q": "¿Puedo autoalojarme en lugar de suscribirme?",
+        "a": "Siempre. Tessera tiene licencia MIT. Ejecútalo en tu propio servidor con códigos ilimitados sin coste — los planes alojados solo te ahorran el trabajo de operación."
+      },
+      "data": {
+        "q": "¿Dónde están mis datos?",
+        "a": "En los planes alojados operamos en la UE. Las IP de los visitantes nunca se almacenan — se resuelven a un país sobre la marcha y se descartan. La tabla de escaneos no tiene columna de IP por diseño."
+      }
+    }
+  },
+  "seo": {
+    "landing": {
+      "title": "Tessera — códigos QR dinámicos que son tuyos",
+      "description": "Códigos QR dinámicos, de código abierto y centrados en la privacidad. Imprime una vez y cambia el destino cuando quieras. Autoalojable, alojamiento en la UE, los códigos nunca caducan."
+    },
+    "pricing": {
+      "title": "Precios de Tessera — planes sencillos, sin ataduras",
+      "description": "Aloja Tessera gratis o deja que lo alojemos nosotros. Precios transparentes, prueba de 14 días sin tarjeta, y tus códigos nunca quedan retenidos."
+    }
+  },
+  "stats": {
+    "periodLabel": "Período:",
+    "periodDays": "{{ days }} d",
+    "totalScans": "{{ count }} escaneo desde el {{ since }}",
+    "totalScansPlural": "{{ count }} escaneos desde el {{ since }}",
+    "loadError": "No se pudieron cargar las estadísticas.",
+    "loading": "Cargando estadísticas…",
+    "empty": "Aún no hay escaneos para el período seleccionado. Comparte el QR o el enlace /r/ para empezar a recopilar datos.",
+    "scansPerDay": "Escaneos / día",
+    "scansLabel": "Escaneos",
+    "byCountry": "Por país",
+    "byDevice": "Por dispositivo",
+    "byOs": "Por sistema",
+    "noData": "Sin datos.",
+    "unknown": "Desconocido"
+  }
+}

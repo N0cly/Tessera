@@ -1,5 +1,6 @@
 import { DecimalPipe, KeyValuePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ChartConfiguration } from 'chart.js';
 
 import { AdminAuthService } from '../core/admin-auth.service';
@@ -10,6 +11,8 @@ import {
   AdminPeriod,
   AdminService,
 } from '../core/admin.service';
+import { LanguageSwitcherComponent } from '../core/language-switcher';
+import { LocaleService } from '../core/locale.service';
 import { token } from '../core/tessera-tokens';
 import { ChartCanvasComponent } from '../stats/chart-canvas';
 
@@ -18,19 +21,27 @@ type Tab = 'overview' | 'customers' | 'audit';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [DecimalPipe, KeyValuePipe, ChartCanvasComponent],
+  imports: [
+    DecimalPipe,
+    KeyValuePipe,
+    ChartCanvasComponent,
+    TranslocoDirective,
+    LanguageSwitcherComponent,
+  ],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })
 export class AdminDashboardComponent implements OnInit {
   private readonly api = inject(AdminService);
   private readonly auth = inject(AdminAuthService);
+  private readonly transloco = inject(TranslocoService);
+  readonly locale = inject(LocaleService);
 
   readonly tab = signal<Tab>('overview');
-  readonly periods: { value: AdminPeriod; label: string }[] = [
-    { value: '7d', label: '7 days' },
-    { value: '30d', label: '30 days' },
-    { value: '90d', label: '90 days' },
+  readonly periods: { value: AdminPeriod; labelKey: string }[] = [
+    { value: '7d', labelKey: 'admin.periods.7d' },
+    { value: '30d', labelKey: 'admin.periods.30d' },
+    { value: '90d', labelKey: 'admin.periods.90d' },
   ];
   readonly period = signal<AdminPeriod>('30d');
 
@@ -49,6 +60,9 @@ export class AdminDashboardComponent implements OnInit {
   readonly auditError = signal<string | null>(null);
   readonly auditPage = signal(1);
   private readonly auditPerPage = 50;
+
+  /** Transloco key for the active period's label (e.g. "admin.periods.30d"). */
+  readonly periodLabelKey = computed(() => `admin.periods.${this.period()}`);
 
   readonly customerPages = computed(() => {
     const c = this.customers();
@@ -90,7 +104,7 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.error.set('Could not load the overview.');
+        this.error.set(this.transloco.translate('admin.errors.overview'));
       },
     });
   }
@@ -105,7 +119,7 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: () => {
         this.customersLoading.set(false);
-        this.customersError.set('Could not load customers.');
+        this.customersError.set(this.transloco.translate('admin.errors.customers'));
       },
     });
   }
@@ -127,7 +141,7 @@ export class AdminDashboardComponent implements OnInit {
       },
       error: () => {
         this.auditLoading.set(false);
-        this.auditError.set('Could not load the audit log.');
+        this.auditError.set(this.transloco.translate('admin.errors.audit'));
       },
     });
   }
@@ -146,7 +160,7 @@ export class AdminDashboardComponent implements OnInit {
   /** Format minor-unit money in its currency, or "—" when unavailable. */
   money(minor: number | null, currency: string | null): string {
     if (minor === null || !currency) return '—';
-    const fmt = new Intl.NumberFormat(undefined, { style: 'currency', currency });
+    const fmt = new Intl.NumberFormat(this.locale.lang(), { style: 'currency', currency });
     const decimals = fmt.resolvedOptions().maximumFractionDigits ?? 2;
     return fmt.format(minor / 10 ** decimals);
   }
@@ -157,7 +171,7 @@ export class AdminDashboardComponent implements OnInit {
 
   formatDate(iso: string): string {
     const d = new Date(iso);
-    return Number.isNaN(d.getTime()) ? iso : d.toLocaleString();
+    return Number.isNaN(d.getTime()) ? iso : d.toLocaleString(this.locale.lang());
   }
 
   detailText(detail: Record<string, unknown> | null): string {
@@ -168,28 +182,38 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   readonly scansChart = computed<ChartConfiguration | null>(() => {
+    this.locale.lang();
     const d = this.overview();
     if (!d) return null;
     const s = d.usage.scansOverTime;
     if (!s.some((p) => p.scans > 0)) return null;
     return this.lineChart(
-      s.map((p) => p.date),
+      s.map((p) => this.dayLabel(p.date)),
       s.map((p) => p.scans),
-      'Scans',
+      this.transloco.translate('admin.chart.scans'),
     );
   });
 
   readonly signupsChart = computed<ChartConfiguration | null>(() => {
+    this.locale.lang();
     const d = this.overview();
     if (!d) return null;
     const s = d.customers.signupsOverTime;
     if (!s.some((p) => p.count > 0)) return null;
     return this.lineChart(
-      s.map((p) => p.date),
+      s.map((p) => this.dayLabel(p.date)),
       s.map((p) => p.count),
-      'Signups',
+      this.transloco.translate('admin.chart.signups'),
     );
   });
+
+  /** Locale-formatted short day label for chart x-axes. */
+  private dayLabel(iso: string): string {
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime())
+      ? iso
+      : d.toLocaleDateString(this.locale.lang(), { month: 'short', day: 'numeric' });
+  }
 
   // Colours resolve from tessera tokens at render time — never hardcoded.
   private lineChart(labels: string[], data: number[], label: string): ChartConfiguration {
