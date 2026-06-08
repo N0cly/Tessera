@@ -94,9 +94,11 @@ Infra
     authenticated, owner-scoped. A plain lightweight controller (not an API Platform resource);
     aggregates across all the user's links on the fly via SQL `GROUP BY` over `Scan` rows — no
     precomputed roll-up table. `periodScansChangePct` compares vs the previous equal-length period.
-    Frontend route layout (all behind the auth guard): `/app` = `DashboardOverviewComponent` (home),
-    `/app/links` = `LinksComponent`. The scans chart reuses the existing `chart.js` +
-    `ChartCanvasComponent` wrapper — no new charting dependency.
+    Frontend route layout (all behind the auth guard): `/app` = `BackofficeLayoutComponent`
+    (the shared nav header + a `<router-outlet>`) with child routes `''` = `DashboardOverviewComponent`
+    (home) and `links` = `LinksComponent`. The nav uses `routerLinkActive`; each child sets its page
+    title via `data.title` (a Transloco key) read by the layout — pages own no nav/header. The scans
+    chart reuses the existing `chart.js` + `ChartCanvasComponent` wrapper — no new charting dependency.
 14. **Billing via Merchant of Record (Paddle).** One `Subscription` per user
     (status: `trialing|active|past_due|canceled|expired`). New users start
     `trialing` for `BILLING_TRIAL_DAYS` (14). The MoR is the **source of truth**:

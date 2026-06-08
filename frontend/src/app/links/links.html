@@ -1,29 +1,4 @@
 <ng-container *transloco="let t">
-  <header class="topbar">
-    <div class="topbar-brand">
-      <img
-        class="topbar-logo"
-        src="/tessera-logo.svg"
-        alt=""
-        aria-hidden="true"
-        width="28"
-        height="28"
-      />
-      <h1>{{ t('links.title') }}</h1>
-      <app-language-switcher />
-    </div>
-    <nav class="topnav" [attr.aria-label]="t('links.navSections')">
-      <a routerLink="/app" class="nav-link">{{ t('links.navOverview') }}</a>
-      <a routerLink="/app/links" class="nav-link active" aria-current="page">{{
-        t('links.title')
-      }}</a>
-      @if (config.demoMode()) {
-        <button type="button" class="ghost" (click)="startTour()">{{ t('tour.replay') }}</button>
-      }
-<!--      <button type="button" class="ghost" (click)="logout()">{{ t('common.nav.signOut') }}</button>-->
-    </nav>
-  </header>
-
   <section class="create" data-tour="create-form">
     <h2>{{ t('links.create.heading') }}</h2>
     <form (submit)="$event.preventDefault(); create()">

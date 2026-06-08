@@ -32,8 +32,9 @@ const FIRST_CARD = '.list ul li.card:first-child';
  * overview, a code's analytics, editing a destination and the QR, then finishes
  * HANDS-ON: the visitor creates their own code, opens it (the demo interstitial
  * logs a simulated scan), watches the scan appear, repoints the destination and
- * opens it again — before a self-host CTA. Skippable (the X) and replayable (the
- * "Take the tour" button); auto-starts once per demo session.
+ * opens it again — before a self-host CTA. Dismissable any way (the explicit
+ * "Skip" button, the X, ESC, an overlay click or finishing) and replayable (the
+ * "Take the tour" button); auto-starts only on the first demo entry.
  */
 @Injectable({ providedIn: 'root' })
 export class TourService {
@@ -41,21 +42,28 @@ export class TourService {
   private readonly transloco = inject(TranslocoService);
   private readonly config = inject(AppConfigService);
 
-  /** Per-session "already seen" marker so the auto-start fires only once. */
-  private static readonly DONE_KEY = 'tessera.tour.done';
+  /** Persisted (localStorage) once the tour is skipped OR finished, so the
+   *  auto-start fires only on the very first demo entry. */
+  private static readonly DISMISSED_KEY = 'tessera.tour.dismissed';
 
   private driverObj: Driver | null = null;
   private steps: TourStep[] = [];
   private running = false;
 
-  /** Auto-start on first demo dashboard landing (once per session). */
+  /** Auto-start on the first demo entry only — never once dismissed/finished. */
   maybeAutoStart(): void {
-    if (this.seen()) return;
-    this.start();
+    if (this.dismissed()) return;
+    this.launch();
   }
 
-  /** Start (or replay) the tour. No-op outside demo mode or while one runs. */
+  /** Replay from the header button: always re-runs and clears the dismissed flag. */
   start(): void {
+    this.clearDismissed();
+    this.launch();
+  }
+
+  /** Run the tour if we're in demo mode and one isn't already running. */
+  private launch(): void {
     if (!this.config.demoMode() || this.running) return;
     void this.run();
   }
@@ -81,9 +89,9 @@ export class TourService {
 
       this.driverObj = driver({
         showProgress: true,
-        // The X closes the tour; overlay-click / ESC do not, so a stray click
-        // mid-interaction never kills it.
-        allowClose: false,
+        // Skippable every way: the explicit "Skip" button + the X, plus ESC and
+        // an overlay click (allowClose). They all funnel through onDestroyed.
+        allowClose: true,
         animate: !reduce,
         smoothScroll: !reduce,
         overlayOpacity: 0.55,
@@ -96,6 +104,9 @@ export class TourService {
         steps: driveSteps,
         onNextClick: () => void this.advance(),
         onCloseClick: () => this.driverObj?.destroy(),
+        // Inject an explicit, labelled "Skip the tour" button into every popover.
+        onPopoverRender: (popover) => this.styleSkipButton(popover), // Catch-all for EVERY exit (skip button, X, ESC, overlay click, finish):
+        // persist the dismissed flag so the tour never auto-starts again.
         onDestroyed: () => this.finish(),
       });
 
@@ -129,9 +140,24 @@ export class TourService {
   }
 
   private finish(): void {
-    this.markSeen();
+    this.markDismissed();
     this.running = false;
     this.driverObj = null;
+  }
+
+  private styleSkipButton(popover: {
+    closeButton: HTMLElement;
+    footerButtons: HTMLElement;
+    nextButton: HTMLElement;
+  }): void {
+    const btn = popover.closeButton;
+    btn.textContent = this.t('skip');
+    btn.classList.add('tessera-tour-skip');
+    popover.footerButtons.insertBefore(btn, popover.footerButtons.firstChild);
+
+    // Focus sur "Suivant" → espace/entrée avance, ne skippe pas.
+    // (onPopoverRender tourne avant le rendu → on focus à la frame suivante.)
+    requestAnimationFrame(() => popover.nextButton?.focus());
   }
 
   // ── step list ────────────────────────────────────────────────────────────
@@ -300,19 +326,27 @@ export class TourService {
     return s.html ? `${text}<p class="tour-cta">${s.html()}</p>` : text;
   }
 
-  private seen(): boolean {
+  private dismissed(): boolean {
     try {
-      return sessionStorage.getItem(TourService.DONE_KEY) === '1';
+      return localStorage.getItem(TourService.DISMISSED_KEY) === '1';
     } catch {
       return false;
     }
   }
 
-  private markSeen(): void {
+  private markDismissed(): void {
     try {
-      sessionStorage.setItem(TourService.DONE_KEY, '1');
+      localStorage.setItem(TourService.DISMISSED_KEY, '1');
     } catch {
-      /* storage unavailable (private mode) — tour simply auto-starts next nav */
+      /* storage unavailable (private mode) — tour simply auto-starts next entry */
+    }
+  }
+
+  private clearDismissed(): void {
+    try {
+      localStorage.removeItem(TourService.DISMISSED_KEY);
+    } catch {
+      /* storage unavailable — nothing persisted to clear */
     }
   }
 }

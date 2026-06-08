@@ -5,6 +5,7 @@
       "replay": "Take the tour",
       "next": "Next",
       "done": "Done",
+      "skip": "Skip the tour",
       "steps": {
         "kpis": {
           "title": "Your dashboard",
@@ -65,6 +66,7 @@
       "replay": "Faire la visite",
       "next": "Suivant",
       "done": "Terminé",
+      "skip": "Passer la visite",
       "steps": {
         "kpis": {
           "title": "Votre tableau de bord",
@@ -125,6 +127,7 @@
       "replay": "Hacer el tour",
       "next": "Siguiente",
       "done": "Listo",
+      "skip": "Saltar la visita",
       "steps": {
         "kpis": {
           "title": "Tu panel",
@@ -185,6 +188,7 @@
       "replay": "Fai il tour",
       "next": "Avanti",
       "done": "Fatto",
+      "skip": "Salta la visita",
       "steps": {
         "kpis": {
           "title": "La tua dashboard",
@@ -245,6 +249,7 @@
       "replay": "Tour starten",
       "next": "Weiter",
       "done": "Fertig",
+      "skip": "Tour überspringen",
       "steps": {
         "kpis": {
           "title": "Dein Dashboard",

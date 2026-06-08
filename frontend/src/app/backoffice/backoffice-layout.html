@@ -1,0 +1,46 @@
+<ng-container *transloco="let t">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img
+        class="topbar-logo"
+        src="/tessera-logo.svg"
+        alt=""
+        aria-hidden="true"
+        width="28"
+        height="28"
+      />
+      <h1>{{ titleKey() ? t(titleKey()) : '' }}</h1>
+      <app-language-switcher />
+    </div>
+    <nav class="topnav" [attr.aria-label]="t('dashboard.sectionsAria')">
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >{{ t('landing.home') }}</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/app"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >{{ t('dashboard.title') }}</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/app/links"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >{{ t('links.title') }}</a
+      >
+      @if (config.demoMode()) {
+        <button type="button" class="ghost" (click)="startTour()">{{ t('tour.replay') }}</button>
+      }
+    </nav>
+  </header>
+
+  <router-outlet />
+</ng-container>

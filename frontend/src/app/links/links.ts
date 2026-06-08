@@ -4,11 +4,8 @@ import { RouterLink } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 import { AppConfigService } from '../core/app-config.service';
-import { AuthService } from '../core/auth.service';
-import { LanguageSwitcherComponent } from '../core/language-switcher';
 import { LocaleService } from '../core/locale.service';
 import { Link, LinksService } from '../core/links.service';
-import { TourService } from '../core/tour.service';
 import { LinkStatsComponent } from '../stats/link-stats';
 
 interface EditState {
@@ -19,22 +16,14 @@ interface EditState {
 
 @Component({
   selector: 'app-links',
-  imports: [
-    FormsModule,
-    RouterLink,
-    LinkStatsComponent,
-    TranslocoDirective,
-    LanguageSwitcherComponent,
-  ],
+  imports: [FormsModule, RouterLink, LinkStatsComponent, TranslocoDirective],
   templateUrl: './links.html',
   styleUrl: './links.scss',
 })
 export class LinksComponent implements OnInit, OnDestroy {
   private readonly api = inject(LinksService);
-  private readonly auth = inject(AuthService);
   private readonly transloco = inject(TranslocoService);
-  private readonly tour = inject(TourService);
-  readonly config = inject(AppConfigService);
+  private readonly config = inject(AppConfigService);
   readonly locale = inject(LocaleService);
 
   readonly links = signal<Link[]>([]);
@@ -201,15 +190,6 @@ export class LinksComponent implements OnInit, OnDestroy {
           this.transloco.translate('links.errors.download', { format: format.toUpperCase() }),
         ),
     });
-  }
-
-  /** Replay the guided tour from the header button (demo only). */
-  startTour(): void {
-    this.tour.start();
-  }
-
-  logout(): void {
-    this.auth.logout();
   }
 
   copySlug(slug: string): void {

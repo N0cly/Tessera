@@ -222,6 +222,7 @@
     }
   },
   "landing": {
+    "home": "Accueil",
     "nav": {
       "howItWorks": "Comment ça marche",
       "selfHost": "Auto-hébergement"
@@ -470,6 +471,7 @@
     "replay": "Faire la visite",
     "next": "Suivant",
     "done": "Terminé",
+    "skip": "Passer la visite",
     "steps": {
       "kpis": {
         "title": "Votre tableau de bord",

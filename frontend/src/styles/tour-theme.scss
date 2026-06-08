@@ -92,6 +92,26 @@
   background-color: var(--color-accent-soft);
 }
 
+// Explicit "Skip the tour" — a subtle text button, just left of Next.
+.driver-popover.tessera-tour .driver-popover-skip-btn {
+  padding: 8px 4px;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-shadow: none;
+  cursor: pointer;
+}
+.driver-popover.tessera-tour .driver-popover-skip-btn:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+.driver-popover.tessera-tour .driver-popover-skip-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
 // The little arrow must match the popover surface on whichever side it sits.
 .driver-popover.tessera-tour .driver-popover-arrow-side-left.driver-popover-arrow {
   border-left-color: var(--color-surface);

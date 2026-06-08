@@ -222,6 +222,7 @@
     }
   },
   "landing": {
+    "home": "Home",
     "nav": {
       "howItWorks": "Come funziona",
       "selfHost": "Self-hosting"
@@ -470,6 +471,7 @@
     "replay": "Fai il tour",
     "next": "Avanti",
     "done": "Fatto",
+    "skip": "Salta la visita",
     "steps": {
       "kpis": {
         "title": "La tua dashboard",

@@ -222,6 +222,7 @@
     }
   },
   "landing": {
+    "home": "Start",
     "nav": {
       "howItWorks": "So funktioniert's",
       "selfHost": "Selbst hosten"
@@ -470,6 +471,7 @@
     "replay": "Tour starten",
     "next": "Weiter",
     "done": "Fertig",
+    "skip": "Tour überspringen",
     "steps": {
       "kpis": {
         "title": "Dein Dashboard",

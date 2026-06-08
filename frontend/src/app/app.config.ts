@@ -45,9 +45,17 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
-    // Load instance flags (demo mode, billing) before first render.
-    provideAppInitializer(() => inject(AppConfigService).load()),
-    // Resolve the startup language (stored → browser → en) before first render.
-    provideAppInitializer(() => inject(LocaleService).init()),
+    // Bootstrap, in order, before first render: instance flags (demo mode,
+    // billing) THEN the startup language. Config must resolve first so demoMode
+    // is known — otherwise a stale token 401 from LocaleService's /api/me probe
+    // would hit the interceptor before it can choose the demo (re-seed) recovery.
+    provideAppInitializer(() => {
+      const config = inject(AppConfigService);
+      const locale = inject(LocaleService);
+      return (async () => {
+        await config.load();
+        await locale.init();
+      })();
+    }),
   ],
 };

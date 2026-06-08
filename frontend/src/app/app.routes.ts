@@ -46,15 +46,26 @@ export const routes: Routes = [
     loadComponent: () => import('./login/login').then((m) => m.LoginComponent),
   },
   {
+    // Back-office shell: shared nav header + <router-outlet>. The guard on the
+    // parent protects the whole subtree; each child sets its page title via
+    // `data.title` (a Transloco key) read by the layout.
     path: 'app',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./dashboard/dashboard-overview').then((m) => m.DashboardOverviewComponent),
-  },
-  {
-    path: 'app/links',
-    canActivate: [authGuard],
-    loadComponent: () => import('./links/links').then((m) => m.LinksComponent),
+      import('./backoffice/backoffice-layout').then((m) => m.BackofficeLayoutComponent),
+    children: [
+      {
+        path: '',
+        data: { title: 'dashboard.title' },
+        loadComponent: () =>
+          import('./dashboard/dashboard-overview').then((m) => m.DashboardOverviewComponent),
+      },
+      {
+        path: 'links',
+        data: { title: 'links.title' },
+        loadComponent: () => import('./links/links').then((m) => m.LinksComponent),
+      },
+    ],
   },
   {
     path: 'admin/login',

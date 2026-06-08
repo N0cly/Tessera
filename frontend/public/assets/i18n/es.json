@@ -222,6 +222,7 @@
     }
   },
   "landing": {
+    "home": "Inicio",
     "nav": {
       "howItWorks": "Cómo funciona",
       "selfHost": "Autoalojamiento"
@@ -470,6 +471,7 @@
     "replay": "Hacer el tour",
     "next": "Siguiente",
     "done": "Listo",
+    "skip": "Saltar la visita",
     "steps": {
       "kpis": {
         "title": "Tu panel",

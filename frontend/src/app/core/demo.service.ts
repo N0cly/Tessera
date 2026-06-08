@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, finalize, map, of, shareReplay, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
@@ -18,13 +18,17 @@ export class DemoService {
   private readonly auth = inject(AuthService);
   private readonly transloco = inject(TranslocoService);
 
+  /** Shared in-flight request so concurrent callers (guard + interceptor retries
+   *  across several requests) create exactly ONE session, not a swarm. */
+  private inFlight: Observable<boolean> | null = null;
+
   /**
    * Create + adopt a fresh demo session. The active UI language is sent so the
    * backend seeds the showcase link names in the visitor's language (the names
    * are localized once, at seed time — CLAUDE.md rule 18).
    */
   createSession(): Observable<boolean> {
-    return this.http
+    this.inFlight ??= this.http
       .post<{
         token: string;
       }>(
@@ -36,7 +40,10 @@ export class DemoService {
         tap(({ token }) => this.auth.useToken(token)),
         map(() => true),
         catchError(() => of(false)),
+        finalize(() => (this.inFlight = null)),
+        shareReplay(1),
       );
+    return this.inFlight;
   }
 
   /** Ensure a session exists; if already authenticated, no-op. */
