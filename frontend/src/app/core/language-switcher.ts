@@ -16,10 +16,7 @@ import { LocaleService } from './locale.service';
   template: `
     <label class="lang-switch">
       <span class="visually-hidden">{{ 'common.language' | transloco }}</span>
-      <select
-        (change)="onChange($event)"
-        [attr.aria-label]="'common.language' | transloco"
-      >
+      <select (change)="onChange($event)" [attr.aria-label]="'common.language' | transloco">
         @for (l of langs; track l.code) {
           <option [value]="l.code" [selected]="l.code === locale.lang()">{{ l.label }}</option>
         }
