@@ -41,10 +41,7 @@ export class LinksService {
     });
   }
 
-  update(
-    iri: string,
-    payload: Partial<Pick<Link, 'destinationUrl' | 'name'>>,
-  ): Observable<Link> {
+  update(iri: string, payload: Partial<Pick<Link, 'destinationUrl' | 'name'>>): Observable<Link> {
     return this.http.patch<Link>(`${environment.apiBaseUrl}${iri}`, payload, {
       headers: {
         'Content-Type': 'application/merge-patch+json',
