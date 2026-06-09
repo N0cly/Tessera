@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Cache\LinkCache;
 use App\Http\DemoInterstitialRenderer;
-use App\Http\InactivePageRenderer;
 use App\Message\ScanRecorded;
 use App\Service\FeatureFlags;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,18 +21,12 @@ use Symfony\Component\Routing\Attribute\Route;
  * Hot path on a warm cache hit: ONE Redis GET, ONE Redis LPUSH (Messenger),
  * then 302 — zero Postgres round-trips. Always 302, never 301: destinations
  * are editable and a 301 would freeze old targets in browser caches forever.
- *
- * Fallback (CLAUDE.md rule 15): the target is chosen from the cached payload
- * with a plain `now vs graceEndsAt` compare — no subscription join per scan.
- * Once the owner's subscription has lapsed beyond grace, the code redirects to
- * its fallback URL, or shows the neutral inactive page if none is set.
  */
 final class RedirectController
 {
     public function __construct(
         private readonly LinkCache $cache,
         private readonly MessageBusInterface $bus,
-        private readonly InactivePageRenderer $inactivePage,
         private readonly FeatureFlags $flags,
         private readonly DemoInterstitialRenderer $demoInterstitial,
     ) {
@@ -72,20 +65,6 @@ final class RedirectController
             return $this->demoInterstitial->render($hit['destinationUrl'], $request->getLocale());
         }
 
-        // Self-resolving grace boundary: switch to fallback only once we're at
-        // or past graceEndsAt. Null grace = active/trial → always destination.
-        $graceEndsAt = $hit['graceEndsAt'];
-        $lapsed = null !== $graceEndsAt && time() >= $graceEndsAt;
-
-        if (!$lapsed) {
-            return new RedirectResponse($hit['destinationUrl'], Response::HTTP_FOUND);
-        }
-
-        if (null !== $hit['fallbackUrl'] && '' !== $hit['fallbackUrl']) {
-            return new RedirectResponse($hit['fallbackUrl'], Response::HTTP_FOUND);
-        }
-
-        // Render in the scanner's language (request locale = Accept-Language).
-        return $this->inactivePage->render($request->getLocale());
+        return new RedirectResponse($hit['destinationUrl'], Response::HTTP_FOUND);
     }
 }

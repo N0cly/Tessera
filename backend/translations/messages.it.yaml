@@ -1,7 +1,3 @@
-inactive:
-    title: 'Link inattivo'
-    heading: 'Questo link al momento non è attivo'
-    body: "L'abbonamento del proprietario è scaduto, quindi questo codice al momento non punta a nulla. Se è tuo, rinnovando il piano tornerà attivo."
 registration:
     invalid_json: 'Corpo JSON non valido.'
     invalid_input: 'Sono richiesti un indirizzo e-mail e una password (almeno 8 caratteri).'

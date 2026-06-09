@@ -7,10 +7,8 @@ namespace App\Tests\Service;
 use App\Cache\LinkCache;
 use App\Repository\DemoSessionRepository;
 use App\Repository\LinkRepository;
-use App\Repository\SubscriptionRepository;
 use App\Service\DemoSessionPurger;
 use App\Service\FeatureFlags;
-use App\Service\GraceCalculator;
 use Psr\Log\NullLogger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -69,8 +67,6 @@ final class DemoSessionPurgerTest extends TestCase
         return new LinkCache(
             $cache,
             $this->createStub(LinkRepository::class),
-            $this->createStub(SubscriptionRepository::class),
-            new GraceCalculator(30), // final; unused by invalidate()
         );
     }
 }

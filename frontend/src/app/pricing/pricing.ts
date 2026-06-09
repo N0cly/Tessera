@@ -64,7 +64,6 @@ export class PricingComponent implements OnInit, OnDestroy {
     return [
       { text: this.transloco.translate('pricing.features.starter.core') },
       { text: this.transloco.translate('pricing.features.starter.analytics') },
-      { text: this.transloco.translate('pricing.features.starter.fallback') },
       { text: this.transloco.translate('pricing.features.starter.euHosting') },
     ];
   }

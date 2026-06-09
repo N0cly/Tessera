@@ -38,7 +38,6 @@
         "starter": {
           "core": "Full open-source core",
           "analytics": "Complete scan analytics",
-          "fallback": "Fallback URL when a subscription lapses",
           "euHosting": "EU hosting"
         },
         "pro": {
@@ -113,7 +112,6 @@
         "starter": {
           "core": "Cœur open source complet",
           "analytics": "Statistiques de scan complètes",
-          "fallback": "URL de repli en cas d'abonnement échu",
           "euHosting": "Hébergement dans l'UE"
         },
         "pro": {
@@ -188,7 +186,6 @@
         "starter": {
           "core": "Núcleo open source completo",
           "analytics": "Analítica de escaneos completa",
-          "fallback": "URL de respaldo cuando caduca una suscripción",
           "euHosting": "Alojamiento en la UE"
         },
         "pro": {
@@ -263,7 +260,6 @@
         "starter": {
           "core": "Core open source completo",
           "analytics": "Analisi delle scansioni complete",
-          "fallback": "URL di riserva quando un abbonamento scade",
           "euHosting": "Hosting nell'UE"
         },
         "pro": {
@@ -338,7 +334,6 @@
         "starter": {
           "core": "Vollständiger Open-Source-Kern",
           "analytics": "Vollständige Scan-Statistiken",
-          "fallback": "Fallback-URL, wenn ein Abo ausläuft",
           "euHosting": "Hosting in der EU"
         },
         "pro": {

@@ -56,11 +56,6 @@
       "trialDaysLeft": "{{days}} days left in trial",
       "codesUsed": "Codes used",
       "limitReached": "You've reached your plan's code limit. Subscribe to create more.",
-      "lapse": {
-        "label": "If your subscription lapses",
-        "before": "codes keep working for {{days}} days, then redirect to each code's fallback URL (set per code in ",
-        "after": ") — or a neutral inactive page if none is set. Codes never just break."
-      },
       "checkoutPending": "Finishing up your subscription… this updates automatically once your payment is confirmed.",
       "openingCheckout": "Opening checkout…",
       "startTrial": "Start trial / subscribe",
@@ -128,11 +123,6 @@
       "trialDaysLeft": "{{days}} jours restants dans l'essai",
       "codesUsed": "Codes utilisés",
       "limitReached": "Vous avez atteint la limite de codes de votre forfait. Abonnez-vous pour en créer davantage.",
-      "lapse": {
-        "label": "Si votre abonnement expire",
-        "before": "les codes continuent de fonctionner pendant {{days}} jours, puis redirigent vers l'URL de repli de chaque code (définie par code dans ",
-        "after": ") — ou vers une page neutre d'inactivité si aucune n'est définie. Les codes ne cessent jamais simplement de fonctionner."
-      },
       "checkoutPending": "Finalisation de votre abonnement… cette page se met à jour automatiquement une fois le paiement confirmé.",
       "openingCheckout": "Ouverture du paiement…",
       "startTrial": "Démarrer l'essai / s'abonner",
@@ -200,11 +190,6 @@
       "trialDaysLeft": "{{days}} días restantes de prueba",
       "codesUsed": "Códigos usados",
       "limitReached": "Has alcanzado el límite de códigos de tu plan. Suscríbete para crear más.",
-      "lapse": {
-        "label": "Si tu suscripción caduca",
-        "before": "los códigos siguen funcionando durante {{days}} días y luego redirigen a la URL de reserva de cada código (configurada por código en ",
-        "after": ") — o a una página neutra de inactividad si no se ha definido ninguna. Los códigos nunca dejan de funcionar sin más."
-      },
       "checkoutPending": "Finalizando tu suscripción… esto se actualiza automáticamente en cuanto se confirme tu pago.",
       "openingCheckout": "Abriendo el pago…",
       "startTrial": "Iniciar prueba / suscribirse",
@@ -272,11 +257,6 @@
       "trialDaysLeft": "{{days}} giorni rimanenti di prova",
       "codesUsed": "Codici utilizzati",
       "limitReached": "Hai raggiunto il limite di codici del tuo piano. Abbonati per crearne altri.",
-      "lapse": {
-        "label": "Se il tuo abbonamento scade",
-        "before": "i codici continuano a funzionare per {{days}} giorni, poi reindirizzano all'URL di riserva di ciascun codice (impostato per codice in ",
-        "after": ") — o a una pagina neutra di inattività se non ne è impostata nessuna. I codici non smettono mai semplicemente di funzionare."
-      },
       "checkoutPending": "Completamento del tuo abbonamento… questa pagina si aggiorna automaticamente una volta confermato il pagamento.",
       "openingCheckout": "Apertura del pagamento…",
       "startTrial": "Avvia la prova / abbonati",
@@ -344,11 +324,6 @@
       "trialDaysLeft": "{{days}} Tage in der Testphase verbleibend",
       "codesUsed": "Verwendete Codes",
       "limitReached": "Du hast das Code-Limit deines Tarifs erreicht. Abonniere, um mehr zu erstellen.",
-      "lapse": {
-        "label": "Wenn dein Abonnement ausläuft",
-        "before": "funktionieren die Codes noch {{days}} Tage und leiten dann auf die Fallback-URL jedes Codes weiter (pro Code festgelegt in ",
-        "after": ") — oder auf eine neutrale Inaktivseite, falls keine festgelegt ist. Codes hören nie einfach auf zu funktionieren."
-      },
       "checkoutPending": "Dein Abonnement wird abgeschlossen… dies aktualisiert sich automatisch, sobald deine Zahlung bestätigt ist.",
       "openingCheckout": "Bezahlung wird geöffnet…",
       "startTrial": "Testphase starten / abonnieren",

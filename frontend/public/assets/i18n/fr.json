@@ -198,11 +198,6 @@
     "trialDaysLeft": "{{days}} jours restants dans l'essai",
     "codesUsed": "Codes utilisés",
     "limitReached": "Vous avez atteint la limite de codes de votre forfait. Abonnez-vous pour en créer davantage.",
-    "lapse": {
-      "label": "Si votre abonnement expire",
-      "before": "les codes continuent de fonctionner pendant {{days}} jours, puis redirigent vers l'URL de repli de chaque code (définie par code dans ",
-      "after": ") — ou vers une page neutre d'inactivité si aucune n'est définie. Les codes ne cessent jamais simplement de fonctionner."
-    },
     "checkoutPending": "Finalisation de votre abonnement… cette page se met à jour automatiquement une fois le paiement confirmé.",
     "openingCheckout": "Ouverture du paiement…",
     "startTrial": "Démarrer l'essai / s'abonner",
@@ -222,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Accueil",
     "nav": {
       "howItWorks": "Comment ça marche",
       "selfHost": "Auto-hébergement"
@@ -342,13 +336,8 @@
     "empty": "Aucun lien pour l’instant. Créez-en un ci-dessus.",
     "edit": {
       "destinationLabel": "URL de destination",
-      "fallbackLabel": "URL de repli (facultatif)",
-      "fallbackPlaceholder": "https://… où mène ce code si votre forfait expire",
-      "fallbackHint": "Si votre abonnement expire, ce code redirige ici au lieu de cesser de fonctionner.",
       "saving": "Enregistrement…"
     },
-    "fallbackBadge": "↳ repli",
-    "fallbackTitle": "Utilisé si votre abonnement expire",
     "editLinks": "Modifier les liens",
     "showStats": "Afficher les statistiques",
     "hideStats": "Masquer les statistiques",
@@ -403,7 +392,6 @@
       "starter": {
         "core": "Cœur open source complet",
         "analytics": "Statistiques de scan complètes",
-        "fallback": "URL de repli en cas d'abonnement échu",
         "euHosting": "Hébergement dans l'UE"
       },
       "pro": {

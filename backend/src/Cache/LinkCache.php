@@ -7,8 +7,6 @@ namespace App\Cache;
 use App\Entity\Link;
 use App\Entity\User;
 use App\Repository\LinkRepository;
-use App\Repository\SubscriptionRepository;
-use App\Service\GraceCalculator;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -16,16 +14,12 @@ use Symfony\Contracts\Cache\ItemInterface;
 /**
  * Slug → minimal redirect payload, Redis-first.
  *
- * We cache everything /r/{slug} needs to choose its target AND dispatch the
- * scan with zero Postgres round-trips on a warm hit: the link id, the
- * destination, the owner's fallback, and the precomputed grace boundary. The
- * fallback decision is then a pure `now vs graceEndsAt` compare at read time —
- * no per-scan subscription join (CLAUDE.md rule 15).
+ * We cache everything /r/{slug} needs to redirect AND dispatch the scan with
+ * zero Postgres round-trips on a warm hit: the link id and the destination.
+ * The hot path then just 302s to the destination — no per-scan join.
  *
- * Invalidation is driven by:
- *  - a Doctrine listener on Link writes (destination/fallback edits), and
- *  - the billing webhook, when the owner's subscription status changes.
- * The safety TTL is a backstop for missed events.
+ * Invalidation is driven by a Doctrine listener on Link writes (destination
+ * edits). The safety TTL is a backstop for missed events.
  */
 final class LinkCache
 {
@@ -36,13 +30,11 @@ final class LinkCache
         #[Autowire(service: 'app.cache.links')]
         private readonly CacheInterface $cache,
         private readonly LinkRepository $links,
-        private readonly SubscriptionRepository $subscriptions,
-        private readonly GraceCalculator $grace,
     ) {
     }
 
     /**
-     * @return array{id: string, destinationUrl: string, fallbackUrl: ?string, graceEndsAt: ?int, lapsed: bool}|null
+     * @return array{id: string, destinationUrl: string}|null
      */
     public function lookup(string $slug): ?array
     {
@@ -82,10 +74,8 @@ final class LinkCache
     }
 
     /**
-     * Bust the redirect cache for every code owned by a user. Called by the
-     * billing webhook when the owner's subscription status changes, so the next
-     * scan rebuilds the payload with the new grace boundary. We delete rather
-     * than warm — a status change is rare and the rebuild is a single query.
+     * Bust the redirect cache for every code owned by a user. We delete rather
+     * than warm — the rebuild is a single query on the next scan.
      */
     public function invalidateForOwner(User $owner): void
     {
@@ -95,22 +85,13 @@ final class LinkCache
     }
 
     /**
-     * @return array{id: string, destinationUrl: string, fallbackUrl: ?string, graceEndsAt: ?int, lapsed: bool}
+     * @return array{id: string, destinationUrl: string}
      */
     private function payload(Link $link): array
     {
-        // Resolve the owner's subscription ONCE here (cache-miss only). The hot
-        // path never sees this query — it reads the derived fields below.
-        $owner = $link->getOwner();
-        $subscription = null !== $owner ? $this->subscriptions->findOneByUser($owner) : null;
-        $graceEndsAt = $this->grace->graceEndsAt($subscription);
-
         return [
             'id' => (string) $link->getId(),
             'destinationUrl' => $link->getDestinationUrl() ?? '',
-            'fallbackUrl' => $link->getFallbackUrl(),
-            'graceEndsAt' => $graceEndsAt?->getTimestamp(),
-            'lapsed' => $this->grace->isLapsing($subscription),
         ];
     }
 

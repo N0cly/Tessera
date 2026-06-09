@@ -198,11 +198,6 @@
     "trialDaysLeft": "{{days}} Tage in der Testphase verbleibend",
     "codesUsed": "Verwendete Codes",
     "limitReached": "Du hast das Code-Limit deines Tarifs erreicht. Abonniere, um mehr zu erstellen.",
-    "lapse": {
-      "label": "Wenn dein Abonnement ausläuft",
-      "before": "funktionieren die Codes noch {{days}} Tage und leiten dann auf die Fallback-URL jedes Codes weiter (pro Code festgelegt in ",
-      "after": ") — oder auf eine neutrale Inaktivseite, falls keine festgelegt ist. Codes hören nie einfach auf zu funktionieren."
-    },
     "checkoutPending": "Dein Abonnement wird abgeschlossen… dies aktualisiert sich automatisch, sobald deine Zahlung bestätigt ist.",
     "openingCheckout": "Bezahlung wird geöffnet…",
     "startTrial": "Testphase starten / abonnieren",
@@ -222,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Start",
     "nav": {
       "howItWorks": "So funktioniert's",
       "selfHost": "Selbst hosten"
@@ -342,13 +336,8 @@
     "empty": "Noch keine Links. Erstelle oben einen.",
     "edit": {
       "destinationLabel": "Ziel-URL",
-      "fallbackLabel": "Ausweich-URL (optional)",
-      "fallbackPlaceholder": "https://… wohin dieser Code führt, wenn dein Tarif ausläuft",
-      "fallbackHint": "Wenn dein Abonnement ausläuft, leitet dieser Code hierher um, statt zu brechen.",
       "saving": "Speichern…"
     },
-    "fallbackBadge": "↳ Ausweich",
-    "fallbackTitle": "Wird verwendet, wenn dein Abonnement ausläuft",
     "editLinks": "Links bearbeiten",
     "showStats": "Statistiken anzeigen",
     "hideStats": "Statistiken ausblenden",
@@ -403,7 +392,6 @@
       "starter": {
         "core": "Vollständiger Open-Source-Kern",
         "analytics": "Vollständige Scan-Statistiken",
-        "fallback": "Fallback-URL, wenn ein Abo ausläuft",
         "euHosting": "Hosting in der EU"
       },
       "pro": {

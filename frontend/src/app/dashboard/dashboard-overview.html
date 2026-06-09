@@ -233,15 +233,6 @@
               }
             </div>
 
-            <div class="plan-line">
-              <span class="muted small">{{ t('dashboard.lapse.label') }}</span>
-              <span class="small">
-                {{ t('dashboard.lapse.before', { days: sub.graceDays })
-                }}<a routerLink="/app/links">{{ t('dashboard.yourLinks') }}</a
-                >{{ t('dashboard.lapse.after') }}
-              </span>
-            </div>
-
             @if (checkoutReturned()) {
               <p class="checkout-pending">
                 {{ t('dashboard.checkoutPending') }}

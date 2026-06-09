@@ -1,7 +1,3 @@
-inactive:
-    title: 'Link inaktiv'
-    heading: 'Dieser Link ist derzeit inaktiv'
-    body: 'Das Abonnement des Inhabers ist abgelaufen, daher verweist dieser Code momentan auf nichts. Wenn er dir gehört, wird er durch eine Verlängerung deines Tarifs wieder aktiv.'
 registration:
     invalid_json: 'Ungültiger JSON-Body.'
     invalid_input: 'E-Mail und Passwort (mindestens 8 Zeichen) sind erforderlich.'

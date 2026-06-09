@@ -80,19 +80,6 @@
                         name="dest-{{ link.id }}"
                       />
                     </label>
-                    <label class="edit-field">
-                      <span class="edit-label">{{ t('links.edit.fallbackLabel') }}</span>
-                      <input
-                        type="url"
-                        [attr.placeholder]="t('links.edit.fallbackPlaceholder')"
-                        [ngModel]="editing()?.fallbackUrl"
-                        (ngModelChange)="patchEditing({ fallbackUrl: $event })"
-                        name="fallback-{{ link.id }}"
-                      />
-                      <span class="edit-hint">
-                        {{ t('links.edit.fallbackHint') }}
-                      </span>
-                    </label>
                     <div class="edit-actions">
                       <button type="submit" [disabled]="savingEdit()">
                         {{ savingEdit() ? t('links.edit.saving') : t('common.actions.save') }}
@@ -109,16 +96,6 @@
                       link.destinationUrl
                     }}</a>
                   </div>
-                  @if (link.fallbackUrl) {
-                    <div class="row dest fallback">
-                      <span class="muted" [title]="t('links.fallbackTitle')">{{
-                        t('links.fallbackBadge')
-                      }}</span>
-                      <a [href]="link.fallbackUrl" target="_blank" rel="noopener">{{
-                        link.fallbackUrl
-                      }}</a>
-                    </div>
-                  }
                   <div class="row actions">
                     <button type="button" data-tour="edit-button" (click)="startEdit(link)">
                       {{ t('links.editLinks') }}
