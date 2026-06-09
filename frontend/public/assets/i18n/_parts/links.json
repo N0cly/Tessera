@@ -18,13 +18,8 @@
       "empty": "No links yet. Create one above.",
       "edit": {
         "destinationLabel": "Destination URL",
-        "fallbackLabel": "Fallback URL (optional)",
-        "fallbackPlaceholder": "https://… where this code goes if your plan lapses",
-        "fallbackHint": "If your subscription lapses, this code redirects here instead of breaking.",
         "saving": "Saving…"
       },
-      "fallbackBadge": "↳ fallback",
-      "fallbackTitle": "Used if your subscription lapses",
       "editLinks": "Edit links",
       "showStats": "Show stats",
       "hideStats": "Hide stats",
@@ -59,13 +54,8 @@
       "empty": "Aucun lien pour l’instant. Créez-en un ci-dessus.",
       "edit": {
         "destinationLabel": "URL de destination",
-        "fallbackLabel": "URL de repli (facultatif)",
-        "fallbackPlaceholder": "https://… où mène ce code si votre forfait expire",
-        "fallbackHint": "Si votre abonnement expire, ce code redirige ici au lieu de cesser de fonctionner.",
         "saving": "Enregistrement…"
       },
-      "fallbackBadge": "↳ repli",
-      "fallbackTitle": "Utilisé si votre abonnement expire",
       "editLinks": "Modifier les liens",
       "showStats": "Afficher les statistiques",
       "hideStats": "Masquer les statistiques",
@@ -100,13 +90,8 @@
       "empty": "Aún no hay enlaces. Crea uno arriba.",
       "edit": {
         "destinationLabel": "URL de destino",
-        "fallbackLabel": "URL de respaldo (opcional)",
-        "fallbackPlaceholder": "https://… a dónde va este código si tu plan caduca",
-        "fallbackHint": "Si tu suscripción caduca, este código redirige aquí en lugar de dejar de funcionar.",
         "saving": "Guardando…"
       },
-      "fallbackBadge": "↳ respaldo",
-      "fallbackTitle": "Se usa si tu suscripción caduca",
       "editLinks": "Editar enlaces",
       "showStats": "Mostrar estadísticas",
       "hideStats": "Ocultar estadísticas",
@@ -141,13 +126,8 @@
       "empty": "Ancora nessun link. Creane uno qui sopra.",
       "edit": {
         "destinationLabel": "URL di destinazione",
-        "fallbackLabel": "URL di riserva (facoltativo)",
-        "fallbackPlaceholder": "https://… dove va questo codice se il tuo piano scade",
-        "fallbackHint": "Se il tuo abbonamento scade, questo codice reindirizza qui invece di smettere di funzionare.",
         "saving": "Salvataggio…"
       },
-      "fallbackBadge": "↳ riserva",
-      "fallbackTitle": "Usato se il tuo abbonamento scade",
       "editLinks": "Modifica i link",
       "showStats": "Mostra le statistiche",
       "hideStats": "Nascondi le statistiche",
@@ -182,13 +162,8 @@
       "empty": "Noch keine Links. Erstelle oben einen.",
       "edit": {
         "destinationLabel": "Ziel-URL",
-        "fallbackLabel": "Ausweich-URL (optional)",
-        "fallbackPlaceholder": "https://… wohin dieser Code führt, wenn dein Tarif ausläuft",
-        "fallbackHint": "Wenn dein Abonnement ausläuft, leitet dieser Code hierher um, statt zu brechen.",
         "saving": "Speichern…"
       },
-      "fallbackBadge": "↳ Ausweich",
-      "fallbackTitle": "Wird verwendet, wenn dein Abonnement ausläuft",
       "editLinks": "Links bearbeiten",
       "showStats": "Statistiken anzeigen",
       "hideStats": "Statistiken ausblenden",

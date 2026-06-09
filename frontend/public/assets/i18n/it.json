@@ -198,11 +198,6 @@
     "trialDaysLeft": "{{days}} giorni rimanenti di prova",
     "codesUsed": "Codici utilizzati",
     "limitReached": "Hai raggiunto il limite di codici del tuo piano. Abbonati per crearne altri.",
-    "lapse": {
-      "label": "Se il tuo abbonamento scade",
-      "before": "i codici continuano a funzionare per {{days}} giorni, poi reindirizzano all'URL di riserva di ciascun codice (impostato per codice in ",
-      "after": ") — o a una pagina neutra di inattività se non ne è impostata nessuna. I codici non smettono mai semplicemente di funzionare."
-    },
     "checkoutPending": "Completamento del tuo abbonamento… questa pagina si aggiorna automaticamente una volta confermato il pagamento.",
     "openingCheckout": "Apertura del pagamento…",
     "startTrial": "Avvia la prova / abbonati",
@@ -222,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Home",
     "nav": {
       "howItWorks": "Come funziona",
       "selfHost": "Self-hosting"
@@ -342,13 +336,8 @@
     "empty": "Ancora nessun link. Creane uno qui sopra.",
     "edit": {
       "destinationLabel": "URL di destinazione",
-      "fallbackLabel": "URL di riserva (facoltativo)",
-      "fallbackPlaceholder": "https://… dove va questo codice se il tuo piano scade",
-      "fallbackHint": "Se il tuo abbonamento scade, questo codice reindirizza qui invece di smettere di funzionare.",
       "saving": "Salvataggio…"
     },
-    "fallbackBadge": "↳ riserva",
-    "fallbackTitle": "Usato se il tuo abbonamento scade",
     "editLinks": "Modifica i link",
     "showStats": "Mostra le statistiche",
     "hideStats": "Nascondi le statistiche",
@@ -403,7 +392,6 @@
       "starter": {
         "core": "Core open source completo",
         "analytics": "Analisi delle scansioni complete",
-        "fallback": "URL di riserva quando un abbonamento scade",
         "euHosting": "Hosting nell'UE"
       },
       "pro": {

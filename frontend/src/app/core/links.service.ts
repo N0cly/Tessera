@@ -9,7 +9,6 @@ export interface Link {
   id: string;
   slug: string;
   destinationUrl: string;
-  fallbackUrl: string | null;
   name: string | null;
   createdAt: string;
   updatedAt: string;
@@ -44,7 +43,7 @@ export class LinksService {
 
   update(
     iri: string,
-    payload: Partial<Pick<Link, 'destinationUrl' | 'name' | 'fallbackUrl'>>,
+    payload: Partial<Pick<Link, 'destinationUrl' | 'name'>>,
   ): Observable<Link> {
     return this.http.patch<Link>(`${environment.apiBaseUrl}${iri}`, payload, {
       headers: {

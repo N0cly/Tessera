@@ -198,11 +198,6 @@
     "trialDaysLeft": "{{days}} días restantes de prueba",
     "codesUsed": "Códigos usados",
     "limitReached": "Has alcanzado el límite de códigos de tu plan. Suscríbete para crear más.",
-    "lapse": {
-      "label": "Si tu suscripción caduca",
-      "before": "los códigos siguen funcionando durante {{days}} días y luego redirigen a la URL de reserva de cada código (configurada por código en ",
-      "after": ") — o a una página neutra de inactividad si no se ha definido ninguna. Los códigos nunca dejan de funcionar sin más."
-    },
     "checkoutPending": "Finalizando tu suscripción… esto se actualiza automáticamente en cuanto se confirme tu pago.",
     "openingCheckout": "Abriendo el pago…",
     "startTrial": "Iniciar prueba / suscribirse",
@@ -222,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Inicio",
     "nav": {
       "howItWorks": "Cómo funciona",
       "selfHost": "Autoalojamiento"
@@ -342,13 +336,8 @@
     "empty": "Aún no hay enlaces. Crea uno arriba.",
     "edit": {
       "destinationLabel": "URL de destino",
-      "fallbackLabel": "URL de respaldo (opcional)",
-      "fallbackPlaceholder": "https://… a dónde va este código si tu plan caduca",
-      "fallbackHint": "Si tu suscripción caduca, este código redirige aquí en lugar de dejar de funcionar.",
       "saving": "Guardando…"
     },
-    "fallbackBadge": "↳ respaldo",
-    "fallbackTitle": "Se usa si tu suscripción caduca",
     "editLinks": "Editar enlaces",
     "showStats": "Mostrar estadísticas",
     "hideStats": "Ocultar estadísticas",
@@ -403,7 +392,6 @@
       "starter": {
         "core": "Núcleo open source completo",
         "analytics": "Analítica de escaneos completa",
-        "fallback": "URL de respaldo cuando caduca una suscripción",
         "euHosting": "Alojamiento en la UE"
       },
       "pro": {

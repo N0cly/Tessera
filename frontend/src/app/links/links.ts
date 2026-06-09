@@ -11,7 +11,6 @@ import { LinkStatsComponent } from '../stats/link-stats';
 interface EditState {
   iri: string;
   destinationUrl: string;
-  fallbackUrl: string;
 }
 
 @Component({
@@ -109,7 +108,6 @@ export class LinksComponent implements OnInit, OnDestroy {
     this.editing.set({
       iri: link['@id'],
       destinationUrl: link.destinationUrl,
-      fallbackUrl: link.fallbackUrl ?? '',
     });
   }
 
@@ -127,12 +125,9 @@ export class LinksComponent implements OnInit, OnDestroy {
     const state = this.editing();
     if (!state || this.savingEdit()) return;
     this.savingEdit.set(true);
-    const fallback = state.fallbackUrl.trim();
     this.api
       .update(state.iri, {
         destinationUrl: state.destinationUrl,
-        // Empty input clears the fallback (back to the inactive page on lapse).
-        fallbackUrl: fallback === '' ? null : fallback,
       })
       .subscribe({
         next: (updated) => {

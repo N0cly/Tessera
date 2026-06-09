@@ -63,18 +63,6 @@ class Link
     #[Groups(['link:read', 'link:write'])]
     private ?string $name = null;
 
-    /**
-     * Where this code redirects once the owner's subscription has lapsed
-     * (beyond grace). Null → the neutral "inactive" page is shown instead.
-     * Same protocol + denylist rules as the destination — a lapsed code must
-     * not become an open redirector.
-     */
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Assert\Url(protocols: ['http', 'https'], requireTld: false)]
-    #[AllowedDestination]
-    #[Groups(['link:read', 'link:write'])]
-    private ?string $fallbackUrl = null;
-
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $owner = null;
@@ -137,18 +125,6 @@ class Link
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getFallbackUrl(): ?string
-    {
-        return $this->fallbackUrl;
-    }
-
-    public function setFallbackUrl(?string $fallbackUrl): self
-    {
-        $this->fallbackUrl = $fallbackUrl;
 
         return $this;
     }

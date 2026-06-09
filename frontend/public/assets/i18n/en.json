@@ -198,11 +198,6 @@
     "trialDaysLeft": "{{days}} days left in trial",
     "codesUsed": "Codes used",
     "limitReached": "You've reached your plan's code limit. Subscribe to create more.",
-    "lapse": {
-      "label": "If your subscription lapses",
-      "before": "codes keep working for {{days}} days, then redirect to each code's fallback URL (set per code in ",
-      "after": ") — or a neutral inactive page if none is set. Codes never just break."
-    },
     "checkoutPending": "Finishing up your subscription… this updates automatically once your payment is confirmed.",
     "openingCheckout": "Opening checkout…",
     "startTrial": "Start trial / subscribe",
@@ -222,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Home",
     "nav": {
       "howItWorks": "How it works",
       "selfHost": "Self-host"
@@ -342,13 +336,8 @@
     "empty": "No links yet. Create one above.",
     "edit": {
       "destinationLabel": "Destination URL",
-      "fallbackLabel": "Fallback URL (optional)",
-      "fallbackPlaceholder": "https://… where this code goes if your plan lapses",
-      "fallbackHint": "If your subscription lapses, this code redirects here instead of breaking.",
       "saving": "Saving…"
     },
-    "fallbackBadge": "↳ fallback",
-    "fallbackTitle": "Used if your subscription lapses",
     "editLinks": "Edit links",
     "showStats": "Show stats",
     "hideStats": "Hide stats",
@@ -403,7 +392,6 @@
       "starter": {
         "core": "Full open-source core",
         "analytics": "Complete scan analytics",
-        "fallback": "Fallback URL when a subscription lapses",
         "euHosting": "EU hosting"
       },
       "pro": {

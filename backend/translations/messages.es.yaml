@@ -1,7 +1,3 @@
-inactive:
-    title: 'Enlace inactivo'
-    heading: 'Este enlace está inactivo en este momento'
-    body: 'La suscripción del propietario ha caducado, así que este código no apunta a ningún sitio ahora mismo. Si es tuyo, renovar tu plan lo reactivará.'
 registration:
     invalid_json: 'Cuerpo JSON no válido.'
     invalid_input: 'Se requieren un correo electrónico y una contraseña (al menos 8 caracteres).'

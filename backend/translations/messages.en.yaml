@@ -1,7 +1,3 @@
-inactive:
-    title: 'Link inactive'
-    heading: 'This link is currently inactive'
-    body: "The owner's subscription has lapsed, so this code isn't pointing anywhere right now. If it's yours, renewing your plan will bring it back."
 registration:
     invalid_json: 'Invalid JSON body.'
     invalid_input: 'Email and password (at least 8 characters) are required.'
