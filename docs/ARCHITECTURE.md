@@ -1,6 +1,6 @@
 # Architecture
 
-This document is the high-level map of Tessera (repo: `qr-code-redirect`) and the
+This document is the high-level map of Tessera and the
 **invariants** that must hold. The exhaustive, rule-by-rule source of truth is
 [`CLAUDE.md`](../CLAUDE.md) at the repo root — when this doc and `CLAUDE.md`
 disagree, `CLAUDE.md` wins. Read this before changing anything load-bearing.
