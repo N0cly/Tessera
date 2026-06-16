@@ -11,3 +11,5 @@
 # .gitignore for finer-grained ignores).
 node_modules/
 vendor/
+/.env
+/.env

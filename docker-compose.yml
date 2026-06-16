@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-app}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${BIND_IP:-127.0.0.1}:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -20,7 +20,7 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "${BIND_IP:-127.0.0.1}:${REDIS_PORT:-6379}:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -86,7 +86,7 @@ services:
       # with the worker. The script is idempotent either way.
       RUN_MIGRATIONS: "1"
     ports:
-      - "${BACKEND_PORT:-8000}:8000"
+      - "${BIND_IP:-127.0.0.1}:${BACKEND_PORT:-8000}:8000"
     depends_on:
       postgres:
         condition: service_healthy
@@ -174,7 +174,7 @@ services:
       context: ./frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-4200}:4200"
+      - "${BIND_IP:-127.0.0.1}:${FRONTEND_PORT:-4200}:4200"
     depends_on:
       backend:
         condition: service_healthy
