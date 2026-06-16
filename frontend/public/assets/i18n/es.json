@@ -217,6 +217,7 @@
     }
   },
   "landing": {
+    "home": "Inicio",
     "nav": {
       "howItWorks": "Cómo funciona",
       "selfHost": "Autoalojamiento"

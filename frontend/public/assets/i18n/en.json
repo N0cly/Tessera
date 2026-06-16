@@ -217,6 +217,7 @@
     }
   },
   "landing": {
+    "home": "Home",
     "nav": {
       "howItWorks": "How it works",
       "selfHost": "Self-host"
