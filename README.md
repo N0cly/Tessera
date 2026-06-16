@@ -49,11 +49,26 @@ Prerequisites: Docker + Docker Compose.
 ```bash
 git clone https://github.com/N0cly/Tessera.git
 cd Tessera
-cp .env.example .env          # then set your secrets in .env (or .env.local)
 docker compose up -d          # migrations + JWT keys run automatically on first boot
 ```
 
-App: `http://localhost:<port>` · API: `…/api` · Redirects: `…/r/{slug}`
+That's it — `docker compose up` boots a working stack with sane defaults baked into
+`docker-compose.yml`, so no config file is required to get started.
+
+App: `http://localhost:4200` · API: `http://localhost:8000/api` · Redirects: `http://localhost:8000/r/{slug}`
+
+**To override defaults** (ports, bind address, public URL, secrets), create a root `.env`
+(gitignored) — docker compose reads it automatically. Common knobs:
+
+```bash
+BIND_IP=0.0.0.0               # expose beyond loopback (default 127.0.0.1)
+APP_BASE_URL=https://qr.example.com   # public origin encoded into QR codes
+APP_SECRET=...                # change in production
+JWT_PASSPHRASE=...            # change in production
+```
+
+Backend application defaults live in `backend/.env` (tracked); keep real secrets in
+`backend/.env.local` (gitignored).
 
 > **GeoLite2 is not bundled** (MaxMind license). Country lookups are optional: download the free
 > `GeoLite2-Country.mmdb` from MaxMind and drop it at `backend/var/geoip/GeoLite2-Country.mmdb`
@@ -61,16 +76,20 @@ App: `http://localhost:<port>` · API: `…/api` · Redirects: `…/r/{slug}`
 
 ## Configuration (key env vars)
 
+Set these in the root `.env` (compose-level overrides) unless noted otherwise:
+
 | Var | Purpose |
 |-----|---------|
+| `BIND_IP` | Host interface the services bind to (default `127.0.0.1`; set `0.0.0.0` to expose) |
+| `BACKEND_PORT` / `FRONTEND_PORT` | Host ports (defaults `8000` / `4200`) |
 | `APP_BASE_URL` | Public base URL encoded into QR codes |
-| `DATABASE_URL` | PostgreSQL connection |
-| `REDIS_URL` | Redis connection |
-| `GEOIP_DATABASE_PATH` | Path to a manually-provided GeoLite2-Country.mmdb (optional country lookup) |
+| `APP_SECRET` / `JWT_PASSPHRASE` | Symfony + JWT secrets — change in production |
 | `DEMO_MODE` | `false` for normal self-host; `true` only for a public demo |
 | `BILLING_ENABLED` | `false` — subscriptions are disabled in the OSS build |
+| `GEOIP_DATABASE_PATH` | Path to a manually-provided GeoLite2-Country.mmdb (optional; set in `backend/.env`) |
 
-Commit non-secret defaults in `.env`; keep secrets in `.env.local` (gitignored).
+The root `.env` is gitignored — commit nothing secret. Backend application defaults
+ship in the tracked `backend/.env`; keep real secrets in `backend/.env.local`.
 
 ## Architecture
 
