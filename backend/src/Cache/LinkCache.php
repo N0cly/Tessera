@@ -15,7 +15,8 @@ use Symfony\Contracts\Cache\ItemInterface;
  * Slug → minimal redirect payload, Redis-first.
  *
  * We cache everything /r/{slug} needs to redirect AND dispatch the scan with
- * zero Postgres round-trips on a warm hit: the link id and the destination.
+ * zero Postgres round-trips on a warm hit: the link id, the destination, and
+ * whether the link was planted by the demo seeder (demo real-redirect gate).
  * The hot path then just 302s to the destination — no per-scan join.
  *
  * Invalidation is driven by a Doctrine listener on Link writes (destination
@@ -34,7 +35,7 @@ final class LinkCache
     }
 
     /**
-     * @return array{id: string, destinationUrl: string}|null
+     * @return array{id: string, destinationUrl: string, demoSeeded: bool}|null
      */
     public function lookup(string $slug): ?array
     {
@@ -85,13 +86,14 @@ final class LinkCache
     }
 
     /**
-     * @return array{id: string, destinationUrl: string}
+     * @return array{id: string, destinationUrl: string, demoSeeded: bool}
      */
     private function payload(Link $link): array
     {
         return [
             'id' => (string) $link->getId(),
             'destinationUrl' => $link->getDestinationUrl() ?? '',
+            'demoSeeded' => $link->isDemoSeeded(),
         ];
     }
 

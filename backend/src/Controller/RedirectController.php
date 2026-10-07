@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Cache\LinkCache;
 use App\Http\DemoInterstitialRenderer;
 use App\Message\ScanRecorded;
+use App\Service\DemoRedirectAllowlist;
 use App\Service\FeatureFlags;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,7 @@ final class RedirectController
         private readonly MessageBusInterface $bus,
         private readonly FeatureFlags $flags,
         private readonly DemoInterstitialRenderer $demoInterstitial,
+        private readonly DemoRedirectAllowlist $demoAllowlist,
     ) {
     }
 
@@ -57,12 +59,18 @@ final class RedirectController
             referrer: $request->headers->get('Referer'),
         ));
 
-        // DEMO MODE — CRITICAL (tessera-demo-mode.md): never perform a real
-        // external redirect. The scan above is already recorded (so analytics
-        // still demonstrate); show the safe interstitial instead of a 302. This
-        // is intentionally global — session isolation does NOT cover /r/{slug}.
+        // DEMO MODE — CRITICAL (tessera-demo-mode.md, tessera-demo-real-redirects.md):
+        // /r/{slug} is global and public, so session isolation does NOT cover it.
+        // A real 302 happens ONLY for a seeded link whose CURRENT destination host
+        // is on the operator allowlist — checked here, server-side, at redirect
+        // time. Visitor-created links, and seeded links repointed off-list, get the
+        // safe interstitial. The scan above is recorded either way.
         if ($this->flags->isDemoMode()) {
-            return $this->demoInterstitial->render($hit['destinationUrl'], $request->getLocale());
+            $realRedirect = ($hit['demoSeeded'] ?? false)
+                && $this->demoAllowlist->allows($hit['destinationUrl']);
+            if (!$realRedirect) {
+                return $this->demoInterstitial->render($hit['destinationUrl'], $request->getLocale());
+            }
         }
 
         return new RedirectResponse($hit['destinationUrl'], Response::HTTP_FOUND);

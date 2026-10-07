@@ -217,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Accueil",
     "nav": {
       "howItWorks": "Comment ça marche",
       "selfHost": "Auto-hébergement"
@@ -245,6 +244,7 @@
       "scansGoTo": "les scans mènent vers",
       "destinationNow": "Destination actuelle",
       "note": "Le QR ci-dessus ne change pas — seule la destination change. C'est tout l'intérêt. Essayez de cliquer sur un autre onglet ; le canevas réaffiche la même URL encodée.",
+      "noteLive": "Scannez-le — c'est un vrai code Tessera, actif sur la démo. Chaque onglet est un code permanent ; sa destination peut changer à tout moment sans réimpression.",
       "cases": {
         "menu": {
           "label": "Menu de restaurant",
@@ -257,6 +257,18 @@
         "bio": {
           "label": "Lien de bio sociale",
           "blurb": "Sur une carte de visite ou un autocollant. Mettez à jour la destination à mesure que votre service de lien-en-bio change."
+        },
+        "nocly": {
+          "label": "Lien portfolio développeur",
+          "blurb": "Sur un CV ou une carte de visite. Pointe-le vers ton dernier projet sans rien réimprimer."
+        },
+        "bongiorno": {
+          "label": "Lien portfolio photographe",
+          "blurb": "Sur un tirage ou un mur de galerie. Bascule-le vers la série du moment sans décrocher le cadre."
+        },
+        "dbsky": {
+          "label": "Lien portfolio vidéaste",
+          "blurb": "Dans une description de vidéo ou un showreel. Renvoie-le vers ton dernier montage quand tu veux."
         }
       }
     },

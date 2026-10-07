@@ -82,7 +82,7 @@
           ></canvas>
           <p class="demo-shorturl">
             <span class="muted">{{ t('landing.demo.scansGoTo') }} </span>
-            <code>{{ fakeShortUrl }}</code>
+            <code>{{ active().fakeShortUrl }}</code>
           </p>
         </div>
 
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <p class="demo-note">⚡ {{ t('landing.demo.note') }}</p>
+      <p class="demo-note">⚡ {{ t(isLive() ? 'landing.demo.noteLive' : 'landing.demo.note') }}</p>
     </aside>
   </section>
 

@@ -127,10 +127,13 @@ When `DEMO_MODE` is on, the hosted instance is a public demo:
   session's links/scans — so the platform's existing owner-scoping is the
   isolation mechanism. The client holds a JWT for that user.
 - **Redirect safety (critical).** `/r/{slug}` is global/public and **not** covered
-  by session isolation, so in demo mode it **never performs a real 302**: it
-  records a simulated scan and renders a safe **interstitial** ("this code would
-  redirect to `<destination>`", shown as inert escaped text). This removes the
-  open-redirect liability while still demonstrating the full mechanic.
+  by session isolation, so in demo mode it records a simulated scan and renders a
+  safe **interstitial** ("this code would redirect to `<destination>`", shown as
+  inert escaped text) — **except** for a *seeded* link (`Link.demoSeeded`, never
+  API-writable) whose current destination host is in `DEMO_REDIRECT_ALLOWLIST`
+  (exact host match): that one really 302s. The check runs server-side at
+  redirect time, off the cached `{id, destinationUrl, demoSeeded}` payload, so a
+  visitor can never turn the demo into an open redirector.
 - **Lifecycle.** Sessions reset after `DEMO_SESSION_TTL_HOURS` (default 1h) of
   inactivity — purged on a schedule and lazily on access; deleting the synthetic
   user cascades the whole workspace. Abuse guardrails: per-session link quota,

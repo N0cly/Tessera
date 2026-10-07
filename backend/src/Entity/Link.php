@@ -67,6 +67,16 @@ class Link
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $owner = null;
 
+    /**
+     * Planted by DemoWorkspaceSeeder only. In DEMO_MODE, a real 302 is allowed
+     * solely for seeded links whose destination host is on the demo redirect
+     * allowlist (tessera-demo-real-redirects.md). Deliberately NOT in any
+     * serializer group: the API can neither read nor set it, so a visitor can
+     * never turn their own link into a real redirect.
+     */
+    #[ORM\Column(options: ['default' => false])]
+    private bool $demoSeeded = false;
+
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['link:read'])]
     private \DateTimeImmutable $createdAt;
@@ -137,6 +147,18 @@ class Link
     public function setOwner(User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function isDemoSeeded(): bool
+    {
+        return $this->demoSeeded;
+    }
+
+    public function markDemoSeeded(): self
+    {
+        $this->demoSeeded = true;
 
         return $this;
     }

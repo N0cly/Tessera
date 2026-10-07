@@ -21,11 +21,12 @@ import { SeoService } from '../core/seo.service';
 import { token } from '../core/tessera-tokens';
 
 interface DemoCase {
-  key: 'menu' | 'event' | 'bio';
+  key: 'nocly' | 'bongiorno' | 'dbsky';
   label: string;
   emoji: string;
   destination: string;
   blurb: string;
+  fakeShortUrl?: string;
 }
 
 @Component({
@@ -50,28 +51,30 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('qrCanvas', { static: false }) qrCanvasRef?: ElementRef<HTMLCanvasElement>;
 
-  // Fake but believable. The slug is decorative — landing is FE-only,
-  // there's no backend lookup, no persistence, nothing on the wire.
-  readonly fakeSlug = 'mZ4kPx7';
-  readonly fakeShortUrl = `qr.example.com/r/${this.fakeSlug}`;
+  // Fallback when the instance exposes no showcase link (self-host, or a host
+  // missing from DEMO_REDIRECT_ALLOWLIST): fake but believable, never scanned.
+  private readonly fakeShortUrl = 'https://qr.example.com/r/mZ4kPx7';
 
   // Decorative emoji + (fake) destination are data, not copy — they stay as-is.
   // Labels and blurbs are translated; they re-resolve when the language changes.
-  private readonly caseData: Pick<DemoCase, 'key' | 'emoji' | 'destination'>[] = [
+  private readonly caseData: Pick<DemoCase, 'key' | 'emoji' | 'destination' | 'fakeShortUrl'>[] = [
     {
-      key: 'menu',
-      emoji: '🍽️',
-      destination: 'https://chez-mathilde.example.com/menu/spring-2026',
+      key: 'nocly',
+      emoji: '💻',
+      destination: 'https://nocly.fr',
+      fakeShortUrl: 'https://tessera.nocly.fr/r/eVi58se',
     },
     {
-      key: 'event',
-      emoji: '🎟️',
-      destination: 'https://meetup.example.com/devops-paris/feb-26',
+      key: 'bongiorno',
+      emoji: '📷',
+      destination: 'https://bongiorno.nocly.fr',
+      fakeShortUrl: 'https://tessera.nocly.fr/r/9mfRs98',
     },
     {
-      key: 'bio',
-      emoji: '🔗',
-      destination: 'https://linktr.example.com/elara-music',
+      key: 'dbsky',
+      emoji: '🎬',
+      destination: 'https://dbsky.nocly.fr',
+      fakeShortUrl: 'https://tessera.nocly.fr/r/sDr29o4',
     },
   ];
 
@@ -87,10 +90,22 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
     }));
   });
 
-  readonly activeKey = signal<DemoCase['key']>('menu');
+  readonly activeKey = signal<DemoCase['key']>('nocly');
   readonly active = computed(
     () => this.cases().find((c) => c.key === this.activeKey()) ?? this.cases()[0],
   );
+
+  /**
+   * On the demo instance each case has a REAL permanent code (/api/config
+   * `showcaseLinks`, keyed by destination host) that 302s when scanned.
+   */
+  private readonly liveShortUrl = computed<string | null>(() => {
+    const host = new URL(this.active().destination).hostname;
+    return this.config.showcaseLinks()[host] ?? null;
+  });
+  readonly isLive = computed(() => this.liveShortUrl() !== null);
+  readonly shortUrl = computed(() => this.liveShortUrl() ?? this.fakeShortUrl);
+  readonly shortUrlLabel = computed(() => this.shortUrl().replace(/^https?:\/\//, ''));
 
   private readonly langSub = this.transloco.langChanges$.subscribe((lang) =>
     this.activeLang.set(lang),
@@ -98,9 +113,9 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     // Re-render the QR whenever the active case changes. The QR ENCODES
-    // the (fake) permanent short URL — never the destination — exactly
-    // mirroring what the real backend does. Changing the active case
-    // changes only what the short URL would point at, not the QR itself.
+    // the permanent short URL — never the destination — exactly mirroring
+    // what the real backend does. On the demo it's the case's real showcase
+    // code; otherwise one fake short URL shared by every case.
     effect(() => {
       // depend on the signal so it re-runs
       this.activeKey();
@@ -125,12 +140,12 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
   private renderQr(): void {
     const canvas = this.qrCanvasRef?.nativeElement;
     if (!canvas) return;
-    // Always encode the SAME short URL — that's the point of the demo:
-    // the QR is permanent, the destination behind it isn't.
+    // Encode the short URL, never the destination: the QR is permanent,
+    // the destination behind it isn't.
     // QR modules use tessera "ink" on "surface" — both tokens stay
     // legal QR contrast in light AND dark mode (the dark-mode --color-ink
     // is the warm paper and --color-surface is deep pin, still > 4.5:1).
-    void QRCode.toCanvas(canvas, `https://${this.fakeShortUrl}`, {
+    void QRCode.toCanvas(canvas, this.active().fakeShortUrl!, {
       errorCorrectionLevel: 'Q',
       width: 320,
       margin: 2,

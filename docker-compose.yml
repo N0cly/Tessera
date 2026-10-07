@@ -74,7 +74,7 @@ services:
       ADMIN_METRICS_CACHE_TTL: ${ADMIN_METRICS_CACHE_TTL:-300}
       # Demo mode (ephemeral public sandbox). OFF by default; billing is a
       # SEPARATE flag, also OFF by default.
-      DEMO_MODE: ${DEMO_MODE:-false}
+      DEMO_MODE: ${DEMO_MODE:-true}
       BILLING_ENABLED: ${BILLING_ENABLED:-false}
       DEMO_SESSION_TTL_HOURS: ${DEMO_SESSION_TTL_HOURS:-1}
       DEMO_LINK_QUOTA: ${DEMO_LINK_QUOTA:-5}
@@ -82,6 +82,11 @@ services:
       DEMO_SESSION_RATE_PER_MINUTE: ${DEMO_SESSION_RATE_PER_MINUTE:-5}
       DEMO_SESSION_BURST: ${DEMO_SESSION_BURST:-5}
       DEMO_GITHUB_URL: ${DEMO_GITHUB_URL:-https://github.com/N0cly/Tessera}
+      # Demo only: seeded links pointing at one of these hosts (exact match) do a
+      # REAL 302; everything else in demo shows the interstitial.
+      DEMO_REDIRECT_ALLOWLIST: ${DEMO_REDIRECT_ALLOWLIST:-nocly.fr,bongiorno.nocly.fr,dbsky.nocly.fr}
+      # Slugs of the landing's permanent showcase QR codes (host=slug).
+      DEMO_SHOWCASE_SLUGS: ${DEMO_SHOWCASE_SLUGS:-nocly.fr=eVi58se,bongiorno.nocly.fr=9mfRs98,dbsky.nocly.fr=sDr29o4}
       # Only the backend container runs migrations on boot to avoid races
       # with the worker. The script is idempotent either way.
       RUN_MIGRATIONS: "1"

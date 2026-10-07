@@ -8,7 +8,8 @@
 #     the passphrase — old tokens become invalid, which is the correct
 #     security behavior).
 #   - Run Doctrine migrations when RUN_MIGRATIONS=1 (set on the `backend`
-#     service in docker-compose; worker leaves it off to avoid races).
+#     service in docker-compose; worker leaves it off to avoid races), then
+#     create/repair the demo showcase links (no-op unless DEMO_MODE).
 #
 # Exec's the actual CMD at the end so PID 1 is the real process and
 # signals reach it cleanly.
@@ -44,6 +45,8 @@ fi
 if [ "${RUN_MIGRATIONS:-0}" = "1" ]; then
     echo "[entrypoint] running Doctrine migrations…"
     php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+    # Permanent landing-page showcase QR links (demo only; no-op otherwise).
+    php bin/console app:demo:showcase-links --no-interaction || echo "[entrypoint] showcase links skipped."
 fi
 
 exec "$@"

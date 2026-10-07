@@ -217,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Start",
     "nav": {
       "howItWorks": "So funktioniert's",
       "selfHost": "Selbst hosten"
@@ -245,6 +244,7 @@
       "scansGoTo": "Scans führen zu",
       "destinationNow": "Aktuelles Ziel",
       "note": "Der QR-Code oben ändert sich nicht — nur das Ziel ändert sich. Genau darum geht es. Klick auf einen anderen Tab; das Canvas zeichnet dieselbe kodierte URL neu.",
+      "noteLive": "Scann ihn — das ist ein echter Tessera-Code, live in der Demo. Jeder Tab ist ein eigener permanenter Code; sein Ziel lässt sich jederzeit ändern, ohne neu zu drucken.",
       "cases": {
         "menu": {
           "label": "Restaurant-Menü",
@@ -257,6 +257,18 @@
         "bio": {
           "label": "Social-Bio-Link",
           "blurb": "Auf einer Visitenkarte oder einem Aufkleber. Aktualisiere das Ziel, wenn sich dein Link-in-Bio-Dienst ändert."
+        },
+        "nocly": {
+          "label": "Entwickler-Portfolio-Link",
+          "blurb": "Auf einem Lebenslauf oder einer Visitenkarte. Richte ihn auf dein neuestes Projekt, ohne etwas neu zu drucken."
+        },
+        "bongiorno": {
+          "label": "Fotografen-Portfolio-Link",
+          "blurb": "Auf einem Print oder an der Galeriewand. Wechsle ihn zur aktuellen Serie, ohne den Rahmen abzuhängen."
+        },
+        "dbsky": {
+          "label": "Videograf-Portfolio-Link",
+          "blurb": "In einer Videobeschreibung oder einem Showreel. Leite ihn jederzeit auf deinen neuesten Schnitt."
         }
       }
     },
