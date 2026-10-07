@@ -22,26 +22,32 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * (CLAUDE.md rule 18 — we never runtime-translate stored user content); the rest
  * of the app treats them as opaque user data.
  *
- * Destinations are real http(s) URLs (and pass the normal validation) but are
- * never actually followed — the demo redirect shows an interstitial instead.
+ * Destinations are the operator-owned hosts of DEMO_REDIRECT_ALLOWLIST
+ * (tessera-demo-real-redirects.md), spread round-robin so each gets traffic.
+ * Seeded links are flagged `demoSeeded`, so /r/{slug} performs a REAL 302 for them —
+ * as long as their destination stays on the allowlist. Repoint one elsewhere,
+ * or create a new link, and the demo falls back to the interstitial.
  */
 final class DemoWorkspaceSeeder
 {
     /**
      * Five template links. Each carries an i18n `name` key (resolved per session
-     * locale), a realistic destination, and a `story` that drives how its scans
-     * are distributed over the 90-day window. Totals are deliberately NON-ROUND
+     * locale) and a `story` that drives how its scans are distributed over the
+     * 90-day window. Totals are deliberately NON-ROUND
      * so the "top links" / time series read as organic, not fabricated.
      */
     private const TEMPLATE = [
-        ['name' => 'demo.seed.launch', 'destination' => 'https://novapress.example.com/launch/aurora-v2', 'story' => 'launch', 'scans' => 287],
-        ['name' => 'demo.seed.steady', 'destination' => 'https://chez-mathilde.example.com/menu/spring-2026', 'story' => 'steady', 'scans' => 146],
-        ['name' => 'demo.seed.growth', 'destination' => 'https://ateliers-lumiere.example.com/newsletter', 'story' => 'growth', 'scans' => 119],
-        ['name' => 'demo.seed.weekend', 'destination' => 'https://marche-bastille.example.com/pop-up', 'story' => 'weekend', 'scans' => 73],
-        ['name' => 'demo.seed.low', 'destination' => 'https://linktr.example.com/elara-music', 'story' => 'low', 'scans' => 24],
+        ['name' => 'demo.seed.launch', 'story' => 'launch', 'scans' => 287],
+        ['name' => 'demo.seed.steady', 'story' => 'steady', 'scans' => 146],
+        ['name' => 'demo.seed.growth', 'story' => 'growth', 'scans' => 119],
+        ['name' => 'demo.seed.weekend', 'story' => 'weekend', 'scans' => 73],
+        ['name' => 'demo.seed.low', 'story' => 'low', 'scans' => 24],
     ];
 
     private const SPREAD_DAYS = 90;
+
+    /** Seed destination when the operator configured no demo allowlist (interstitial only). */
+    private const FALLBACK_DESTINATION = 'https://example.com/';
 
     /**
      * Country weights (cumulative buckets). A realistic long tail: a few markets
@@ -95,6 +101,7 @@ final class DemoWorkspaceSeeder
         private readonly EntityManagerInterface $em,
         private readonly SlugGenerator $slugs,
         private readonly TranslatorInterface $translator,
+        private readonly DemoRedirectAllowlist $allowlist,
     ) {
     }
 
@@ -116,13 +123,21 @@ final class DemoWorkspaceSeeder
     public function seed(User $user, string $locale = 'en'): void
     {
         $now = new \DateTimeImmutable();
+        // Round-robin the allowlisted hosts over the template (in TEMPLATE order,
+        // busiest first) so every allowlisted site gets a share of the traffic.
+        $hosts = $this->allowlist->hosts();
 
-        foreach (self::TEMPLATE as $tpl) {
+        foreach (self::TEMPLATE as $n => $tpl) {
+            $destination = [] !== $hosts
+                ? 'https://'.$hosts[$n % \count($hosts)].'/'
+                : self::FALLBACK_DESTINATION;
+
             $link = (new Link())
                 ->setOwner($user)
                 ->setName($this->translator->trans($tpl['name'], [], 'messages', $locale))
-                ->setDestinationUrl($tpl['destination'])
-                ->setSlug($this->slugs->generateUnique());
+                ->setDestinationUrl($destination)
+                ->setSlug($this->slugs->generateUnique())
+                ->markDemoSeeded();
             $this->em->persist($link);
 
             for ($i = 0; $i < $tpl['scans']; ++$i) {

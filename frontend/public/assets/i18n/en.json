@@ -217,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Home",
     "nav": {
       "howItWorks": "How it works",
       "selfHost": "Self-host"
@@ -245,6 +244,7 @@
       "scansGoTo": "scans go to",
       "destinationNow": "Destination right now",
       "note": "The QR above doesn't change — only the destination does. That's the whole point. Try clicking another tab; the canvas re-renders the same encoded URL.",
+      "noteLive": "Scan it — this is a real Tessera code, live on the demo. Each tab is its own permanent code; its destination can change anytime without reprinting.",
       "cases": {
         "menu": {
           "label": "Restaurant menu",
@@ -257,6 +257,18 @@
         "bio": {
           "label": "Social bio link",
           "blurb": "On a business card or sticker. Update the destination as your link-in-bio service changes."
+        },
+        "nocly": {
+          "label": "Developer portfolio link",
+          "blurb": "On a résumé or business card. Point it at your latest project without reprinting a thing."
+        },
+        "bongiorno": {
+          "label": "Photographer portfolio link",
+          "blurb": "On a print or gallery wall. Swap it to the current series while the frame stays up."
+        },
+        "dbsky": {
+          "label": "Videographer portfolio link",
+          "blurb": "In a video description or showreel. Send it to your newest edit anytime."
         }
       }
     },

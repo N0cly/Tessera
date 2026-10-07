@@ -18,6 +18,8 @@ parameters:
     env(DEMO_SESSION_RATE_PER_MINUTE): '5'
     env(DEMO_SESSION_BURST): '5'
     env(DEMO_GITHUB_URL): 'https://github.com/N0cly/Tessera'
+    env(DEMO_REDIRECT_ALLOWLIST): 'nocly.fr,bongiorno.nocly.fr,dbsky.nocly.fr'
+    env(DEMO_SHOWCASE_SLUGS): 'nocly.fr=eVi58se,bongiorno.nocly.fr=9mfRs98,dbsky.nocly.fr=sDr29o4'
 
 services:
     # default configuration for services in *this* file

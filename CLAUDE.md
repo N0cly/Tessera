@@ -246,13 +246,25 @@ Infra
       a JWT for that user. Seeded from a fixed template (`DemoWorkspaceSeeder`:
       example links + scan history) so analytics are populated immediately. No
       signup — `/api/register` is 403 in demo.
-    - **Redirect safety — CRITICAL:** in demo mode `/r/{slug}` NEVER performs a
-      real 302. It records the (simulated) scan, then renders
+    - **Redirect safety — CRITICAL:** in demo mode `/r/{slug}` never performs a
+      real 302 by default (one narrow exception below). It records the (simulated) scan, then renders
       `DemoInterstitialRenderer` ("Tessera demo — this code would redirect to
       `<destination>`", destination shown as inert escaped text). Session
       isolation does NOT cover `/r/{slug}` (it's global/public) — that's exactly
       why the 302 is neutralized. Destinations keep the http(s) + denylist
-      validation even though they're never followed.
+      validation. **Sole exception (tessera-demo-real-redirects.md):** a link
+      planted by `DemoWorkspaceSeeder` (`Link.demoSeeded`, in NO serializer
+      group — the API can't read or set it) whose *current* destination host is
+      in `DEMO_REDIRECT_ALLOWLIST` (env, exact host match; default
+      `nocly.fr,bongiorno.nocly.fr,dbsky.nocly.fr`) gets a real 302. Decided
+      server-side in `RedirectController` from the cached
+      `{id, destinationUrl, demoSeeded}` (`DemoRedirectAllowlist`), never only
+      at display. Visitor-created links, or a seeded link repointed off-list →
+      interstitial. The seed round-robins its links over the allowlisted hosts.
+      The landing's QR encodes real permanent **showcase codes** (slugs from
+      `DEMO_SHOWCASE_SLUGS` `host=slug`, e.g. `/r/eVi58se` → nocly.fr; one per allowlisted host, `DemoShowcaseLinks`, owned by the session-less
+      `showcase@demo.invalid` so never purged), created at boot by
+      `app:demo:showcase-links` and listed in `/api/config` `showcaseLinks`.
     - **Lifecycle:** `DemoSession.lastActivityAt` is touched per request
       (`DemoActivitySubscriber`); idle past `DEMO_SESSION_TTL_HOURS` (default 1)
       → purged. Purge deletes the synthetic user (DB cascades session + links +
@@ -313,6 +325,8 @@ http://localhost:8000, frontend at http://localhost:4200.
 - Cron logs: `docker compose logs -f cron` (periodic demo-link purge; no-op when `DEMO_USER_EMAIL` is empty)
 - Inspect queue: `docker compose exec redis redis-cli XLEN messages`
 - Manual demo purge: `docker compose exec backend bin/console app:demo:purge`
+- Demo landing showcase codes (create/repair, prints the short URLs):
+  `docker compose exec backend bin/console app:demo:showcase-links`
 - Purge stale demo workspaces: `docker compose exec backend bin/console app:demo:purge-sessions`
   (enable the demo with `DEMO_MODE=true`; `GET /api/config` exposes the flags)
 - Grant operator admin + enrol 2FA: `docker compose exec backend bin/console app:admin:grant <email>`

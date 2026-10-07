@@ -217,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Home",
     "nav": {
       "howItWorks": "Come funziona",
       "selfHost": "Self-hosting"
@@ -245,6 +244,7 @@
       "scansGoTo": "le scansioni portano a",
       "destinationNow": "Destinazione attuale",
       "note": "Il QR qui sopra non cambia: cambia solo la destinazione. È proprio questo il punto. Prova a cliccare un'altra scheda; il canvas ridisegna lo stesso URL codificato.",
+      "noteLive": "Scansionalo: è un vero codice Tessera, attivo sulla demo. Ogni scheda è un codice permanente; la sua destinazione può cambiare in qualsiasi momento senza ristampare.",
       "cases": {
         "menu": {
           "label": "Menù del ristorante",
@@ -257,6 +257,18 @@
         "bio": {
           "label": "Link bio social",
           "blurb": "Su un biglietto da visita o un adesivo. Aggiorna la destinazione man mano che cambia il tuo servizio di link-in-bio."
+        },
+        "nocly": {
+          "label": "Link portfolio sviluppatore",
+          "blurb": "Su un CV o un biglietto da visita. Puntalo al tuo ultimo progetto senza ristampare nulla."
+        },
+        "bongiorno": {
+          "label": "Link portfolio fotografo",
+          "blurb": "Su una stampa o una parete di galleria. Cambialo alla serie del momento senza staccare la cornice."
+        },
+        "dbsky": {
+          "label": "Link portfolio videomaker",
+          "blurb": "Nella descrizione di un video o in uno showreel. Rimandalo al tuo ultimo montaggio quando vuoi."
         }
       }
     },

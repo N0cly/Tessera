@@ -29,6 +29,7 @@
         "scansGoTo": "scans go to",
         "destinationNow": "Destination right now",
         "note": "The QR above doesn't change — only the destination does. That's the whole point. Try clicking another tab; the canvas re-renders the same encoded URL.",
+        "noteLive": "Scan it — this is a real Tessera code, live on the demo. Each tab is its own permanent code; its destination can change anytime without reprinting.",
         "cases": {
           "menu": {
             "label": "Restaurant menu",
@@ -41,6 +42,18 @@
           "bio": {
             "label": "Social bio link",
             "blurb": "On a business card or sticker. Update the destination as your link-in-bio service changes."
+          },
+          "nocly": {
+            "label": "Developer portfolio link",
+            "blurb": "On a résumé or business card. Point it at your latest project without reprinting a thing."
+          },
+          "bongiorno": {
+            "label": "Photographer portfolio link",
+            "blurb": "On a print or gallery wall. Swap it to the current series while the frame stays up."
+          },
+          "dbsky": {
+            "label": "Videographer portfolio link",
+            "blurb": "In a video description or showreel. Send it to your newest edit anytime."
           }
         }
       },
@@ -132,6 +145,7 @@
         "scansGoTo": "les scans mènent vers",
         "destinationNow": "Destination actuelle",
         "note": "Le QR ci-dessus ne change pas — seule la destination change. C'est tout l'intérêt. Essayez de cliquer sur un autre onglet ; le canevas réaffiche la même URL encodée.",
+        "noteLive": "Scannez-le — c'est un vrai code Tessera, actif sur la démo. Chaque onglet est un code permanent ; sa destination peut changer à tout moment sans réimpression.",
         "cases": {
           "menu": {
             "label": "Menu de restaurant",
@@ -144,6 +158,18 @@
           "bio": {
             "label": "Lien de bio sociale",
             "blurb": "Sur une carte de visite ou un autocollant. Mettez à jour la destination à mesure que votre service de lien-en-bio change."
+          },
+          "nocly": {
+            "label": "Lien portfolio développeur",
+            "blurb": "Sur un CV ou une carte de visite. Pointe-le vers ton dernier projet sans rien réimprimer."
+          },
+          "bongiorno": {
+            "label": "Lien portfolio photographe",
+            "blurb": "Sur un tirage ou un mur de galerie. Bascule-le vers la série du moment sans décrocher le cadre."
+          },
+          "dbsky": {
+            "label": "Lien portfolio vidéaste",
+            "blurb": "Dans une description de vidéo ou un showreel. Renvoie-le vers ton dernier montage quand tu veux."
           }
         }
       },
@@ -235,6 +261,7 @@
         "scansGoTo": "los escaneos llevan a",
         "destinationNow": "Destino actual",
         "note": "El QR de arriba no cambia, solo cambia el destino. De eso se trata. Prueba a hacer clic en otra pestaña; el lienzo vuelve a dibujar la misma URL codificada.",
+        "noteLive": "Escanéalo: es un código Tessera real, activo en la demo. Cada pestaña es un código permanente; su destino puede cambiar cuando quieras sin reimprimir.",
         "cases": {
           "menu": {
             "label": "Menú de restaurante",
@@ -247,6 +274,18 @@
           "bio": {
             "label": "Enlace de bio social",
             "blurb": "En una tarjeta de visita o una pegatina. Actualiza el destino a medida que cambia tu servicio de enlace-en-bio."
+          },
+          "nocly": {
+            "label": "Enlace de portafolio de desarrollador",
+            "blurb": "En un CV o una tarjeta de visita. Apúntalo a tu último proyecto sin reimprimir nada."
+          },
+          "bongiorno": {
+            "label": "Enlace de portafolio de fotógrafo",
+            "blurb": "En una copia impresa o un muro de galería. Cámbialo a la serie actual sin descolgar el marco."
+          },
+          "dbsky": {
+            "label": "Enlace de portafolio de videógrafo",
+            "blurb": "En la descripción de un vídeo o un showreel. Redirígelo a tu último montaje cuando quieras."
           }
         }
       },
@@ -338,6 +377,7 @@
         "scansGoTo": "le scansioni portano a",
         "destinationNow": "Destinazione attuale",
         "note": "Il QR qui sopra non cambia: cambia solo la destinazione. È proprio questo il punto. Prova a cliccare un'altra scheda; il canvas ridisegna lo stesso URL codificato.",
+        "noteLive": "Scansionalo: è un vero codice Tessera, attivo sulla demo. Ogni scheda è un codice permanente; la sua destinazione può cambiare in qualsiasi momento senza ristampare.",
         "cases": {
           "menu": {
             "label": "Menù del ristorante",
@@ -350,6 +390,18 @@
           "bio": {
             "label": "Link bio social",
             "blurb": "Su un biglietto da visita o un adesivo. Aggiorna la destinazione man mano che cambia il tuo servizio di link-in-bio."
+          },
+          "nocly": {
+            "label": "Link portfolio sviluppatore",
+            "blurb": "Su un CV o un biglietto da visita. Puntalo al tuo ultimo progetto senza ristampare nulla."
+          },
+          "bongiorno": {
+            "label": "Link portfolio fotografo",
+            "blurb": "Su una stampa o una parete di galleria. Cambialo alla serie del momento senza staccare la cornice."
+          },
+          "dbsky": {
+            "label": "Link portfolio videomaker",
+            "blurb": "Nella descrizione di un video o in uno showreel. Rimandalo al tuo ultimo montaggio quando vuoi."
           }
         }
       },
@@ -441,6 +493,7 @@
         "scansGoTo": "Scans führen zu",
         "destinationNow": "Aktuelles Ziel",
         "note": "Der QR-Code oben ändert sich nicht — nur das Ziel ändert sich. Genau darum geht es. Klick auf einen anderen Tab; das Canvas zeichnet dieselbe kodierte URL neu.",
+        "noteLive": "Scann ihn — das ist ein echter Tessera-Code, live in der Demo. Jeder Tab ist ein eigener permanenter Code; sein Ziel lässt sich jederzeit ändern, ohne neu zu drucken.",
         "cases": {
           "menu": {
             "label": "Restaurant-Menü",
@@ -453,6 +506,18 @@
           "bio": {
             "label": "Social-Bio-Link",
             "blurb": "Auf einer Visitenkarte oder einem Aufkleber. Aktualisiere das Ziel, wenn sich dein Link-in-Bio-Dienst ändert."
+          },
+          "nocly": {
+            "label": "Entwickler-Portfolio-Link",
+            "blurb": "Auf einem Lebenslauf oder einer Visitenkarte. Richte ihn auf dein neuestes Projekt, ohne etwas neu zu drucken."
+          },
+          "bongiorno": {
+            "label": "Fotografen-Portfolio-Link",
+            "blurb": "Auf einem Print oder an der Galeriewand. Wechsle ihn zur aktuellen Serie, ohne den Rahmen abzuhängen."
+          },
+          "dbsky": {
+            "label": "Videograf-Portfolio-Link",
+            "blurb": "In einer Videobeschreibung oder einem Showreel. Leite ihn jederzeit auf deinen neuesten Schnitt."
           }
         }
       },

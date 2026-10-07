@@ -13,6 +13,8 @@ export interface AppConfig {
   demoResetHours: number;
   /** Self-host link shown in the demo banner / interstitial. */
   githubUrl: string;
+  /** Demo only: destination host → permanent scannable short URL ({APP_BASE_URL}/r/{slug}). */
+  showcaseLinks: Record<string, string>;
 }
 
 const DEFAULTS: AppConfig = {
@@ -20,6 +22,7 @@ const DEFAULTS: AppConfig = {
   billingEnabled: false,
   demoResetHours: 1,
   githubUrl: 'https://github.com/N0cly/Tessera',
+  showcaseLinks: {},
 };
 
 /**
@@ -37,6 +40,7 @@ export class AppConfigService {
   readonly billingEnabled = computed(() => this._config().billingEnabled);
   readonly demoResetHours = computed(() => this._config().demoResetHours);
   readonly githubUrl = computed(() => this._config().githubUrl);
+  readonly showcaseLinks = computed(() => this._config().showcaseLinks ?? {});
 
   /** APP_INITIALIZER: load the flags before first render. Fails soft to defaults. */
   async load(): Promise<void> {

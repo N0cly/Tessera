@@ -217,7 +217,6 @@
     }
   },
   "landing": {
-    "home": "Inicio",
     "nav": {
       "howItWorks": "Cómo funciona",
       "selfHost": "Autoalojamiento"
@@ -245,6 +244,7 @@
       "scansGoTo": "los escaneos llevan a",
       "destinationNow": "Destino actual",
       "note": "El QR de arriba no cambia, solo cambia el destino. De eso se trata. Prueba a hacer clic en otra pestaña; el lienzo vuelve a dibujar la misma URL codificada.",
+      "noteLive": "Escanéalo: es un código Tessera real, activo en la demo. Cada pestaña es un código permanente; su destino puede cambiar cuando quieras sin reimprimir.",
       "cases": {
         "menu": {
           "label": "Menú de restaurante",
@@ -257,6 +257,18 @@
         "bio": {
           "label": "Enlace de bio social",
           "blurb": "En una tarjeta de visita o una pegatina. Actualiza el destino a medida que cambia tu servicio de enlace-en-bio."
+        },
+        "nocly": {
+          "label": "Enlace de portafolio de desarrollador",
+          "blurb": "En un CV o una tarjeta de visita. Apúntalo a tu último proyecto sin reimprimir nada."
+        },
+        "bongiorno": {
+          "label": "Enlace de portafolio de fotógrafo",
+          "blurb": "En una copia impresa o un muro de galería. Cámbialo a la serie actual sin descolgar el marco."
+        },
+        "dbsky": {
+          "label": "Enlace de portafolio de videógrafo",
+          "blurb": "En la descripción de un vídeo o un showreel. Redirígelo a tu último montaje cuando quieras."
         }
       }
     },
